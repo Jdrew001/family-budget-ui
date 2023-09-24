@@ -1,0 +1,7 @@
+{
+  "name": "family-budget-ui",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
