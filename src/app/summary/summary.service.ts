@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from '../core/services/base.service';
 import { SummaryConstant } from './summary.constant';
-import { zip } from 'rxjs';
+import { Observable, zip } from 'rxjs';
 import { CurrentBudgetSummary, SummaryAccountBalance, SummaryTransactions } from './model/summary.model';
 
 @Injectable({
@@ -14,14 +14,17 @@ export class SummaryService extends BaseService {
   get currentBudgetSummary() { return this._currentBudgetSummary; }
   set currentBudgetSummary(value) { this._currentBudgetSummary = value; }
 
-  private _accountBalanceSummary: SummaryAccountBalance = null;
+  private _accountBalanceSummary: SummaryAccountBalance[] = [];
   get accountBalanceSummary() { return this._accountBalanceSummary; }
   set accountBalanceSummary(value) { this._accountBalanceSummary = value; }
 
   private _transactionSummary: SummaryTransactions = null;
   get transactionSummary() { return this._transactionSummary; }
   set transactionSummary(value) { this._transactionSummary = value; }
-  
+
+  private _accountId: string = 'c30f8277-98f4-42d5-9c62-56559a038594';
+  get accountId() { return this._accountId; }
+  set accountId(value) { this._accountId = value; }
 
   constructor(
     private readonly http: HttpClient
@@ -30,24 +33,24 @@ export class SummaryService extends BaseService {
   }
 
   getSummaryData() {
-    const currentBudgetSummary = this.getCurrentBudgetSummary();
+    const currentBudgetSummary = this.getCurrentBudgetSummary(this.accountId);
     const accountBalances = this.getAccountBalances();
     const accountTransactions = this.getAccountTransactions('1');
 
     zip(currentBudgetSummary, accountBalances, accountTransactions)
       .subscribe(([currentBudgetSummary, accountBalances, accountTransactions]) => {
         this.currentBudgetSummary = currentBudgetSummary as CurrentBudgetSummary;
-        this.accountBalanceSummary = accountBalances as SummaryAccountBalance;
+        this.accountBalanceSummary = accountBalances as SummaryAccountBalance[];
         this.transactionSummary = accountTransactions as SummaryTransactions;
       });
   }
 
-  public getCurrentBudgetSummary() {
-    return this.http.get(`${this.BASE_URL}${SummaryConstant.CURRENT_BUDGET}`);
+  public getCurrentBudgetSummary(accountId: string) {
+    return this.http.get(`${this.BASE_URL}${SummaryConstant.CURRENT_BUDGET}/${accountId}`);
   }
 
-  public getAccountBalances() {
-    return this.http.get(`${this.BASE_URL}${SummaryConstant.ACCOUNT_BALANCES}`);
+  public getAccountBalances(): Observable<SummaryAccountBalance[]> {
+    return this.http.get(`${this.BASE_URL}${SummaryConstant.ACCOUNT_BALANCES}`) as Observable<SummaryAccountBalance[]>;
   }
 
   public getAccountTransactions(accountId: string) {

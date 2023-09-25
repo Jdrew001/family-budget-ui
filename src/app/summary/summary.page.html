@@ -32,7 +32,7 @@
               <p class="text-sm strong">Left to Spend for next<br> {{currentBudgetSummary?.leftSpendingDays}} days</p>
             </ion-col> 
             <ion-col class="ion-align-self-center" size="3">
-              <p class="text-sm strong">${{currentBudgetSummary?.leftSpendingAmount}}</p>
+              <p class="text-sm strong" style="float: right;">${{currentBudgetSummary?.leftSpendingAmount}}</p>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -94,49 +94,27 @@
       </ion-grid>
     </div>
 
-    <div>
-      <ion-grid class="p-0 m-0">
-        <ion-row>
-          <ion-col class="p-0 m-0">
-            <app-card>
-              <ion-grid>
-                <ion-row class="ion-justify-content-start">
-                  <ion-col>
-                    <p class="strong text-sm pb-0 mb-0">Checking</p>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col class="pt-0 m-0" size="10">
-                    <p class="pt-0 m-0">$1,500</p>
-                  </ion-col>
-                  <ion-col size="2">
-                    <!--icon-->
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </app-card>
-          </ion-col>
-          <ion-col class="p-0 m-0">
-            <app-card>
-              <ion-grid>
-                <ion-row class="ion-justify-content-start">
-                  <ion-col>
-                    <p class="strong text-sm pb-0 mb-0">Savings</p>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col class="pt-0 m-0" size="10">
-                    <p class="pt-0 m-0">$1,500</p>
-                  </ion-col>
-                  <ion-col size="2">
-                    <!--icon-->
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </app-card>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+    <div style="height: 10rem" class="pb-5">
+      <swiper-container slides-per-view="2" speed="500" pagination="true">
+        <swiper-slide *ngFor="let item of accountBalanceSummary">
+          <app-card>
+            <ion-grid>
+              <ion-row class="ion-justify-content-start">
+                <ion-col>
+                  <p class="strong text-sm pb-0 mb-0">{{item?.name}}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="pt-0 m-0" size="10">
+                  <p class="pt-0 m-0">${{item?.amount}}</p>
+                </ion-col>
+                <ion-col size="2">
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </app-card>
+        </swiper-slide>
+      </swiper-container>
     </div>
 
     <div>

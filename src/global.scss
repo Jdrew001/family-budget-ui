@@ -165,3 +165,11 @@ ion-content {
 .light-text-color {
     color: var(--ion-color-light) !important;
 }
+
+::ng-deep swiper-container {
+    height: 100%;
+}
+
+::ng-deep .swiper-pagination-bullet-active {
+    background: var(--ion-color-primary) !important;
+}
