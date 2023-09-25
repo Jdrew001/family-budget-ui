@@ -1,0 +1,239 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Summary</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div>
+    <div>
+      <ion-grid>
+        <ion-row class="ion-justify-content-start">
+          <ion-col size="8">
+            <h5 class="pb-1 mb-0"><strong>Current</strong> Budget</h5>
+            <p class="pt-0 mt-2 text-xs light-text-color">Sep 15 - Sep 28</p>
+          </ion-col>
+          <ion-col>
+            <p class="hoverable" style="float: right" (click)="onSeeMore()">See More</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  
+    <!-- What's left -->
+    <div>
+      <app-card>
+        <ion-grid>
+          <ion-row class="ion-justify-content-start">
+            <ion-col size="1">
+              <!--icon-->
+            </ion-col>
+            <ion-col>
+              <p class="text-sm strong">Left to Spend for next<br> 5 days</p>
+            </ion-col> 
+            <ion-col class="ion-align-self-center" size="2">
+              <p class="text-sm strong">$200.00</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </app-card>
+    </div>
+
+    <div>
+      <ion-grid class="p-0 m-0">
+        <ion-row>
+          <ion-col class="p-0 m-0">
+            <app-card>
+              <ion-grid>
+                <ion-row class="ion-justify-content-start">
+                  <ion-col>
+                    <p class="strong text-sm pb-0 mb-0">Income</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="pt-0 m-0" size="10">
+                    <p class="pt-0 m-0">$1,500</p>
+                  </ion-col>
+                  <ion-col size="2">
+                    <!--icon-->
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </app-card>
+          </ion-col>
+          <ion-col class="p-0 m-0">
+            <app-card>
+              <ion-grid>
+                <ion-row class="ion-justify-content-start">
+                  <ion-col>
+                    <p class="strong text-sm pb-0 mb-0">Income</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="pt-0 m-0" size="10">
+                    <p class="pt-0 m-0">$1,500</p>
+                  </ion-col>
+                  <ion-col size="2">
+                    <!--icon-->
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </app-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h5 class=""><strong>Account</strong> Balances</h5>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div>
+      <ion-grid class="p-0 m-0">
+        <ion-row>
+          <ion-col class="p-0 m-0">
+            <app-card>
+              <ion-grid>
+                <ion-row class="ion-justify-content-start">
+                  <ion-col>
+                    <p class="strong text-sm pb-0 mb-0">Checking</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="pt-0 m-0" size="10">
+                    <p class="pt-0 m-0">$1,500</p>
+                  </ion-col>
+                  <ion-col size="2">
+                    <!--icon-->
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </app-card>
+          </ion-col>
+          <ion-col class="p-0 m-0">
+            <app-card>
+              <ion-grid>
+                <ion-row class="ion-justify-content-start">
+                  <ion-col>
+                    <p class="strong text-sm pb-0 mb-0">Savings</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="pt-0 m-0" size="10">
+                    <p class="pt-0 m-0">$1,500</p>
+                  </ion-col>
+                  <ion-col size="2">
+                    <!--icon-->
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </app-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h5 class=""><strong>Recent</strong> Transactions</h5>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div>
+      <app-card>
+        <ion-grid>
+          <ion-row class="ion-justify-content-start">
+            <ion-col size="1">
+              <!--icon-->
+            </ion-col>
+            <ion-col>
+              <p class="text-sm strong">some description here</p>
+              <p class="pt-0 mt-2 text-xs light-text-color">Sep 15 - Sep 28</p>
+            </ion-col> 
+            <ion-col class="ion-align-self-center" size="2">
+              <p class="text-sm strong">$200.00</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </app-card>
+
+      <app-card>
+        <ion-grid>
+          <ion-row class="ion-justify-content-start">
+            <ion-col size="1">
+              <!--icon-->
+            </ion-col>
+            <ion-col>
+              <p class="text-sm strong">some description here</p>
+              <p class="pt-0 mt-2 text-xs light-text-color">Sep 15 - Sep 28</p>
+            </ion-col> 
+            <ion-col class="ion-align-self-center" size="2">
+              <p class="text-sm strong">$200.00</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </app-card>
+
+      <app-card>
+        <ion-grid>
+          <ion-row class="ion-justify-content-start">
+            <ion-col size="1">
+              <!--icon-->
+            </ion-col>
+            <ion-col>
+              <p class="text-sm strong">some description here</p>
+              <p class="pt-0 mt-2 text-xs light-text-color">Sep 15 - Sep 28</p>
+            </ion-col> 
+            <ion-col class="ion-align-self-center" size="2">
+              <p class="text-sm strong">$200.00</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </app-card>
+
+      <app-card>
+        <ion-grid>
+          <ion-row class="ion-justify-content-start">
+            <ion-col size="1">
+              <!--icon-->
+            </ion-col>
+            <ion-col>
+              <p class="text-sm strong">some description here</p>
+              <p class="pt-0 mt-2 text-xs light-text-color">Sep 15 - Sep 28</p>
+            </ion-col> 
+            <ion-col class="ion-align-self-center" size="2">
+              <p class="text-sm strong">$200.00</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </app-card>
+
+      <app-card>
+        <ion-grid>
+          <ion-row class="ion-justify-content-start">
+            <ion-col size="1">
+              <!--icon-->
+            </ion-col>
+            <ion-col>
+              <p class="text-sm strong">some description here</p>
+              <p class="pt-0 mt-2 text-xs light-text-color">Sep 15 - Sep 28</p>
+            </ion-col> 
+            <ion-col class="ion-align-self-center" size="2">
+              <p class="text-sm strong">$200.00</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </app-card>
+    </div>
+  </div>
+</ion-content>
