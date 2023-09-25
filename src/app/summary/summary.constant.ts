@@ -1,5 +1,5 @@
 export class SummaryConstant {
-    public static readonly CURRENT_BUDGET = 'currentBudget';
-    public static readonly ACCOUNT_BALANCES = 'accountBalances';
-    public static readonly TRANSACTIONS = 'transactions';
+    public static readonly CURRENT_BUDGET = 'summary/currentBudget';
+    public static readonly ACCOUNT_BALANCES = 'summary/accountBalances';
+    public static readonly TRANSACTIONS = 'summary/transactions';
 }

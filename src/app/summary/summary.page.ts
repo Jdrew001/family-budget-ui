@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SummaryService } from './summary.service';
 
 @Component({
   selector: 'app-summary',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SummaryPage implements OnInit {
 
-  constructor() { }
+  get currentBudgetSummary() { return this.summaryService.currentBudgetSummary; }
+  get accountBalanceSummary() { return this.summaryService.accountBalanceSummary; }
+  get transactionSummary() { return this.summaryService.transactionSummary; }
+
+  constructor(
+    public summaryService: SummaryService
+  ) { }
 
   ngOnInit() {
+    this.summaryService.getSummaryData();
   }
 
   onSeeMore() {

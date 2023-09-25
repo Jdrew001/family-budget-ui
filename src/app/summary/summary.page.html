@@ -11,7 +11,7 @@
         <ion-row class="ion-justify-content-start">
           <ion-col size="8">
             <h5 class="pb-1 mb-0"><strong>Current</strong> Budget</h5>
-            <p class="pt-0 mt-2 text-xs light-text-color">Sep 15 - Sep 28</p>
+            <p class="pt-0 mt-2 text-xs light-text-color">{{currentBudgetSummary?.displayDate}}</p>
           </ion-col>
           <ion-col>
             <p class="hoverable" style="float: right" (click)="onSeeMore()">See More</p>
@@ -29,10 +29,10 @@
               <!--icon-->
             </ion-col>
             <ion-col>
-              <p class="text-sm strong">Left to Spend for next<br> 5 days</p>
+              <p class="text-sm strong">Left to Spend for next<br> {{currentBudgetSummary?.leftSpendingDays}} days</p>
             </ion-col> 
-            <ion-col class="ion-align-self-center" size="2">
-              <p class="text-sm strong">$200.00</p>
+            <ion-col class="ion-align-self-center" size="3">
+              <p class="text-sm strong">${{currentBudgetSummary?.leftSpendingAmount}}</p>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -52,7 +52,7 @@
                 </ion-row>
                 <ion-row>
                   <ion-col class="pt-0 m-0" size="10">
-                    <p class="pt-0 m-0">$1,500</p>
+                    <p class="pt-0 m-0">${{currentBudgetSummary?.income?.amount}}</p>
                   </ion-col>
                   <ion-col size="2">
                     <!--icon-->
@@ -66,12 +66,12 @@
               <ion-grid>
                 <ion-row class="ion-justify-content-start">
                   <ion-col>
-                    <p class="strong text-sm pb-0 mb-0">Income</p>
+                    <p class="strong text-sm pb-0 mb-0">Expenses</p>
                   </ion-col>
                 </ion-row>
                 <ion-row>
                   <ion-col class="pt-0 m-0" size="10">
-                    <p class="pt-0 m-0">$1,500</p>
+                    <p class="pt-0 m-0">${{currentBudgetSummary?.expense?.amount}}</p>
                   </ion-col>
                   <ion-col size="2">
                     <!--icon-->

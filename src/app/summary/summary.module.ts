@@ -9,6 +9,7 @@ import { SummaryPageRoutingModule } from './summary-routing.module';
 import { SummaryPage } from './summary.page';
 import { SummaryService } from './summary.service';
 import { SharedModule } from '../shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     IonicModule,
     SummaryPageRoutingModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
   declarations: [SummaryPage],
   providers: [
