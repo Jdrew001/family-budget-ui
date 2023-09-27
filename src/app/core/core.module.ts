@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreService } from './services/core.service';
+import { ToastService } from './services/toast.service';
 
 
 
@@ -10,7 +11,8 @@ import { CoreService } from './services/core.service';
     CommonModule
   ],
   providers: [
-    CoreService
+    CoreService,
+    ToastService
   ]
 })
 export class CoreModule { }

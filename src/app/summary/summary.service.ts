@@ -18,7 +18,7 @@ export class SummaryService extends BaseService {
   get accountBalanceSummary() { return this._accountBalanceSummary; }
   set accountBalanceSummary(value) { this._accountBalanceSummary = value; }
 
-  private _transactionSummary: SummaryTransactions = null;
+  private _transactionSummary: SummaryTransactions[] = null;
   get transactionSummary() { return this._transactionSummary; }
   set transactionSummary(value) { this._transactionSummary = value; }
 
@@ -35,13 +35,13 @@ export class SummaryService extends BaseService {
   getSummaryData() {
     const currentBudgetSummary = this.getCurrentBudgetSummary(this.accountId);
     const accountBalances = this.getAccountBalances();
-    const accountTransactions = this.getAccountTransactions('1');
+    const accountTransactions = this.getAccountTransactions(this.accountId);
 
     zip(currentBudgetSummary, accountBalances, accountTransactions)
       .subscribe(([currentBudgetSummary, accountBalances, accountTransactions]) => {
         this.currentBudgetSummary = currentBudgetSummary as CurrentBudgetSummary;
         this.accountBalanceSummary = accountBalances as SummaryAccountBalance[];
-        this.transactionSummary = accountTransactions as SummaryTransactions;
+        this.transactionSummary = accountTransactions as SummaryTransactions[];
       });
   }
 
