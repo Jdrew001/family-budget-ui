@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SigninService } from './services/signin.service';
 import { SigninFormService } from './services/signin-form.service';
 import { ToastService } from 'src/app/core/services/toast.service';
+import { TokenService } from 'src/app/core/services/token.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -17,7 +19,9 @@ export class SigninPage implements OnInit {
   constructor(
     private signInService: SigninService,
     private signInFormService: SigninFormService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private tokenService: TokenService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -26,8 +30,11 @@ export class SigninPage implements OnInit {
   login() {
     if (!this.signInForm.invalid) {
       this.signInService.signIn(this.signInForm.value)
-      .subscribe(result => {
-        console.log('result', result);
+      .subscribe(async result => {
+        await this.tokenService.setToken(result);
+
+        //navigate to summary page
+        this.router.navigate(['/summary']);
     });
     } else {
       this.signInForm.markAllAsTouched();

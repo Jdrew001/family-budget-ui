@@ -10,6 +10,7 @@ import { SigninPage } from './signin.page';
 import { SigninFormService } from './services/signin-form.service';
 import { SigninService } from './services/signin.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CoreModule } from 'src/app/core/core.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     IonicModule,
     SigninPageRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    CoreModule
   ],
   declarations: [SigninPage],
   providers: [

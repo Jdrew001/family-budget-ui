@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SignInModel } from '../models/signin.model';
 import { BaseService } from 'src/app/core/services/base.service';
 import { AuthConstants } from '../../auth.constants';
 import { HttpClient } from '@angular/common/http';
+import { SignInModel } from 'src/app/core/models/auth.model';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,12 @@ import { HttpClient } from '@angular/common/http';
 export class SigninService extends BaseService {
 
   constructor(
-    private http: HttpClient
+    private authService: AuthService
   ) {
     super();
   }
 
   signIn(signInModel: SignInModel): Observable<any> {
-    const url = this.BASE_URL + AuthConstants.SIGN_IN_URL;
-    return this.http.post(url, signInModel);
+    return this.authService.signIn(signInModel);
   }
 }

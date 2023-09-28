@@ -1,5 +1,23 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { NgModule, inject } from '@angular/core';
+import { CanActivateFn, CanMatchFn, PreloadAllModules, Router, RouterModule, Routes, UrlTree } from '@angular/router';
+import { Observable, take, tap } from 'rxjs';
+import { AuthService } from './core/services/auth.service';
+import { NavController } from '@ionic/angular';
+
+const isAuthenticated = (): | boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> => {
+  const authService = inject(AuthService);
+  const navController = inject(NavController);
+  return authService.isAuthenticated$.pipe(
+      take(1),
+      tap((isAuthenticated: boolean) => {
+          if (!isAuthenticated) {
+            navController.navigateRoot('/signin', { replaceUrl:true });
+          }
+      }),
+  );
+}
+
+const canMatch:CanMatchFn = isAuthenticated;
 
 const routes: Routes = [
   {
@@ -12,11 +30,12 @@ const routes: Routes = [
   },
   {
     path: 'summary',
-    loadChildren: () => import('./summary/summary.module').then( m => m.SummaryPageModule)
+    loadChildren: () => import('./summary/summary.module').then( m => m.SummaryPageModule),
+    canLoad: [canMatch],
   },
   {
     path: '',
-    redirectTo: 'signin',
+    redirectTo: 'summary',
     pathMatch: 'full'
   }
 ];
