@@ -4,6 +4,8 @@ import { SigninFormService } from './services/signin-form.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { TokenService } from 'src/app/core/services/token.service';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-signin',
@@ -21,7 +23,8 @@ export class SigninPage implements OnInit {
     private signInFormService: SigninFormService,
     private toastService: ToastService,
     private tokenService: TokenService,
-    private router: Router
+    private navController: NavController,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -32,9 +35,10 @@ export class SigninPage implements OnInit {
       this.signInService.signIn(this.signInForm.value)
       .subscribe(async result => {
         await this.tokenService.setToken(result);
+        this.authService.isAuthenticated$.next(true);
 
         //navigate to summary page
-        this.router.navigate(['/summary']);
+        setTimeout(async() => {this.navController.navigateForward('/summary', { replaceUrl:true })}, 2000);
     });
     } else {
       this.signInForm.markAllAsTouched();

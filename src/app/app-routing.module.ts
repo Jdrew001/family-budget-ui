@@ -3,6 +3,8 @@ import { CanActivateFn, CanMatchFn, PreloadAllModules, Router, RouterModule, Rou
 import { Observable, take, tap } from 'rxjs';
 import { AuthService } from './core/services/auth.service';
 import { NavController } from '@ionic/angular';
+import { SigninPage } from './auth/signin/signin.page';
+import { SignupPage } from './auth/signup/signup.page';
 
 const isAuthenticated = (): | boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> => {
   const authService = inject(AuthService);
@@ -22,11 +24,11 @@ const canMatch:CanMatchFn = isAuthenticated;
 const routes: Routes = [
   {
     path: 'signin',
-    loadChildren: () => import('./auth/signin/signin.module').then( m => m.SigninPageModule)
+    component: SigninPage
   },
   {
     path: 'signup',
-    loadChildren: () => import('./auth/signup/signup.module').then( m => m.SignupPageModule)
+    component: SignupPage
   },
   {
     path: 'summary',

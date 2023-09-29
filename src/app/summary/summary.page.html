@@ -16,14 +16,18 @@
       </ion-grid>
     </div>
 
-    <div style="height: 9rem" class="pb-2">
-      <swiper-container slides-per-view="2" speed="500" pagination="true">
+    <div class="pb-2">
+      <swiper-container 
+        slides-per-view="2" 
+        speed="500" 
+        pagination="true"
+        css-mode="true">
         <swiper-slide *ngFor="let item of accountBalanceSummary">
           <app-card>
             <ion-grid>
               <ion-row class="ion-justify-content-start">
                 <ion-col>
-                  <p class="strong text-sm pb-0 mb-0">{{item?.name}}</p>
+                  <p class="strong text-sm pb-0 mb-0">{{item?.name}}{{item?.active}}</p>
                 </ion-col>
               </ion-row>
               <ion-row>

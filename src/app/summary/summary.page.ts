@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SummaryService } from './summary.service';
 
 @Component({
@@ -7,6 +7,8 @@ import { SummaryService } from './summary.service';
   styleUrls: ['./summary.page.scss'],
 })
 export class SummaryPage implements OnInit {
+
+  @ViewChild('slider') slider: ElementRef;
 
   get currentBudgetSummary() { return this.summaryService.currentBudgetSummary; }
   get accountBalanceSummary() { return this.summaryService.accountBalanceSummary; }

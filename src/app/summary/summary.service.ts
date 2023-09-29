@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from '../core/services/base.service';
 import { SummaryConstant } from './summary.constant';
-import { Observable, zip } from 'rxjs';
+import { Observable, switchMap, zip } from 'rxjs';
 import { CurrentBudgetSummary, SummaryAccountBalance, SummaryTransactions } from './model/summary.model';
 
 @Injectable({
@@ -33,16 +33,17 @@ export class SummaryService extends BaseService {
   }
 
   getSummaryData() {
-    const currentBudgetSummary = this.getCurrentBudgetSummary(this.accountId);
-    const accountBalances = this.getAccountBalances();
-    const accountTransactions = this.getAccountTransactions(this.accountId);
-
-    zip(currentBudgetSummary, accountBalances, accountTransactions)
-      .subscribe(([currentBudgetSummary, accountBalances, accountTransactions]) => {
-        this.currentBudgetSummary = currentBudgetSummary as CurrentBudgetSummary;
-        this.accountBalanceSummary = accountBalances as SummaryAccountBalance[];
-        this.transactionSummary = accountTransactions as SummaryTransactions[];
-      });
+    this.getAccountBalances().pipe(
+      switchMap((accountBalances) => {
+        this.accountBalanceSummary = accountBalances;
+        const currentBudgetSummary = this.getCurrentBudgetSummary(this.accountId);
+        const accountTransactions = this.getAccountTransactions(this.accountId);
+        return zip(currentBudgetSummary, accountTransactions);
+      })
+    ).subscribe(([currentBudgetSummary, accountTransactions]) => {
+      this.currentBudgetSummary = currentBudgetSummary as CurrentBudgetSummary;
+      this.transactionSummary = accountTransactions as SummaryTransactions[];
+    });
   }
 
   public getCurrentBudgetSummary(accountId: string) {

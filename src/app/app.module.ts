@@ -9,6 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { register } from 'swiper/element/bundle';
 import { CoreModule } from './core/core.module';
+import { SigninPageModule } from './auth/signin/signin.module';
+import { SignupPageModule } from './auth/signup/signup.module';
 
 register();
 
@@ -18,7 +20,9 @@ register();
     CoreModule,
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    SigninPageModule,
+    SignupPageModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
