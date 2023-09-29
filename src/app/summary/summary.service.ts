@@ -49,6 +49,16 @@ export class SummaryService extends BaseService {
     });
   }
 
+  getAccountBudgetTransactions() {
+    const currentBudgetSummary = this.getCurrentBudgetSummary();
+    const accountTransactions = this.getAccountTransactions();
+    return zip(currentBudgetSummary, accountTransactions)
+      .subscribe(([currentBudgetSummary, accountTransactions]) => {
+        this.currentBudgetSummary = currentBudgetSummary as CurrentBudgetSummary;
+        this.transactionSummary = accountTransactions as SummaryTransactions[];
+    });;
+  }
+
   public getCurrentBudgetSummary() {
     return this.http.get(`${this.BASE_URL}${SummaryConstant.CURRENT_BUDGET}/${this.accountId}`);
   }

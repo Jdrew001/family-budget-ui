@@ -41,7 +41,7 @@ ion-content {
 }
 
 .strong {
-    font-weight: bold;
+    font-weight: bolder !important;
 }
 
 .pb-0 {
@@ -169,7 +169,7 @@ ion-content {
 }
 
 .light-text-color {
-    color: var(--ion-color-light) !important;
+    color: var(--ion-color-subtle) !important;
 }
 
 ::ng-deep swiper-container {

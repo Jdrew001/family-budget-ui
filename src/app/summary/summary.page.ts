@@ -22,6 +22,16 @@ export class SummaryPage implements OnInit {
     this.summaryService.getSummaryData();
   }
 
+  handleAccountAction(id: string) {
+    this.summaryService.accountId = id;
+    // we now should call get info
+    this.summaryService.getAccountBudgetTransactions();
+    this.accountBalanceSummary.forEach(item => {
+      if (item.id === id) item.active = true;
+      else item.active = false;
+    });
+  }
+
   onSeeMore() {
     console.log('See more clicked');
   }
