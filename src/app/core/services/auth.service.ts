@@ -54,7 +54,7 @@ export class AuthService extends BaseService {
       setTimeout(async() => {await SplashScreen.hide();}, 2000);
 
       //redirect the user to /summary page
-      this.navController.navigateRoot('/summary', { replaceUrl:true });
+      this.navController.navigateRoot('/tabs/summary', { replaceUrl:true });
       this.userService.fetchUserInformation();
     });
   }

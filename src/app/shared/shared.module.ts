@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { CardComponent } from './components/card/card.component';
 import { IonicModule } from '@ionic/angular';
 import { AccountService } from './services/account/account.service';
+import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 
 
 
 @NgModule({
   declarations: [
-    CardComponent
+    CardComponent,
+    NavigationBarComponent
   ],
   providers: [
     AccountService
@@ -18,7 +20,8 @@ import { AccountService } from './services/account/account.service';
     IonicModule
   ],
   exports: [
-    CardComponent
+    CardComponent,
+    NavigationBarComponent
   ]
 })
 export class SharedModule { }

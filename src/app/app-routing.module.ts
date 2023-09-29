@@ -31,14 +31,13 @@ const routes: Routes = [
     component: SignupPage
   },
   {
-    path: 'summary',
-    loadChildren: () => import('./summary/summary.module').then( m => m.SummaryPageModule),
-    canLoad: [canMatch],
+    path: '',
+    redirectTo: 'tabs',
+    pathMatch: 'full'
   },
   {
-    path: '',
-    redirectTo: 'summary',
-    pathMatch: 'full'
+    path: 'tabs',
+    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
   }
 ];
 
