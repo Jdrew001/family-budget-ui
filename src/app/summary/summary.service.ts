@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from '../core/services/base.service';
 import { SummaryConstant } from './summary.constant';
-import { Observable, switchMap, zip } from 'rxjs';
+import { EMPTY, Observable, switchMap, zip } from 'rxjs';
 import { CurrentBudgetSummary, SummaryAccountBalance, SummaryTransactions } from './model/summary.model';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class SummaryService extends BaseService {
   get transactionSummary() { return this._transactionSummary; }
   set transactionSummary(value) { this._transactionSummary = value; }
 
-  private _accountId: string = 'c30f8277-98f4-42d5-9c62-56559a038594';
+  private _accountId: string = '';
   get accountId() { return this._accountId; }
   set accountId(value) { this._accountId = value; }
 
@@ -36,8 +36,11 @@ export class SummaryService extends BaseService {
     this.getAccountBalances().pipe(
       switchMap((accountBalances) => {
         this.accountBalanceSummary = accountBalances;
-        const currentBudgetSummary = this.getCurrentBudgetSummary(this.accountId);
-        const accountTransactions = this.getAccountTransactions(this.accountId);
+        this.accountId = accountBalances?.find(item => item.active)?.id;
+
+        if (!this.accountId) return EMPTY;
+        const currentBudgetSummary = this.getCurrentBudgetSummary();
+        const accountTransactions = this.getAccountTransactions();
         return zip(currentBudgetSummary, accountTransactions);
       })
     ).subscribe(([currentBudgetSummary, accountTransactions]) => {
@@ -46,15 +49,15 @@ export class SummaryService extends BaseService {
     });
   }
 
-  public getCurrentBudgetSummary(accountId: string) {
-    return this.http.get(`${this.BASE_URL}${SummaryConstant.CURRENT_BUDGET}/${accountId}`);
+  public getCurrentBudgetSummary() {
+    return this.http.get(`${this.BASE_URL}${SummaryConstant.CURRENT_BUDGET}/${this.accountId}`);
   }
 
   public getAccountBalances(): Observable<SummaryAccountBalance[]> {
     return this.http.get(`${this.BASE_URL}${SummaryConstant.ACCOUNT_BALANCES}`) as Observable<SummaryAccountBalance[]>;
   }
 
-  public getAccountTransactions(accountId: string) {
-    return this.http.get(`${this.BASE_URL}${SummaryConstant.TRANSACTIONS}/${accountId}`);
+  public getAccountTransactions() {
+    return this.http.get(`${this.BASE_URL}${SummaryConstant.TRANSACTIONS}/${this.accountId}`);
   }
 }
