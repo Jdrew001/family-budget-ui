@@ -38,6 +38,10 @@ const routes: Routes = [
   {
     path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
+  },
+  {
+    path: 'manage-transaction',
+    loadChildren: () => import('./manage-transaction/manage-transaction.module').then( m => m.ManageTransactionPageModule)
   }
 ];
 
