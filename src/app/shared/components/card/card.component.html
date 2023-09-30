@@ -1,5 +1,5 @@
-<ion-card [ngClass]="{'active': isActive}" (click)="handleClick()">
-  <ion-card-content>
+<ion-card [ngClass]="{'active': isActive}" [ngStyle]="{'margin': margin}" (click)="handleClick()">
+  <ion-card-content [ngStyle]="{'padding': padding + 'px'}">
     <ng-content>
     </ng-content>
   </ion-card-content>

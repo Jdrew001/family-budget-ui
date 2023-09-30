@@ -281,10 +281,40 @@ ion-input {
     font-size: 16px !important;
     box-shadow: $default-shadow !important;
 }
+ion-textarea {
+    --background: var(--ion-color-secondary) !important;
+    margin-top: 2px !important;
+    border-radius: 25px !important;
+    margin-bottom: 2px !important;
+    --padding-bottom: 18px !important;
+    --padding-top: 18px !important;
+    --padding-start: 10px !important;
+    --padding-end: 10px !important;
+    text-indent: 1em !important;
+    font-size: 16px !important;
+    box-shadow: $default-shadow !important;
+    min-height: 100px !important;
+}
+
 ion-button {
     text-transform: none;
     font-size: 16px;
     font-family: "dmsans-regular", Arial, Helvetica, sans-serif;
+}
+
+ion-select {
+    --background: var(--ion-color-secondary) !important;
+    margin-top: 2px !important;
+    border-radius: 25px !important;
+    margin-bottom: 2px !important;
+    --padding-bottom: 18px !important;
+    --padding-top: 18px !important;
+    --padding-start: 10px !important;
+    --padding-end: 10px !important;
+    --border-color: none !important;
+    text-indent: 1em !important;
+    font-size: 16px !important;
+    box-shadow: $default-shadow !important;
 }
 
 .input-group {
@@ -350,6 +380,20 @@ ion-button {
 .error-message-style::part(message) {
     color: var(--ion-color-medium);
     font-size: 12px
+}
+
+.input-lookalike {
+    background: var(--ion-color-secondary) !important;
+    margin-top: 2px !important;
+    border-radius: 25px !important;
+    margin-bottom: 2px !important;
+    padding-bottom: 18px !important;
+    padding-top: 10px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    text-indent: 1em !important;
+    font-size: 16px !important;
+    box-shadow: $default-shadow !important;
 }
 
 swiper-container {

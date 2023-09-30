@@ -7,6 +7,198 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <h1>Manage Transaction</h1>
+<ion-content [fullscreen]="true" [formGroup]="formGroup">
+  <div class="input-group">
+    <div class="group">
+      <ion-label position="stacked">Account</ion-label>
+      <!-- <ion-select formControlName="account" aria-label="accountes" placeholder="Select Account" fill="solid">
+        <ion-select-option *ngFor="let item of refData?.accounts" [value]="item?.id">{{item?.name}}</ion-select-option>
+      </ion-select> -->
+      <swiper-container 
+        slides-per-view="2" 
+        speed="500" 
+        pagination="true"
+        css-mode="true">
+        <swiper-slide *ngFor="let item of accounts">
+          <app-card
+            [id]="item?.id"
+            [active]="item?.active">
+            <ion-grid>
+              <ion-row class="ion-justify-content-start">
+                <ion-col>
+                  <p class="strong text-sm pb-0 mb-0">{{item?.name}}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="pt-0 m-0" size="10">
+                  <p class="pt-0 m-0">${{item?.amount}}</p>
+                </ion-col>
+                <ion-col size="2">
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </app-card>
+        </swiper-slide>
+      </swiper-container>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <div class="group">
+      <ion-label position="stacked">Description</ion-label>
+      <ion-textarea formControlName="description" placeholder="Type something here"></ion-textarea>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <div class="group">
+      <ion-label position="stacked">Category</ion-label>
+      <div (click)="chooseCategory()" class="input-lookalike">
+        <p>Select Category</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <div class="group">
+      <ion-label position="stacked">Amount</ion-label>
+        <ion-input formControlName="amount" type="number">
+        <!-- <ion-icon *ngIf="(email.dirty || email.touched) && !email.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
+        <ion-icon *ngIf="(email.dirty || email.touched) && email.errors" class="incorrect" name="close-circle" item-right></ion-icon> -->
+        </ion-input>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <div class="group">
+      <ion-label position="stacked">Date</ion-label>
+        <ion-input formControlName="date" type="date">
+        <!-- <ion-icon *ngIf="(email.dirty || email.touched) && !email.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
+        <ion-icon *ngIf="(email.dirty || email.touched) && email.errors" class="incorrect" name="close-circle" item-right></ion-icon> -->
+        </ion-input>
+    </div>
+  </div>
+
+  <div class="button-group">
+    <ion-button (click)="onConfirm()" class="shadow" type="submit" expand="block" shape="round" size="large" >Confirm</ion-button>
+  </div>
+
+  <ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.90" [breakpoints]="[0, 0.90]">
+    <ng-template>
+      <ion-toolbar>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <h5 class="text-center bold-text mb-1">Categories</h5>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <app-card margin="10px 5px 5px 5px" padding="5">
+                <ion-grid>
+                  <ion-row class="ion-justify-content-start">
+                    <ion-col>
+                      <p class="strong text-sm pb-0 mb-0">Income <br> Categories</p>
+                    </ion-col>
+                  </ion-row>
+                  <!-- <ion-row>
+                    <ion-col class="pt-0 m-0" size="10">
+                      <p class="pt-0 m-0">${{item?.amount}}</p>
+                    </ion-col>
+                    <ion-col size="2">
+                    </ion-col>
+                  </ion-row> -->
+                </ion-grid>
+              </app-card>
+            </ion-col>
+            <ion-col>
+              <app-card margin="10px 5px 5px 5px" padding="5">
+                <ion-grid>
+                  <ion-row class="ion-justify-content-start">
+                    <ion-col>
+                      <p class="strong text-sm pb-0 mb-0">Expense <br> Categories</p>
+                    </ion-col>
+                  </ion-row>
+                  <!-- <ion-row>
+                    <ion-col class="pt-0 m-0" size="10">
+                      <p class="pt-0 m-0">${{item?.amount}}</p>
+                    </ion-col>
+                    <ion-col size="2">
+                    </ion-col>
+                  </ion-row> -->
+                </ion-grid>
+              </app-card>
+            </ion-col>
+            <ion-col size="12">
+              <ion-searchbar placeholder="Search" (click)="modal.setCurrentBreakpoint(0.75)"></ion-searchbar>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-toolbar>
+      <ion-content #ionContent [scrollY]="true" style="--offset-bottom: -15vh;">
+        <ion-grid>
+          <ion-row #scrollContainer style="overflow-y: scroll; padding-bottom: 2rem">
+            
+            <ion-grid>
+
+              <ion-row>
+                <ion-col size="12">
+                  <app-card>
+                    <p>Salary/Wages</p>
+                  </app-card>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="12">
+                  <app-card>
+                    <p>Salary/Wages</p>
+                  </app-card>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="12">
+                  <app-card>
+                    <p>Salary/Wages</p>
+                  </app-card>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="12">
+                  <app-card>
+                    <p>Salary/Wages</p>
+                  </app-card>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="12">
+                  <app-card>
+                    <p>Salary/Wages</p>
+                  </app-card>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="12">
+                  <app-card>
+                    <p>Salary/Wages</p>
+                  </app-card>
+                </ion-col>
+              </ion-row>
+
+              <div class="button-group">
+                <ion-button (click)="onConfirmCategories()" class="shadow" type="submit" expand="block" shape="round" size="large" >Confirm</ion-button>
+              </div>
+
+            </ion-grid>
+          </ion-row>
+
+          
+        </ion-grid>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { CoreService } from '../core/services/core.service';
 
 @Component({
   selector: 'app-tabs',
@@ -10,13 +11,15 @@ export class TabsPage implements OnInit {
 
   constructor(
     private navController: NavController,
+    private coreService: CoreService
   ) { }
 
   ngOnInit() {
   }
 
   handleFabClick() {
-    this.navController.navigateForward('/manage-transaction', { animated: true });
+    // this.navController.navigateForward('/manage-transaction', { animated: true });
+    this.coreService.$showManageTransaction.next({data: null, show: true});
   }
 
 }

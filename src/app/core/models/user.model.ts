@@ -3,3 +3,8 @@ export interface UserModel {
     firstname: string;
     lastname: string;
 }
+
+export interface UserAccountModel {
+    id: string;
+    name: string;
+}

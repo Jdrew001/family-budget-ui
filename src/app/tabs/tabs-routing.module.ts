@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { TabsPage } from './tabs.page';
+import { SummaryPage } from '../summary/summary.page';
+import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
 
 const routes: Routes = [
   {
@@ -10,7 +12,7 @@ const routes: Routes = [
     children:[
       {
         path: 'summary',
-        loadChildren: () => import('../summary/summary.module').then( m => m.SummaryPageModule)
+        component: SummaryPage
       },
       {
         path: '',

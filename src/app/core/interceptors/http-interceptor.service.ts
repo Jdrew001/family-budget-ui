@@ -61,7 +61,7 @@ export class HttpInterceptorService implements HttpInterceptor {
   }
 
   private handleError(error: HttpErrorResponse): Observable<any> {
-    if (error.status === 403) {
+    if (error.status === 403 || error.status === 401) {
       this.authService.refreshToken().subscribe(result => {
         this.tokenService.setToken(result);
       })

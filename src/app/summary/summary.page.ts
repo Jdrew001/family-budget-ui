@@ -1,5 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SummaryService } from './summary.service';
+import { ActivatedRoute } from '@angular/router';
+import { ModalController, ViewDidEnter } from '@ionic/angular';
+import { CoreService } from '../core/services/core.service';
+import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
 
 @Component({
   selector: 'app-summary',
@@ -15,11 +19,34 @@ export class SummaryPage implements OnInit {
   get transactionSummary() { return this.summaryService.transactionSummary; }
 
   constructor(
-    public summaryService: SummaryService
+    public summaryService: SummaryService,
+    private modalController: ModalController,
+    private coreService: CoreService
   ) { }
 
   ngOnInit() {
     this.summaryService.getSummaryData();
+    this.handleNavigation();
+  }
+
+  handleNavigation() {
+    this.coreService.$showManageTransaction.subscribe(async (value: any) => {
+      const val = value?.data;
+      if (value.show) {
+        const modal = await this.modalController.create({
+          component: ManageTransactionPage,
+          componentProps: {
+            accounts: this.accountBalanceSummary
+          }
+        });
+
+        modal.present();
+        const { data } = await modal.onWillDismiss();
+        if (data && data?.refresh) {
+          this.summaryService.getSummaryData();
+        }
+      }
+   });
   }
 
   handleAccountAction(id: string) {
