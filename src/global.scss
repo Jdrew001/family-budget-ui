@@ -204,8 +204,15 @@ ion-content {
     color: var(--ion-color-subtle) !important;
 }
 
-ion-input, ion-textarea, .placeholder {
-    --placeholder-color: var(--ion-color-subtle) !important;
+ion-input, ion-textarea {
+    
+}
+
+div.input-lookalike {
+    margin-top: 1rem !important;
+}
+
+.placeholder {
     color: var(--ion-color-subtle) !important;
 }
 
@@ -299,8 +306,8 @@ ion-icon.incorrect {
 
 ion-input {
     --background: var(--ion-color-secondary) !important;
-    margin-top: 2px !important;
-    border-radius: 25px !important;
+    margin-top: 1rem !important;
+    --border-radius: 25px !important;
     margin-bottom: 2px !important;
     --padding-bottom: 18px !important;
     --padding-top: 18px !important;
@@ -309,11 +316,13 @@ ion-input {
     text-indent: 1em !important;
     font-size: 16px !important;
     box-shadow: $default-shadow !important;
+    --placeholder-color: var(--ion-color-subtle) !important;
+    --placeholder-opacity: 1 !important;
 }
 ion-textarea {
     --background: var(--ion-color-secondary) !important;
-    margin-top: 2px !important;
-    border-radius: 25px !important;
+    margin-top: 1rem !important;
+    --border-radius: 25px !important;
     margin-bottom: 2px !important;
     --padding-bottom: 18px !important;
     --padding-top: 18px !important;
@@ -323,6 +332,8 @@ ion-textarea {
     font-size: 16px !important;
     box-shadow: $default-shadow !important;
     min-height: 100px !important;
+    --placeholder-color: var(--ion-color-subtle) !important;
+    --placeholder-opacity: 1 !important;
 }
 
 ion-button {

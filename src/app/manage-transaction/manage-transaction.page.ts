@@ -61,6 +61,7 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
       return;
     }
     this.manageTranService.confirmTransaction(0);
+    this.formGroup.reset();
   }
 
   chooseCategory() {
