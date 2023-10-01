@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ModalController, ViewDidEnter } from '@ionic/angular';
 import { CoreService } from '../core/services/core.service';
 import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-summary',
@@ -36,7 +37,7 @@ export class SummaryPage implements OnInit {
         const modal = await this.modalController.create({
           component: ManageTransactionPage,
           componentProps: {
-            accounts: this.accountBalanceSummary
+            accounts: _.cloneDeep(this.accountBalanceSummary)
           }
         });
 

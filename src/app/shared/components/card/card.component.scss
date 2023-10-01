@@ -1,3 +1,14 @@
+
+
+::ng-deep .active ion-list {
+    --background: var(--ion-color-tertiary) !important;
+}
+
+::ng-deep .active ion-item {
+    --background: var(--ion-color-tertiary) !important;
+
+}
+
 .active {
     --background: var(--ion-color-tertiary) !important;
     --color: white !important;

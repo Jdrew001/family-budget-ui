@@ -14,6 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SummaryPage } from '../summary/summary.page';
 import { SharedModule } from '../shared/shared.module';
 import { SummaryService } from '../summary/summary.service';
+import { CategoryOverlayComponent } from '../manage-transaction/category-overlay/category-overlay.component';
+import { DateOverlayComponent } from '../manage-transaction/date-overlay/date-overlay.component';
 
 @NgModule({
   imports: [
@@ -29,7 +31,9 @@ import { SummaryService } from '../summary/summary.service';
   declarations: [
     TabsPage,
     ManageTransactionPage,
-    SummaryPage
+    SummaryPage,
+    CategoryOverlayComponent,
+    DateOverlayComponent
   ],
   providers: [
     ManageTransactionService,

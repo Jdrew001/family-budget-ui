@@ -29,10 +29,14 @@
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
     "@ionic/storage-angular": "^4.0.0",
+    "@types/lodash": "^4.14.199",
+    "@types/underscore": "^1.11.9",
     "ionicons": "^7.0.0",
+    "lodash": "^4.17.21",
     "rxjs": "~7.8.0",
     "swiper": "^10.3.0",
     "tslib": "^2.3.0",
+    "underscore": "^1.13.6",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
