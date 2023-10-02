@@ -7,11 +7,14 @@ import { AuthService } from './services/auth.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorService } from './interceptors/http-interceptor.service';
 import { UserService } from './services/user/user.service';
+import { CurrencyMaskDirective } from './directives/currency-mask.directive';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    CurrencyMaskDirective
+  ],
   imports: [
     CommonModule,
     IonicStorageModule.forRoot(),
@@ -27,6 +30,9 @@ import { UserService } from './services/user/user.service';
       useClass: HttpInterceptorService,
       multi: true
     }
+  ],
+  exports: [
+    CurrencyMaskDirective
   ]
 })
 export class CoreModule { }

@@ -33,7 +33,7 @@
               </ion-row>
               <ion-row>
                 <ion-col class="pt-0 m-0" size="10">
-                  <p class="pt-0 m-0">${{item?.amount}}</p>
+                  <p class="pt-0 m-0">{{item?.amount | currency:'USD':'symbol':'1.2-2'}}</p>
                 </ion-col>
                 <ion-col size="2">
                 </ion-col>
@@ -71,7 +71,7 @@
                 <p class="text-sm strong">Left to Spend for next<br> {{currentBudgetSummary?.leftSpendingDays}} days</p>
               </ion-col> 
               <ion-col class="ion-align-self-center" size="3">
-                <p class="text-sm strong" style="float: right;">${{currentBudgetSummary?.leftSpendingAmount}}</p>
+                <p class="text-sm strong" style="float: right;">{{currentBudgetSummary?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'}}</p>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -91,7 +91,7 @@
                   </ion-row>
                   <ion-row>
                     <ion-col class="pt-0 m-0" size="10">
-                      <p class="pt-0 m-0">${{currentBudgetSummary?.income?.amount}}</p>
+                      <p class="pt-0 m-0">{{currentBudgetSummary?.income?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
                     </ion-col>
                     <ion-col size="2">
                       <!--icon-->
@@ -110,7 +110,7 @@
                   </ion-row>
                   <ion-row>
                     <ion-col class="pt-0 m-0" size="10">
-                      <p class="pt-0 m-0">${{currentBudgetSummary?.expense?.amount}}</p>
+                      <p class="pt-0 m-0">{{currentBudgetSummary?.expense?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
                     </ion-col>
                     <ion-col size="2">
                       <!--icon-->
@@ -141,12 +141,12 @@
             <ion-col size="1">
               <!--icon-->
             </ion-col>
-            <ion-col>
-              <p class="text-sm strong">{{transaction?.description}}</p>
+            <ion-col size="8">
+              <p class="text-sm strong description">{{transaction?.description}}</p>
               <p class="pt-0 mt-2 text-xs light-text-color">{{transaction?.date}}</p>
             </ion-col> 
-            <ion-col class="ion-align-self-center" size="2">
-              <p class="text-sm strong">${{transaction?.amount}}</p>
+            <ion-col class="ion-align-self-end" size="3">
+              <p class="text-sm strong" [ngClass]="{'showRed': transaction?.showRed}">{{transaction?.amount | currency:'USD':'symbol':'1.2-2'}}</p>
             </ion-col>
           </ion-row>
         </ion-grid>

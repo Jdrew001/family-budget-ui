@@ -24,9 +24,9 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
   refData: ManageTransRefData;
   formGroup: FormGroup = this.manageTranService.manageTransactionForm;
 
-  get accountFormControl() { return this.formGroup.get('account'); }
-  get selectedCategory() { return this.formGroup.get('category'); }
-  get selectedDate() { return this.formGroup.get('date'); }
+  get accountFormControl() { return this.formGroup?.get('account'); }
+  get selectedCategory() { return this.formGroup?.get('category'); }
+  get selectedDate() { return this.formGroup?.get('date'); }
 
   constructor(
     private modalController: ModalController,
@@ -73,8 +73,8 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
   }
 
   closeTransaction() {
-    this.formGroup.reset();
     this.modalController.dismiss();
+    this.formGroup.reset();
   }
 
   onSelectCategory(value) {

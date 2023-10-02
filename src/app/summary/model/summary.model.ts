@@ -28,4 +28,5 @@ export interface SummaryTransactions {
     category: string;
     categoryIcon: string;
     transactionType: number;
+    showRed: boolean;
 }

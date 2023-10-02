@@ -204,16 +204,29 @@ ion-content {
     color: var(--ion-color-subtle) !important;
 }
 
-ion-input, ion-textarea {
-    
-}
-
 div.input-lookalike {
     margin-top: 1rem !important;
+    height: 56px !important;
+
+    p {
+        margin: unset !important;
+        position: relative;
+        top: 9px;
+    }
+}
+
+.showRed {
+    color: #FF0000;
 }
 
 .placeholder {
     color: var(--ion-color-subtle) !important;
+}
+
+.description {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
 }
 
 ::ng-deep swiper-container {

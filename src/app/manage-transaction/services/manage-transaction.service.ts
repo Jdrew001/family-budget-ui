@@ -20,7 +20,7 @@ export class ManageTransactionService extends BaseService {
     account: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     category: new FormControl('', Validators.required),
-    amount: new FormControl('', Validators.required),
+    amount: new FormControl('$0.00', Validators.required),
     date: new FormControl('', Validators.required),
   });
 
