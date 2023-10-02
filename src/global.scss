@@ -270,6 +270,14 @@ div.heading-container {
     margin-bottom: 2rem;
 }
 
+.text-left {
+    text-align: start;
+}
+
+.text-right {
+    text-align: end;
+}
+
 .text-center {
     text-align: center;
 }
@@ -447,6 +455,10 @@ ion-select {
     text-indent: 1em !important;
     font-size: 16px !important;
     box-shadow: $default-shadow !important;
+}
+
+.alert-container ion-item {
+    --background: rgba(255, 0, 34, .25);
 }
 
 swiper-container {

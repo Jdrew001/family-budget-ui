@@ -13,7 +13,7 @@
               (click)="categoryTypeSelected(0)" 
               [active]="selectedCategoryType == 0"
               margin="10px 5px 5px 5px" 
-              padding="5">
+              padding="5px">
               <ion-list lines="none">
                 <ion-item>
                   <ion-icon name="cash-outline" color="primary"></ion-icon>
@@ -27,7 +27,7 @@
               (click)="categoryTypeSelected(1)" 
               [active]="selectedCategoryType == 1"
               margin="10px 5px 5px 5px" 
-              padding="5">
+              padding="5px">
               <ion-list lines="none">
                 <ion-item>
                   <ion-icon name="cash-outline" color="primary"></ion-icon>
@@ -54,7 +54,7 @@
 
             <ion-row *ngFor="let item of categoryList">
               <ion-col size="12">
-                <app-card (click)="selectCategory(item?.id)" padding="5" margin="3px 5px 3px 5px">
+                <app-card (click)="selectCategory(item?.id)" padding="5px" margin="3px 5px 3px 5px">
                   <ion-list lines="none">
                     <ion-item>
                       <ion-label>{{ item?.name }}</ion-label>

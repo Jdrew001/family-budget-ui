@@ -44,6 +44,10 @@ const routes: Routes = [
   {
     path: 'manage-transaction',
     component: ManageTransactionPage,
+  },
+  {
+    path: 'manage-budget',
+    loadChildren: () => import('./manage-budget/manage-budget.module').then( m => m.ManageBudgetPageModule)
   }
 ];
 

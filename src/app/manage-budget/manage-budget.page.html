@@ -1,0 +1,136 @@
+<ion-header [translucent]="true" class="mb-5">
+  <ion-toolbar style="--border-style: none !important;">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <h5 class="text-left"><span class="strong">Manage</span> Budget</h5>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+    <ion-buttons (click)="closeBudget()" class="mr-5" slot="end">
+      <ion-icon class="text-md pt-3 strong" name="close-outline"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <app-card 
+          padding="1px 0px"
+          margin="0px">
+          <ion-grid>
+            <ion-row>
+              <ion-col class="pb-1">
+                <p class="pt-0 mt-0 pb-0 mb-0 text-xs light-text-color">
+                  Sep 29 - Oct 12
+                </p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="pt-0">
+                <p class="text-xs strong">Left to Spend for next 13 days</p>
+              </ion-col>
+              <ion-col class="pt-0">
+                <p class="text-xs strong">$3,125.00</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="pt-0 pb-0">
+                <ion-progress-bar [value]="0.25"></ion-progress-bar>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="pt-3 pb-0">
+                <p class="text-xs strong light-text-color">$0</p>
+              </ion-col>
+              <ion-col class="pt-3 pb-0">
+                <p class="ion-float-right light-text-color text-xs strong">$3,125.00</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="pt-4 pb-0">
+                <p class="text-xs strong">Total Spent: $123.23</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </app-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <app-card 
+          margin="5px 0px" 
+          padding="5px">
+          <ion-list lines="none">
+            <ion-item>
+              <ion-label class="text-xs pl-0 pb-0">
+                <span class="strong text-xs">Total </span><span class="text-xs">Budget</span><br>
+                <span>$2323.22</span>
+              </ion-label>
+              <ion-icon name="cash-outline" color="primary"></ion-icon>
+            </ion-item>
+          </ion-list>
+        </app-card>
+      </ion-col>
+      <ion-col>
+        <app-card 
+          margin="5px 0px" 
+          padding="5px">
+          <ion-list lines="none">
+            <ion-item>
+              <ion-label class="text-xs pl-0 pb-0">
+                <span class="strong text-xs">Whats </span><span class="text-xs">Left</span><br>
+                <span>$23.00</span>
+              </ion-label>
+              <ion-icon name="cash-outline" color="primary"></ion-icon>
+            </ion-item>
+          </ion-list>
+        </app-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <h5 class=""><strong>Categories</strong></h5>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <app-card
+          margin="5px 0px" 
+          padding="5px">
+          <ion-grid>
+            <ion-row class="ion-justify-content-start">
+              <ion-col size="2">
+                <!--icon-->
+              </ion-col>
+              <ion-col>
+                <p class="text-sm strong description">Grocery</p>
+                <p class="pt-0 mt-2 text-xs light-text-color">Remaining: $150.00</p>
+              </ion-col> 
+              <ion-col>
+                <p class="text-sm strong ion-float-right">$50.00</p><br>
+                <p class="text-xs light-text-color ion-float-right">Budgeted: $200.00</p>
+              </ion-col>
+              <ion-col class="ion-align-self-center" size="1">
+                <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </app-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

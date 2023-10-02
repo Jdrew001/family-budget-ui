@@ -5,6 +5,7 @@ import { ModalController, ViewDidEnter } from '@ionic/angular';
 import { CoreService } from '../core/services/core.service';
 import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
 import * as _ from 'lodash';
+import { ManageBudgetPage } from '../manage-budget/manage-budget.page';
 
 @Component({
   selector: 'app-summary',
@@ -58,6 +59,18 @@ export class SummaryPage implements OnInit {
       if (item.id === id) item.active = true;
       else item.active = false;
     });
+  }
+
+  async manageUnsetBudget() {
+    const modal = await this.modalController.create({
+      component: ManageBudgetPage,
+      componentProps: {
+        budget: this.currentBudgetSummary.id
+      }
+    });
+
+    modal.present();
+    // handle when the modal is dissmissed
   }
 
   onSeeMore() {
