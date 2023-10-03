@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { IonContent, IonGrid, IonModal, ModalController, NavController, ViewDidEnter } from '@ionic/angular';
 import { UserService } from '../core/services/user/user.service';
 import { ManageTransactionService } from './services/manage-transaction.service';
-import { ManageTransRefData, TransactionAction, TransactionType } from './models/manage-transaction.model';
+import { ManageTransRefData, TransactionAction } from './models/manage-transaction.model';
 import { FormGroup } from '@angular/forms';
 import { SummaryAccountBalance } from '../summary/model/summary.model';
 import { CategoryOverlayComponent } from './category-overlay/category-overlay.component';

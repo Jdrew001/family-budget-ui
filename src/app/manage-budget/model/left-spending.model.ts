@@ -1,3 +1,5 @@
+import { TransactionType } from "src/app/core/models/transaction-type.model";
+
 export interface LeftSpendingManage {
     id: string;
     displayDate: string;
@@ -8,12 +10,12 @@ export interface LeftSpendingManage {
     totalBudget: string;
 }
 
-export interface BudgetCategory {
+export interface CategoriesForBudget {
     id: string;
-    icon: string;
-    percentageSpent: number;
     name: string;
-    remaining: string;
-    budgeted: string;
-    spent: string;
+    budgetAmount: number;
+    type: TransactionType;
+    spentAmount: number;
+    remainingAmount: number;
+    showRed: boolean;
 }

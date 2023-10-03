@@ -1,4 +1,4 @@
-<ion-header [translucent]="true" class="mb-5">
+<ion-header [translucent]="true" class="mb-1">
   <ion-toolbar style="--border-style: none !important;">
     <ion-grid>
       <ion-row>
@@ -25,21 +25,21 @@
             <ion-row>
               <ion-col class="pb-1">
                 <p class="pt-0 mt-0 pb-0 mb-0 text-xs light-text-color">
-                  Sep 29 - Oct 12
+                  {{ manageBudgetSummary?.displayDate }}
                 </p>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col class="pt-0">
-                <p class="text-xs strong">Left to Spend for next 13 days</p>
+                <p class="text-xs strong">Left to Spend for next {{ manageBudgetSummary?.leftSpendingDays }} days</p>
               </ion-col>
               <ion-col class="pt-0">
-                <p class="text-xs strong">$3,125.00</p>
+                <p class="text-xs strong">{{ manageBudgetSummary?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'  }}</p>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col class="pt-0 pb-0">
-                <ion-progress-bar [value]="0.25"></ion-progress-bar>
+                <ion-progress-bar [value]="manageBudgetSummary?.percentageSpent"></ion-progress-bar>
               </ion-col>
             </ion-row>
             <ion-row>
@@ -47,12 +47,12 @@
                 <p class="text-xs strong light-text-color">$0</p>
               </ion-col>
               <ion-col class="pt-3 pb-0">
-                <p class="ion-float-right light-text-color text-xs strong">$3,125.00</p>
+                <p class="ion-float-right light-text-color text-xs strong">{{ manageBudgetSummary?.totalBudget | currency:'USD':'symbol':'1.2-2' }}</p>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col class="pt-4 pb-0">
-                <p class="text-xs strong">Total Spent: $123.23</p>
+                <p class="text-xs strong">Total Spent: {{ manageBudgetSummary?.totalSpent | currency:'USD':'symbol':'1.2-2' }}</p>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -70,7 +70,7 @@
             <ion-item>
               <ion-label class="text-xs pl-0 pb-0">
                 <span class="strong text-xs">Total </span><span class="text-xs">Budget</span><br>
-                <span>$2323.22</span>
+                <span>{{ manageBudgetSummary?.totalBudget | currency:'USD':'symbol':'1.2-2' }}</span>
               </ion-label>
               <ion-icon name="cash-outline" color="primary"></ion-icon>
             </ion-item>
@@ -85,7 +85,7 @@
             <ion-item>
               <ion-label class="text-xs pl-0 pb-0">
                 <span class="strong text-xs">Whats </span><span class="text-xs">Left</span><br>
-                <span>$23.00</span>
+                <span>{{ manageBudgetSummary?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'  }}</span>
               </ion-label>
               <ion-icon name="cash-outline" color="primary"></ion-icon>
             </ion-item>
@@ -97,16 +97,22 @@
 
   <div>
     <ion-grid>
-      <ion-row>
-        <ion-col>
-          <h5 class=""><strong>Categories</strong></h5>
+      <ion-row class="ion-justify-content-start">
+        <ion-col class="ion-align-self-end">
+          <h5 class="mt-0"><strong>Categories</strong></h5>
+        </ion-col>
+        <ion-col class="ion-align-self-end">
+          <ion-button (click)="addCategory()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+            <ion-icon slot="start" name="add-outline"></ion-icon>
+            Add
+          </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
   </div>
 
   <ion-grid>
-    <ion-row>
+    <ion-row *ngFor="let item of manageBudgetCategories">
       <ion-col>
         <app-card
           margin="5px 0px" 
@@ -117,12 +123,12 @@
                 <!--icon-->
               </ion-col>
               <ion-col>
-                <p class="text-sm strong description">Grocery</p>
-                <p class="pt-0 mt-2 text-xs light-text-color">Remaining: $150.00</p>
+                <p class="text-sm strong description">{{ item?.name }}</p>
+                <p class="pt-0 mt-2 text-xs light-text-color strong">Remaining: {{ item?.remainingAmount | currency:'USD':'symbol':'1.2-2' }}</p>
               </ion-col> 
               <ion-col>
-                <p class="text-sm strong ion-float-right">$50.00</p><br>
-                <p class="text-xs light-text-color ion-float-right">Budgeted: $200.00</p>
+                <p class="text-sm strong ion-float-right">{{ item?.spentAmount | currency:'USD':'symbol':'1.2-2'  }}</p><br>
+                <p class="text-xs light-text-color ion-float-right strong">Budgeted: {{ item?.budgetAmount | currency:'USD':'symbol':'1.2-2'  }}</p>
               </ion-col>
               <ion-col class="ion-align-self-center" size="1">
                 <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
@@ -133,4 +139,9 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <app-add-category
+    #addCategoryModal
+    [budgetCategoryRefData]="budgetCategoryRefData"
+    (onConfirm$)="onAddCategory()"></app-add-category>
 </ion-content>

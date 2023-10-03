@@ -6,6 +6,7 @@ import { NavController } from '@ionic/angular';
 import { SigninPage } from './auth/signin/signin.page';
 import { SignupPage } from './auth/signup/signup.page';
 import { ManageTransactionPage } from './manage-transaction/manage-transaction.page';
+import { ManageBudgetPage } from './manage-budget/manage-budget.page';
 
 const isAuthenticated = (): | boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> => {
   const authService = inject(AuthService);
@@ -13,6 +14,7 @@ const isAuthenticated = (): | boolean | UrlTree | Observable<boolean | UrlTree> 
   return authService.isAuthenticated$.pipe(
       take(1),
       tap((isAuthenticated: boolean) => {
+        console.log('testing');
           if (!isAuthenticated) {
             navController.navigateRoot('/signin', { replaceUrl:true });
           }
@@ -47,7 +49,7 @@ const routes: Routes = [
   },
   {
     path: 'manage-budget',
-    loadChildren: () => import('./manage-budget/manage-budget.module').then( m => m.ManageBudgetPageModule)
+    component: ManageBudgetPage,
   }
 ];
 

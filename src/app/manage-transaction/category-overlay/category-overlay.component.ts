@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { TransactionType } from '../models/manage-transaction.model';
 import { IonGrid, IonModal, IonSearchbar, ViewDidEnter, ViewWillLeave } from '@ionic/angular';
+import { TransactionType } from 'src/app/core/models/transaction-type.model';
 
 @Component({
   selector: 'app-category-overlay',

@@ -14,7 +14,7 @@
       </ion-grid>
     </div>
 
-    <div class="pb-2">
+    <div *ngIf="accountBalanceSummary" class="pb-2">
       <swiper-container 
         slides-per-view="2" 
         speed="500" 
@@ -23,6 +23,8 @@
         <swiper-slide *ngFor="let item of accountBalanceSummary">
           <app-card
             [id]="item?.id"
+            margin="10px 5px 5px 5px" 
+            padding="5px"
             [active]="item?.active"
             (onClick)="handleAccountAction($event)">
             <ion-grid>
@@ -59,14 +61,15 @@
         </ion-grid>
       </div>
 
-      <div *ngIf="currentBudgetSummary?.showBudgetError" class="alert-container">
+      <!--*ngIf="currentBudgetSummary?.showBudgetError"-->
+      <div  class="alert-container">
         <ion-grid>
           <ion-row>
             <ion-col>
               <ion-list lines="none">
                 <ion-item>
                   <ion-icon name="alert-circle-outline" color="primary"></ion-icon>
-                  <p class="text-xs pl-3 m-0">You don't have your categories set for the current budget.</p>
+                  <p class="text-xs pl-3 m-0">You don't have categories set for the current budget.</p>
                   <ion-button (click)="manageUnsetBudget()" size="small" color="primary" fill="outline" class="text-xs">Manage</ion-button>
                 </ion-item>
               </ion-list>
@@ -77,7 +80,9 @@
     
       <!-- What's left -->
       <div>
-        <app-card>
+        <app-card
+          margin="10px 5px 5px 5px" 
+          padding="5px">
           <ion-grid>
             <ion-row class="ion-justify-content-start">
               <ion-col size="1">
@@ -98,7 +103,9 @@
         <ion-grid class="p-0 m-0">
           <ion-row>
             <ion-col class="p-0 m-0">
-              <app-card>
+              <app-card
+                margin="10px 5px 5px 5px" 
+                padding="5px">
                 <ion-grid>
                   <ion-row class="ion-justify-content-start">
                     <ion-col>
@@ -117,7 +124,9 @@
               </app-card>
             </ion-col>
             <ion-col class="p-0 m-0">
-              <app-card>
+              <app-card
+                margin="10px 5px 5px 5px" 
+                padding="5px">
                 <ion-grid>
                   <ion-row class="ion-justify-content-start">
                     <ion-col>
@@ -126,7 +135,7 @@
                   </ion-row>
                   <ion-row>
                     <ion-col class="pt-0 m-0" size="10">
-                      <p class="pt-0 m-0">{{currentBudgetSummary?.expense?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
+                      <p class="pt-0 m-0 showRed">{{currentBudgetSummary?.expense?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
                     </ion-col>
                     <ion-col size="2">
                       <!--icon-->
@@ -151,7 +160,9 @@
     </div>
 
     <div>
-      <app-card *ngFor="let transaction of transactionSummary">
+      <app-card *ngFor="let transaction of transactionSummary"
+        margin="10px 5px 5px 5px" 
+        padding="5px">
         <ion-grid>
           <ion-row class="ion-justify-content-start">
             <ion-col size="1">
@@ -161,8 +172,8 @@
               <p class="text-sm strong description">{{transaction?.description}}</p>
               <p class="pt-0 mt-2 text-xs light-text-color">{{transaction?.date}}</p>
             </ion-col> 
-            <ion-col class="ion-align-self-end" size="3">
-              <p class="text-sm strong" [ngClass]="{'showRed': transaction?.showRed}">{{transaction?.amount | currency:'USD':'symbol':'1.2-2'}}</p>
+            <ion-col class="ion-align-self-center" size="3">
+              <p class="text-sm strong ion-float-right" [ngClass]="{'showRed': transaction?.showRed}">{{transaction?.amount | currency:'USD':'symbol':'1.2-2'}}</p>
             </ion-col>
           </ion-row>
         </ion-grid>

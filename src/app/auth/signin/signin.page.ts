@@ -38,7 +38,7 @@ export class SigninPage implements OnInit {
         this.authService.isAuthenticated$.next(true);
 
         //navigate to summary page
-        setTimeout(async() => {this.navController.navigateForward('/summary', { replaceUrl:true })}, 2000);
+        setTimeout(async() => {this.navController.navigateForward('/tabs/summary', { replaceUrl:true })}, 1000);
     });
     } else {
       this.signInForm.markAllAsTouched();
