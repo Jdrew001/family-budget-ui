@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable, catchError, from, lastValueFrom } from 'rxjs';
+import { EMPTY, Observable, Subject, catchError, finalize, from, lastValueFrom, switchMap, take } from 'rxjs';
 import { TokenService } from '../services/token.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -12,60 +12,90 @@ import { NavController } from '@ionic/angular';
 export class HttpInterceptorService implements HttpInterceptor {
 
   token: TokenModel;
+  isRefreshingToken: boolean = false;
+  refreshTokenFinished$: Subject<TokenModel> = new Subject<TokenModel>();
 
   constructor(
     private tokenService: TokenService,
     private authService: AuthService,
-    private router: Router,
     private navController: NavController
   ) {
   }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
-    return from(this.handle(req, next));
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return this.handle(req, next);
   }
 
-  async handle(req: HttpRequest<any>, next: HttpHandler) {
-    this.token = await this.tokenService.getToken();
-
-    // skip certain URLS -- add in constant
-    if (req.url.includes(AuthConstants.SIGN_IN_URL) || req.url.includes(AuthConstants.SIGN_UP_URL)) {
-      return await lastValueFrom(next.handle(req))
-    }
-    
-    if (!this.token) {
-      this.navController.navigateRoot('/signin', { replaceUrl:true });
-      return EMPTY;
-    }
-
-    //check if we are refreshing the token
-    if (req.url.includes('refreshToken')) {
-      //set the header to include the refresh token
-      req = req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${this.token.refreshToken}`
+  handle(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return from(this.tokenService.getToken()).pipe(
+      switchMap((token) => {
+        this.token = token;
+  
+        // skip certain URLS -- add in constant
+        if (req.url.includes(AuthConstants.SIGN_IN_URL) || req.url.includes(AuthConstants.SIGN_UP_URL)) {
+          return next.handle(req);
         }
+  
+        if (!this.token) {
+          this.navController.navigateRoot('/signin', { replaceUrl:true });
+          return EMPTY;
+        }
+  
+        //check if we are refreshing the token
+        if (req.url.includes('refreshToken')) {
+          //set the header to include the refresh token
+          req = this.addTokenToHeader(req, this.token.refreshToken);
+          return next.handle(req);
+        }
+  
+        req = this.addTokenToHeader(req, this.token.accessToken);
+  
+        return next.handle(req).pipe(
+          catchError((error: HttpErrorResponse) => {
+            return this.handleError(req, next, error)
+          })
+        );
       })
-      return await lastValueFrom(next.handle(req));
-    }
-
-    req = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${this.token.accessToken}`
-      }
-    })
-
-    return await lastValueFrom(next.handle(req).pipe(
-      catchError((error: HttpErrorResponse) => this.handleError(error)))
     );
   }
 
-  private handleError(error: HttpErrorResponse): Observable<any> {
-    if (error.status === 403 || error.status === 401) {
-      this.authService.refreshToken().subscribe(result => {
-        this.tokenService.setToken(result);
-      })
+  private handleError(request: HttpRequest<any>, next: HttpHandler, error: HttpErrorResponse): Observable<any> {
+    if (error.status !== 403 && error.status !== 401) return next.handle(request);
+
+    if (!this.isRefreshingToken) {
+      this.isRefreshingToken = true;
+      return this.authService.refreshToken().pipe(
+        switchMap((token: TokenModel) => {
+          if (token.accessToken && token.refreshToken) {
+            this.tokenService.setToken(token);
+            this.refreshTokenFinished$.next(token);
+            request = this.addTokenToHeader(request, token.accessToken);
+            return next.handle(request);
+          }
+
+          //error block - we should call code here to show an error
+          return EMPTY;
+        }),
+        finalize(() => {
+          this.isRefreshingToken = false;
+        })
+      );
+    } else {
+      return this.refreshTokenFinished$.pipe(
+        take(1),
+        switchMap((token) => {
+          request = this.addTokenToHeader(request, token.accessToken);
+          return next.handle(request)
+        })
+      );
     }
-    return EMPTY;
+  }
+
+  private addTokenToHeader(req: HttpRequest<any>, token: string) {
+    return req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    })
   }
 }
