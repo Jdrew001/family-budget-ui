@@ -13,14 +13,6 @@ export interface TypeAmount {
     icon: string;
 }
 
-export interface SummaryAccountBalance {
-    id: string;
-    name: string;
-    icon: string;
-    amount: string;
-    active: boolean;
-}
-
 export interface SummaryTransactions {
     id: string;
     date: string;

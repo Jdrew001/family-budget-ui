@@ -4,9 +4,9 @@ import { UserService } from '../core/services/user/user.service';
 import { ManageTransactionService } from './services/manage-transaction.service';
 import { ManageTransRefData, TransactionAction } from './models/manage-transaction.model';
 import { FormGroup } from '@angular/forms';
-import { SummaryAccountBalance } from '../summary/model/summary.model';
 import { CategoryOverlayComponent } from './category-overlay/category-overlay.component';
 import { DateOverlayComponent } from './date-overlay/date-overlay.component';
+import { SummaryAccountBalance } from '../core/models/account.model';
 
 @Component({
   selector: 'app-manage-transaction',

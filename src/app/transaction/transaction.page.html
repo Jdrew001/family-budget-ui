@@ -1,0 +1,82 @@
+<ion-header [translucent]="true">
+  <app-navigation-bar [title]="'Transactions'"></app-navigation-bar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div style="margin-bottom: 3rem;">
+    <div>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h5 class=""><strong>Account</strong> Balances</h5>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="mb-4">
+      <swiper-container 
+        slides-per-view="2" 
+        speed="500" 
+        pagination="true"
+        css-mode="true">
+
+        <swiper-slide *ngFor="let item of accountBalanceSummary">
+          <app-card
+            id="1"
+            margin="10px 5px 5px 5px" 
+            padding="5px"
+            [active]="item?.active"
+            (onClick)="handleAccountAction($event)">
+            <ion-grid>
+              <ion-row class="ion-justify-content-start">
+                <ion-col>
+                  <p class="strong text-sm pb-0 mb-0">{{ item?.name }}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="pt-0 m-0" size="10">
+                  <p class="pt-0 m-0">{{ item?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
+                </ion-col>
+                <ion-col size="2">
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </app-card>
+        </swiper-slide>
+
+      </swiper-container>
+    </div>
+
+    <div class="pt-3" *ngFor="let group of groupedTransactions">
+      <div>
+        <p class="light-text-color text-xs">{{ group?.groupName }}</p>
+      </div>
+      <div *ngFor="let transaction of group?.transactions">
+        <app-card
+          margin="10px 5px 5px 5px" 
+          padding="5px">
+          <ion-grid>
+            <ion-row class="ion-justify-content-start">
+              <ion-col size="1">
+                <!--icon-->
+              </ion-col>
+              <ion-col size="8">
+                <p class="text-sm strong description">{{ transaction?.description }}</p>
+                <p class="pt-0 mt-2 text-xs light-text-color">{{ transaction?.date }}</p>
+              </ion-col> 
+              <ion-col class="ion-align-self-center" size="3">
+                <p class="text-sm strong ion-float-right" [ngClass]="{'showRed': transaction?.showRed}">$200.00</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </app-card>
+      </div>
+    </div>
+    <ion-infinite-scroll threshold="1%" (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+    
+  </div>
+</ion-content>

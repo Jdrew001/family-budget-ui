@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { TabsPage } from './tabs.page';
 import { SummaryPage } from '../summary/summary.page';
 import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
+import { TransactionPage } from '../transaction/transaction.page';
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
       {
         path: 'summary',
         component: SummaryPage
+      },
+      {
+        path: 'transaction',
+        component: TransactionPage
       },
       {
         path: '',

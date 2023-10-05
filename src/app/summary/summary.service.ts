@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { BaseService } from '../core/services/base.service';
 import { SummaryConstant } from './summary.constant';
 import { EMPTY, Observable, switchMap, zip } from 'rxjs';
-import { CurrentBudgetSummary, SummaryAccountBalance, SummaryTransactions } from './model/summary.model';
+import { CurrentBudgetSummary, SummaryTransactions } from './model/summary.model';
+import { SummaryAccountBalance } from '../core/models/account.model';
 
 @Injectable({
   providedIn: 'root'

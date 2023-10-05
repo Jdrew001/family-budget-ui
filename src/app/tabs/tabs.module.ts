@@ -19,6 +19,8 @@ import { DateOverlayComponent } from '../manage-transaction/date-overlay/date-ov
 import { AddCategoryComponent } from '../manage-budget/add-category/add-category.component';
 import { ManageBudgetPage } from '../manage-budget/manage-budget.page';
 import { ManageBudgetService } from '../manage-budget/services/manage-budget.service';
+import { TransactionPage } from '../transaction/transaction.page';
+import { TransactionService } from '../transaction/transaction.service';
 
 @NgModule({
   imports: [
@@ -29,13 +31,14 @@ import { ManageBudgetService } from '../manage-budget/services/manage-budget.ser
     TabsPageRoutingModule,
     CoreModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
   ],
   declarations: [
     TabsPage,
     ManageTransactionPage,
     ManageBudgetPage,
     SummaryPage,
+    TransactionPage,
     CategoryOverlayComponent,
     DateOverlayComponent,
     AddCategoryComponent
@@ -43,7 +46,8 @@ import { ManageBudgetService } from '../manage-budget/services/manage-budget.ser
   providers: [
     ManageTransactionService,
     ManageBudgetService,
-    SummaryService
+    SummaryService,
+    TransactionService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

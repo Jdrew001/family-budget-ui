@@ -5,6 +5,7 @@ import { UserConstants } from './user.constant';
 import { Storage } from '@ionic/storage-angular';
 import { UserAccountModel, UserModel } from '../../models/user.model';
 import { Observable } from 'rxjs';
+import { SummaryAccountBalance } from '../../models/account.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,11 @@ export class UserService extends BaseService {
   fetchAccountsForUser() {
     const url = `${this.BASE_URL}${UserConstants.GET_ACCOUNTS}`;
     return this.http.get(url) as Observable<UserAccountModel[]>;
+  }
+
+  fetchAccountBalancesForUser(): Observable<SummaryAccountBalance[]> {
+    const url = `${this.BASE_URL}${UserConstants.GET_ACCOUNT_BALANCES}`;
+    return this.http.get(url) as Observable<SummaryAccountBalance[]>;
   }
 
   private async storeUserInformation(userInformation: UserModel) {
