@@ -3,9 +3,8 @@ import { BaseService } from 'src/app/core/services/base.service';
 import { ManageBudgetConstant } from '../manage-budget.constant';
 import { HttpClient } from '@angular/common/http';
 import { Observable, zip } from 'rxjs';
-import { CategoriesForBudget, LeftSpendingManage } from '../model/left-spending.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { CategoriesForBudget, LeftSpendingManage } from 'src/app/core/models/left-spending.model';
 @Injectable({
   providedIn: 'root'
 })

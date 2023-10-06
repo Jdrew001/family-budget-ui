@@ -1,6 +1,8 @@
-import { TransactionType } from "src/app/core/models/transaction-type.model";
+import { TransactionType } from "./transaction-type.model";
 
 export interface LeftSpendingManage {
+    accountId?: string;
+    accountName?: string;
     id: string;
     displayDate: string;
     leftSpendingAmount: string;

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionService } from './transaction.service';
-import { InfiniteScrollCustomEvent } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, ViewDidEnter } from '@ionic/angular';
 
 @Component({
   selector: 'app-transaction',
   templateUrl: './transaction.page.html',
   styleUrls: ['./transaction.page.scss'],
 })
-export class TransactionPage implements OnInit {
+export class TransactionPage implements OnInit, ViewDidEnter {
   
   get accountBalanceSummary() { return this.transactionService.accountBalanceSummary; }
   get groupedTransactions() { return this.transactionService.groupTransactions; }
@@ -16,8 +16,12 @@ export class TransactionPage implements OnInit {
     private transactionService: TransactionService
   ) { }
 
-  ngOnInit() {
+  ionViewDidEnter(): void {
+    this.transactionService.groupTransactions = [];
     this.fetchTransactionGroups();
+  }
+
+  ngOnInit() {
   }
 
   fetchTransactionGroups() {

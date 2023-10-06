@@ -21,6 +21,8 @@ import { ManageBudgetPage } from '../manage-budget/manage-budget.page';
 import { ManageBudgetService } from '../manage-budget/services/manage-budget.service';
 import { TransactionPage } from '../transaction/transaction.page';
 import { TransactionService } from '../transaction/transaction.service';
+import { BudgetPage } from '../budget/budget.page';
+import { BudgetService } from '../budget/budget.service';
 
 @NgModule({
   imports: [
@@ -39,6 +41,7 @@ import { TransactionService } from '../transaction/transaction.service';
     ManageBudgetPage,
     SummaryPage,
     TransactionPage,
+    BudgetPage,
     CategoryOverlayComponent,
     DateOverlayComponent,
     AddCategoryComponent
@@ -47,7 +50,8 @@ import { TransactionService } from '../transaction/transaction.service';
     ManageTransactionService,
     ManageBudgetService,
     SummaryService,
-    TransactionService
+    TransactionService,
+    BudgetService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

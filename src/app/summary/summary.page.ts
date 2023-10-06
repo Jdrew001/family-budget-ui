@@ -12,7 +12,7 @@ import { ManageBudgetPage } from '../manage-budget/manage-budget.page';
   templateUrl: './summary.page.html',
   styleUrls: ['./summary.page.scss'],
 })
-export class SummaryPage implements OnInit {
+export class SummaryPage implements OnInit, ViewDidEnter {
 
   @ViewChild('slider') slider: ElementRef;
 
@@ -26,8 +26,11 @@ export class SummaryPage implements OnInit {
     private coreService: CoreService
   ) { }
 
-  ngOnInit() {
+  ionViewDidEnter(): void {
     this.summaryService.getSummaryData();
+  }
+
+  ngOnInit() {
     this.handleNavigation();
   }
 
