@@ -9,6 +9,8 @@ import { CoreService } from '../core/services/core.service';
 })
 export class TabsPage implements OnInit {
 
+  selectedTab = 'summary';
+
   constructor(
     private navController: NavController,
     private coreService: CoreService
@@ -20,6 +22,10 @@ export class TabsPage implements OnInit {
   handleFabClick() {
     // this.navController.navigateForward('/manage-transaction', { animated: true });
     this.coreService.$showManageTransaction.next({data: null, show: true});
+  }
+
+  handleTabSelect(event) {
+    this.selectedTab = event;
   }
 
 }
