@@ -1,5 +1,5 @@
 @keyframes growProgressBar {
-    0%, 33% { --pgPercentage: 0; }
+    0%, 8% { --pgPercentage: 0; }
     100% { --pgPercentage: var(--value); }
   }
   

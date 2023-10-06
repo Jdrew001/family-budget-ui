@@ -50,14 +50,14 @@
           padding="5px">
           <ion-grid>
             <ion-row class="ion-justify-content-start">
-              <ion-col size="1">
-                <!--icon-->
+              <ion-col size="2">
+                <app-circle-gauge [config]="transaction?.circleGuage"></app-circle-gauge>
               </ion-col>
               <ion-col size="8">
                 <p class="text-sm strong description">{{ transaction?.description }}</p>
                 <p class="pt-0 mt-2 text-xs light-text-color">{{ transaction?.date }}</p>
               </ion-col> 
-              <ion-col class="ion-align-self-center" size="3">
+              <ion-col class="ion-align-self-center" size="2">
                 <p class="text-sm strong ion-float-right" [ngClass]="{'showRed': transaction?.showRed}">$200.00</p>
               </ion-col>
             </ion-row>

@@ -21,4 +21,5 @@ export interface Transaction {
     date: string;
     showRed: boolean;
     amount: number;
+    circleGuage?: any;
 }

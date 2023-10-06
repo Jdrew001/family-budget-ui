@@ -20,4 +20,5 @@ export interface CategoriesForBudget {
     spentAmount: number;
     remainingAmount: number;
     showRed: boolean;
+    circleGuage?: any;
 }

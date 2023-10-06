@@ -82,7 +82,7 @@
         <ion-grid>
           <ion-row class="ion-justify-content-start">
             <ion-col size="2">
-              <!--icon-->
+              <app-circle-gauge [config]="item?.circleGuage"></app-circle-gauge>
             </ion-col>
             <ion-col>
               <p class="text-sm strong description">{{item?.name}}</p>
