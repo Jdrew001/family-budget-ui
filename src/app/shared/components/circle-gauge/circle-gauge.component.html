@@ -1,0 +1,13 @@
+<div #gauge role="progressbar" 
+  [attr.aria-valuenow]="config?.currentValue"
+  aria-valuemin="config?.minValue"
+  aria-valuemax="config?.maxValue"
+  [style.--value]="config?.currentValue"
+  [ngClass]="{
+    'should-animate': animate,
+    'reset': !animate,
+    'normal': !config?.showRed,
+    'showRed': config?.showRed
+  }">
+  <ion-icon class="text-md" name="basketball-outline"></ion-icon>
+</div>

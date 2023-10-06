@@ -22,4 +22,5 @@ export interface SummaryTransactions {
     categoryIcon: string;
     transactionType: number;
     showRed: boolean;
+    circleGuage?: any;
 }

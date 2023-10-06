@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { SummaryService } from './summary.service';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, ViewDidEnter } from '@ionic/angular';
@@ -6,6 +6,8 @@ import { CoreService } from '../core/services/core.service';
 import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
 import * as _ from 'lodash';
 import { ManageBudgetPage } from '../manage-budget/manage-budget.page';
+import { CircleGuageConstant } from '../shared/constants/circle-guage.constant';
+import { CircleGaugeComponent } from '../shared/components/circle-gauge/circle-gauge.component';
 
 @Component({
   selector: 'app-summary',
@@ -16,6 +18,8 @@ export class SummaryPage implements OnInit, ViewDidEnter {
 
   @ViewChild('slider') slider: ElementRef;
 
+  configTest = CircleGuageConstant.CONFIG;
+
   get currentBudgetSummary() { return this.summaryService.currentBudgetSummary; }
   get accountBalanceSummary() { return this.summaryService.accountBalanceSummary; }
   get transactionSummary() { return this.summaryService.transactionSummary; }
@@ -23,8 +27,9 @@ export class SummaryPage implements OnInit, ViewDidEnter {
   constructor(
     public summaryService: SummaryService,
     private modalController: ModalController,
-    private coreService: CoreService
-  ) { }
+    private coreService: CoreService,
+  ) {
+  }
 
   ionViewDidEnter(): void {
     this.summaryService.getSummaryData();
@@ -32,6 +37,7 @@ export class SummaryPage implements OnInit, ViewDidEnter {
 
   ngOnInit() {
     this.handleNavigation();
+    
   }
 
   handleNavigation() {

@@ -2,18 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from './components/card/card.component';
 import { IonicModule } from '@ionic/angular';
-import { AccountService } from './services/account/account.service';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
+import { CircleGaugeComponent } from './components/circle-gauge/circle-gauge.component';
+import { SharedService } from './services/shared/shared.service';
 
 
 
 @NgModule({
   declarations: [
     CardComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    CircleGaugeComponent
   ],
   providers: [
-    AccountService
+    SharedService
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
   ],
   exports: [
     CardComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    CircleGaugeComponent
   ]
 })
 export class SharedModule { }
