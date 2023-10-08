@@ -1,4 +1,8 @@
-<ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.90" [breakpoints]="[0, 0.90]">
+<ion-modal #modal 
+  trigger="open-modal" 
+  [initialBreakpoint]="0.90" 
+  [breakpoints]="[0, 0.90]"
+  (willDismiss)="modalWillDismiss($event)">
   <ng-template [formGroup]="formGroup">
     <ion-toolbar>
       <ion-grid>
@@ -32,7 +36,7 @@
               padding="5px">
               <ion-list lines="none">
                 <ion-item>
-                  <ion-icon name="cash-outline" color="primary"></ion-icon>
+                  <ion-icon nclass="text-lg" [src]="'assets/icon/profit.svg'" color="primary"></ion-icon>
                   <ion-label class="strong text-xs pl-3 pb-0" color="primary">Income <br> Categories</ion-label>
                 </ion-item>
               </ion-list>
@@ -46,7 +50,7 @@
               padding="5px">
               <ion-list lines="none">
                 <ion-item>
-                  <ion-icon name="cash-outline" color="primary"></ion-icon>
+                  <ion-icon class="text-lg" [src]="'assets/icon/expense.svg'" color="primary"></ion-icon>
                   <ion-label class="strong text-xs pl-3 pb-0" color="primary">Expense <br> Categories</ion-label>
                 </ion-item>
               </ion-list>
@@ -83,7 +87,7 @@
             </ion-row>
 
             <div class="button-group mt-5">
-              <ion-button (click)="onConfirm()" class="shadow" type="submit" expand="block" shape="round" size="large" >Confirm</ion-button>
+              <ion-button [disabled]="formGroup?.invalid" (click)="onConfirm()" class="shadow" type="submit" expand="block" shape="round" size="large" >Confirm</ion-button>
             </div>
 
           </ion-grid>

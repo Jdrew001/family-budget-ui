@@ -8,7 +8,7 @@ import { ManageBudgetService } from '../services/manage-budget.service';
   templateUrl: './add-category.component.html',
   styleUrls: ['./add-category.component.scss'],
 })
-export class AddCategoryComponent  implements OnInit, ViewDidEnter, ViewWillLeave {
+export class AddCategoryComponent  implements OnInit, ViewDidEnter {
 
   @ViewChild('modal') modalElement: IonModal;
   @ViewChild('scrollContainer') scrollContainer: IonGrid;
@@ -38,11 +38,12 @@ export class AddCategoryComponent  implements OnInit, ViewDidEnter, ViewWillLeav
     });
   }
 
-  ionViewWillLeave(): void {
+  modalWillDismiss(e): void {
     this.selectedCategoryType = null;
     this.selectedCategory = null;
     this.refDataClone = null;
-    this.formGroup.reset();
+    this.formGroup.get('amount').setValue('');
+    this.formGroup.get('id').setValue('');
   }
 
   presentModal() {
@@ -65,7 +66,7 @@ export class AddCategoryComponent  implements OnInit, ViewDidEnter, ViewWillLeav
   selectCategory(id: string) {
     if (this.selectedCategory == id) {
       this.selectedCategory = null;
-      this.formGroup.get('id').setValue(this.selectCategory);
+      this.formGroup.get('id').setValue(null);
       return;
     }
 

@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { ManageBudgetService } from './services/manage-budget.service';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { TransactionType } from '../core/models/transaction-type.model';
+import { CoreService } from '../core/services/core.service';
 
 @Component({
   selector: 'app-manage-budget',
@@ -22,12 +23,13 @@ export class ManageBudgetPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private manageBudgetService: ManageBudgetService
+    private manageBudgetService: ManageBudgetService,
+    private coreService: CoreService
   ) { }
 
   ngOnInit() {
     this.manageBudgetService.getAllData(this.budget);  
-    this.manageBudgetService.getBudgetCategoryRefData(this.budget).subscribe(data => {
+    this.coreService.getBudgetCategoryRefData(this.budget).subscribe(data => {
       this.budgetCategoryRefData = data;
     });
   }

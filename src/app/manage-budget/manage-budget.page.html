@@ -72,7 +72,7 @@
                 <span class="strong text-xs">Total </span><span class="text-xs">Budget</span><br>
                 <span>{{ manageBudgetSummary?.totalBudget | currency:'USD':'symbol':'1.2-2' }}</span>
               </ion-label>
-              <ion-icon name="cash-outline" color="primary"></ion-icon>
+              <ion-icon style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+manageBudgetSummary?.totalBudgetIcon+'.svg'" color="primary"></ion-icon>
             </ion-item>
           </ion-list>
         </app-card>
@@ -87,7 +87,7 @@
                 <span class="strong text-xs">Whats </span><span class="text-xs">Left</span><br>
                 <span>{{ manageBudgetSummary?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'  }}</span>
               </ion-label>
-              <ion-icon name="cash-outline" color="primary"></ion-icon>
+              <ion-icon style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+manageBudgetSummary?.totalSpentIcon+'.svg'" color="primary"></ion-icon>
             </ion-item>
           </ion-list>
         </app-card>
@@ -111,34 +111,30 @@
     </ion-grid>
   </div>
 
-  <ion-grid>
-    <ion-row *ngFor="let item of manageBudgetCategories">
-      <ion-col>
-        <app-card
-          margin="5px 0px" 
-          padding="5px">
-          <ion-grid>
-            <ion-row class="ion-justify-content-start">
-              <ion-col size="2">
-                <!--icon-->
-              </ion-col>
-              <ion-col>
-                <p class="text-sm strong description">{{ item?.name }}</p>
-                <p class="pt-0 mt-2 text-xs light-text-color strong">Remaining: {{ item?.remainingAmount | currency:'USD':'symbol':'1.2-2' }}</p>
-              </ion-col> 
-              <ion-col>
-                <p class="text-sm strong ion-float-right">{{ item?.spentAmount | currency:'USD':'symbol':'1.2-2'  }}</p><br>
-                <p class="text-xs light-text-color ion-float-right strong">Budgeted: {{ item?.budgetAmount | currency:'USD':'symbol':'1.2-2'  }}</p>
-              </ion-col>
-              <ion-col class="ion-align-self-center" size="1">
-                <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </app-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <div>
+    <app-card *ngFor="let item of manageBudgetCategories"
+    margin="10px 5px 5px 5px" 
+    padding="5px">
+      <ion-grid>
+        <ion-row class="ion-justify-content-start">
+          <ion-col size="2">
+            <app-circle-gauge [config]="item?.circleGuage"></app-circle-gauge>
+          </ion-col>
+          <ion-col>
+            <p class="text-sm strong description">{{ item?.name }}</p>
+            <p class="pt-0 mt-2 text-xs light-text-color strong">Remaining: {{ item?.remainingAmount | currency:'USD':'symbol':'1.2-2' }}</p>
+          </ion-col> 
+          <ion-col>
+            <p class="text-sm strong ion-float-right">{{ item?.spentAmount | currency:'USD':'symbol':'1.2-2'  }}</p><br>
+            <p class="text-xs light-text-color ion-float-right strong">Budgeted: {{ item?.budgetAmount | currency:'USD':'symbol':'1.2-2'  }}</p>
+          </ion-col>
+          <ion-col class="ion-align-self-center" size="1">
+            <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </app-card>
+  </div>
 
   <app-add-category
     #addCategoryModal

@@ -10,6 +10,8 @@ export interface LeftSpendingManage {
     percentageSpent: number;
     totalSpent: string;
     totalBudget: string;
+    totalSpentIcon?: string;
+    totalBudgetIcon?: string;
 }
 
 export interface CategoriesForBudget {

@@ -8,7 +8,12 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <h5 class=""><strong>{{ activeAccountName }}</strong> Budget</h5>
+            <h5 class=""><strong>{{ currentBudget?.accountName }}</strong> Budget</h5>
+          </ion-col>
+          <ion-col class="ion-align-self-end">
+            <ion-button (click)="editBudget()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+              Edit
+            </ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -99,4 +104,9 @@
         </ion-grid>
     </app-card>
   </div>
+
+  <!-- <app-add-category
+    #addCategoryModal
+    [budgetCategoryRefData]="budgetCategoryRefData"
+    (onConfirm$)="editBudget()"></app-add-category> -->
 </ion-content>

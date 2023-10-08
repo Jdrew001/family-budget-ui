@@ -17,6 +17,7 @@ export class TransactionPage implements OnInit, ViewDidEnter {
   ) { }
 
   ionViewDidEnter(): void {
+    this.transactionService.accountBalanceSummary = [];
     this.transactionService.groupTransactions = [];
     this.fetchTransactionGroups();
   }

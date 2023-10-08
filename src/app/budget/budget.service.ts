@@ -10,10 +10,6 @@ import { CategoriesForBudget, LeftSpendingManage } from '../core/models/left-spe
 })
 export class BudgetService extends BaseService {
 
-  private _activeAccountName: string;
-  get activeAccountName() { return this._activeAccountName; }
-  set activeAccountName(value) { this._activeAccountName = value; }
-
   private _budgetSummary: Array<LeftSpendingManage> = [];
   get budgetSummary() { return this._budgetSummary; }
   set budgetSummary(value) { this._budgetSummary = value; }
@@ -21,6 +17,10 @@ export class BudgetService extends BaseService {
   private _categoriesForBudget: Array<CategoriesForBudget> = [];
   get categoriesForBudget() { return this._categoriesForBudget; }
   set categoriesForBudget(value) { this._categoriesForBudget = value; }
+
+  private _currentBudget: LeftSpendingManage;
+  get currentBudget() { return this._currentBudget; }
+  set currentBudget(value) { this._currentBudget = value; }
 
   constructor(
     private http: HttpClient
@@ -32,7 +32,7 @@ export class BudgetService extends BaseService {
     this.getAllBudgets().pipe(
       switchMap((currentBudget: Array<LeftSpendingManage>) => {
         this.budgetSummary = currentBudget;
-        this.activeAccountName = this.budgetSummary[0]?.accountName;
+        this.currentBudget = this.budgetSummary[0];
         return this.getBudgetCategories(currentBudget[0]);
       })
     ).subscribe(result => {

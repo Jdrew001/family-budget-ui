@@ -6,6 +6,7 @@ export interface CurrentBudgetSummary {
     income: TypeAmount;
     expense: TypeAmount;
     showBudgetError: boolean;
+    circleGuage: any;
 }
 
 export interface TypeAmount {

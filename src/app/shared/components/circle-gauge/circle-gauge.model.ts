@@ -3,4 +3,5 @@ export interface CircleGaugeModel {
     maxValue: number;
     currentValue: number;
     showRed: boolean;
+    icon?: string;
 }

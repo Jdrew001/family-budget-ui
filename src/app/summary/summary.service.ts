@@ -37,6 +37,7 @@ export class SummaryService extends BaseService {
   }
 
   getSummaryData() {
+    this.accountBalanceSummary = [];
     this.getAccountBalances().pipe(
       switchMap((accountBalances) => {
         this.accountBalanceSummary = accountBalances;
