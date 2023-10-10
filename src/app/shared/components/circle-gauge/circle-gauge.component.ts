@@ -11,19 +11,18 @@ import { SharedService } from '../../services/shared/shared.service';
 })
 export class CircleGaugeComponent {
 
-  @ViewChild('gauge') gaugeComponent: ElementRef;
+  @ViewChild('gauge') gaugeComponent: ElementRef = {} as ElementRef;
 
-  _config: CircleGaugeModel;
+  _config: CircleGaugeModel = {} as CircleGaugeModel;
   get config() { return this._config; }
   @Input() set config (value: CircleGaugeModel) {
     if (value) {
       if (!this.firstRun) {
         return;
       }
-      
-      this.animate = true;
       this._config = value;
       this.firstRun = false;
+      this.animate = true;
     }
   }
 

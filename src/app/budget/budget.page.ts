@@ -4,6 +4,7 @@ import { BudgetService } from './budget.service';
 import { CoreService } from '../core/services/core.service';
 import { TransactionType } from '../core/models/transaction-type.model';
 import { ManageBudgetPage } from '../manage-budget/manage-budget.page';
+import { ManageCategoryPage } from '../manage-category/manage-category.page';
 
 @Component({
   selector: 'app-budget',
@@ -11,6 +12,8 @@ import { ManageBudgetPage } from '../manage-budget/manage-budget.page';
   styleUrls: ['./budget.page.scss'],
 })
 export class BudgetPage implements OnInit, ViewDidEnter {
+
+  @ViewChild('manageCategory') manageCategory: ManageCategoryPage;
 
   get budgetSummary() { return this.budgetService.budgetSummary; }
   get categoriesForBudget() { return this.budgetService.categoriesForBudget; }
@@ -47,5 +50,9 @@ export class BudgetPage implements OnInit, ViewDidEnter {
     if (activeIndex !== undefined) {
       this.budgetService.currentBudget.accountName = this.budgetSummary[activeIndex]?.accountName;
     }
+  }
+
+  openManageCategory(data) {
+    this.manageCategory.presentModal(data);
   }
 }

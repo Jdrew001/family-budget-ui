@@ -9,12 +9,12 @@ import { TransactionType } from 'src/app/core/models/transaction-type.model';
 })
 export class CategoryOverlayComponent  implements OnInit, ViewDidEnter, ViewWillLeave {
 
-  @ViewChild('modal') modalElement: IonModal;
-  @ViewChild('scrollContainer') scrollContainer: IonGrid;
-  @ViewChild('searchBar') searchBar: IonSearchbar;
+  @ViewChild('modal') modalElement: IonModal = {} as IonModal;
+  @ViewChild('scrollContainer') scrollContainer: IonGrid = {} as IonGrid;
+  @ViewChild('searchBar') searchBar: IonSearchbar = {} as IonSearchbar;
 
-  selectedCategory: string;
-  selectedCategoryType: TransactionType | null;
+  selectedCategory: string = '';
+  selectedCategoryType: TransactionType | null = null;
 
   @Input() categoryRefData = [];
   categoryList: Array<{id: string, name: string, type: TransactionType}> = [];
@@ -33,7 +33,7 @@ export class CategoryOverlayComponent  implements OnInit, ViewDidEnter, ViewWill
   }
 
   ionViewWillLeave() {
-    this.selectedCategory = null;
+    this.selectedCategory = '';
     this.selectedCategoryType = null;
     this.categoryList = [];
     this.searchBar.value = '';
@@ -47,7 +47,7 @@ export class CategoryOverlayComponent  implements OnInit, ViewDidEnter, ViewWill
     }
 
     this.selectedCategoryType = null;
-    this.categoryList = this.categoryRefData.filter(category => {
+    this.categoryList = this.categoryRefData.filter((category: any) => {
       return category.name.toLowerCase().includes(value.toLowerCase());
     });
   }
@@ -63,21 +63,21 @@ export class CategoryOverlayComponent  implements OnInit, ViewDidEnter, ViewWill
     this.selectedCategoryType = null;
     this.beforeSearchCategoryList = [];
     if (this.selectedCategory == id) {
-      this.selectedCategory = null;
+      this.selectedCategory = '';
       return;
     }
     this.selectedCategory = id;
   }
 
   categoryTypeSelected(type: TransactionType) {
-    this.selectedCategory = null;
+    this.selectedCategory = '';
     if (this.selectedCategoryType == type) {
       this.selectedCategoryType = null;
       this.categoryList = this.categoryRefData;
       return;
     }
     this.selectedCategoryType = type;
-    this.categoryList = this.categoryRefData.filter(category => category.type == type);
+    this.categoryList = this.categoryRefData.filter((category: any) => category.type == type);
   }
 
   onConfirmCategories() {

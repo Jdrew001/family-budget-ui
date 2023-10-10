@@ -21,7 +21,7 @@ export class UserService extends BaseService {
 
   fetchUserInformation() {
     const url = `${this.BASE_URL}${UserConstants.GET_USERINFO}`;
-    this.http.get(url).subscribe(async (response: UserModel) => {
+    this.http.get<UserModel>(url).subscribe(async (response: UserModel) => {
       this.storeUserInformation(response);
       console.log('userInformation', await this.storage.get('userInformation'));
     });

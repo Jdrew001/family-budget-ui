@@ -14,7 +14,7 @@ import { CircleGaugeComponent } from '../shared/components/circle-gauge/circle-g
 })
 export class SummaryService extends BaseService {
 
-  private _currentBudgetSummary: CurrentBudgetSummary = null;
+  private _currentBudgetSummary: CurrentBudgetSummary = {} as CurrentBudgetSummary;
   get currentBudgetSummary() { return this._currentBudgetSummary; }
   set currentBudgetSummary(value) { this._currentBudgetSummary = value; }
 
@@ -22,7 +22,7 @@ export class SummaryService extends BaseService {
   get accountBalanceSummary() { return this._accountBalanceSummary; }
   set accountBalanceSummary(value) { this._accountBalanceSummary = value; }
 
-  private _transactionSummary: SummaryTransactions[] = null;
+  private _transactionSummary: SummaryTransactions[] = [];
   get transactionSummary() { return this._transactionSummary; }
   set transactionSummary(value) { this._transactionSummary = value; }
 
@@ -41,7 +41,7 @@ export class SummaryService extends BaseService {
     this.getAccountBalances().pipe(
       switchMap((accountBalances) => {
         this.accountBalanceSummary = accountBalances;
-        this.accountId = accountBalances?.find(item => item.active)?.id;
+        this.accountId = accountBalances?.find(item => item.active)?.id as string;
 
         if (!this.accountId) return EMPTY;
         const currentBudgetSummary = this.getCurrentBudgetSummary();

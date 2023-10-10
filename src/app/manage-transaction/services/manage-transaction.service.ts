@@ -4,7 +4,7 @@ import { ManageTransactionConstant } from '../manage-transaction.constant';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TransactionAction } from '../models/manage-transaction.model';
-import { catchError } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { error } from 'console';
 import { HandleErrorHelper } from 'src/app/core/helpers/handle-error';
 import { ModalController, NavController } from '@ionic/angular';
@@ -53,6 +53,6 @@ export class ManageTransactionService extends BaseService {
 
   getRefData() {
     const url = `${this.BASE_URL}${ManageTransactionConstant.REF_DATA}`;
-    return this.http.get(url);
+    return this.http.get(url) as Observable<any>;
   }
 }

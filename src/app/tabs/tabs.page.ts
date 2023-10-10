@@ -24,7 +24,7 @@ export class TabsPage implements OnInit {
     this.coreService.$showManageTransaction.next({data: null, show: true});
   }
 
-  handleTabSelect(event) {
+  handleTabSelect(event: any) {
     this.selectedTab = event;
   }
 

@@ -22,10 +22,10 @@
         css-mode="true">
         <swiper-slide *ngFor="let item of accountBalanceSummary">
           <app-card
-            [id]="item?.id"
+            [id]="item?.id!"
             margin="10px 5px 5px 5px" 
             padding="5px"
-            [active]="item?.active"
+            [active]="item?.active!"
             (onClick)="handleAccountAction($event)">
             <ion-grid>
               <ion-row class="ion-justify-content-start">

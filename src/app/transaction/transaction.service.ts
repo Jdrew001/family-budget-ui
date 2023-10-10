@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from '../core/services/base.service';
 import { HttpClient } from '@angular/common/http';
-import { switchMap } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { GroupTransaction, TransactionGroupRequest, TransactionGroupResponse } from './model/transaction.model';
 import { UserService } from '../core/services/user/user.service';
 import { SummaryAccountBalance } from '../core/models/account.model';
@@ -39,7 +39,7 @@ export class TransactionService extends BaseService {
     this.userService.fetchAccountBalancesForUser().pipe(
       switchMap((accountBalances) => {
         this.accountBalanceSummary = accountBalances;
-        this.accountId = accountBalances?.find(item => item.active)?.id;
+        this.accountId = accountBalances?.find(item => item.active)?.id as string;
         return this.getTransactionsForAccount();
       })).subscribe((response: TransactionGroupResponse) => this.updateTransactionData(response));
   }
@@ -60,7 +60,7 @@ export class TransactionService extends BaseService {
       size: this.pageSize,
       accountId: this.accountId
     }
-    return this.http.post(`${this.BASE_URL}${TransactionConstant.GROUPED_TRANSACTION_URL}`, body);
+    return this.http.post(`${this.BASE_URL}${TransactionConstant.GROUPED_TRANSACTION_URL}`, body) as Observable<any>;
   }
 
   private updateTransactionData(response: TransactionGroupResponse) {

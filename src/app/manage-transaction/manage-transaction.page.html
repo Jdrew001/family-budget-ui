@@ -18,11 +18,11 @@
         css-mode="true">
         <swiper-slide *ngFor="let item of accounts">
           <app-card
-            [id]="item?.id"
-            [active]="item?.active"
+            [id]="item?.id!"
+            [active]="item?.active!"
             margin="10px 5px 10px 5px" 
             padding="5px"
-            (click)="onAccountSelect(item?.id)">
+            (click)="onAccountSelect(item?.id!)">
             <ion-grid>
               <ion-row class="ion-justify-content-start">
                 <ion-col>
@@ -90,7 +90,7 @@
   </div>
 
   <app-category-overlay #categoryOverlay
-    [categoryRefData]="refData?.categories"
+    [categoryRefData]="refData?.categories!"
     [showAccountOverlay]="showAccountOverlay"
     (onConfirm)="onSelectCategory($event)">
   </app-category-overlay>

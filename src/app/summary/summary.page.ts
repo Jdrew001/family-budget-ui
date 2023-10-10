@@ -16,7 +16,7 @@ import { CircleGaugeComponent } from '../shared/components/circle-gauge/circle-g
 })
 export class SummaryPage implements OnInit, ViewDidEnter {
 
-  @ViewChild('slider') slider: ElementRef;
+  @ViewChild('slider') slider: ElementRef = {} as ElementRef;
 
   configTest = CircleGuageConstant.CONFIG;
 

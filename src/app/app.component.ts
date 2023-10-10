@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.platForm.ready().then(async (source) => {
-      await this.storage.create();
+      await this.storage.create();//
       await this.authService.validateRefreshToken();
     });
   }

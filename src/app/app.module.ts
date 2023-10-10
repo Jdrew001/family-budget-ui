@@ -17,9 +17,9 @@ register();
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    IonicModule.forRoot(),
     CoreModule,
     BrowserModule,
-    IonicModule.forRoot(),
     AppRoutingModule,
     SigninPageModule,
     SignupPageModule

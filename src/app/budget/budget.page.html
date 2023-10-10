@@ -83,7 +83,8 @@
   <div>
     <app-card *ngFor="let item of categoriesForBudget"
       margin="10px 5px 5px 5px" 
-      padding="5px">
+      padding="5px"
+      (click)="openManageCategory(item)">
         <ion-grid>
           <ion-row class="ion-justify-content-start">
             <ion-col size="2">
@@ -105,8 +106,6 @@
     </app-card>
   </div>
 
-  <!-- <app-add-category
-    #addCategoryModal
-    [budgetCategoryRefData]="budgetCategoryRefData"
-    (onConfirm$)="editBudget()"></app-add-category> -->
+  <app-manage-category #manageCategory
+    ></app-manage-category>
 </ion-content>

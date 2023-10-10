@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class CardComponent  implements OnInit {
 
-  @Input('id') id: string;
+  @Input('id') id: string = '';
   @Input('active') isActive: boolean = false;
   @Input('padding') padding: string = '20';
   @Input('margin') margin: string = '20';

@@ -9,8 +9,8 @@
     initial-value: 0;
   }
   
-  div[role="progressbar"].normal {
-    --size: 2.1rem;
+  div.normal {
+    --size: 36px;
     --fg: rgba(36, 56, 142, 1);
     --bg: rgba(36, 56, 142, 0.2);
     width: var(--size);
@@ -26,8 +26,8 @@
     color: var(--fg);
   }
 
-  div[role="progressbar"].showRed {
-    --size: 2.1rem;
+  div.showRed {
+    --size: 36px;
     --fg: #FF0000;
     --bg: #ff000020;
     width: var(--size);
@@ -49,5 +49,5 @@
   // }
 
   .should-animate {
-    animation: growProgressBar 2s 1 forwards;
+    animation: growProgressBar 1.5s 1 forwards;
   }

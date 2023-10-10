@@ -1,8 +1,7 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { IonContent, IonGrid, IonModal, ModalController, NavController, ViewDidEnter } from '@ionic/angular';
-import { UserService } from '../core/services/user/user.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalController, ViewDidEnter } from '@ionic/angular';
 import { ManageTransactionService } from './services/manage-transaction.service';
-import { ManageTransRefData, TransactionAction } from './models/manage-transaction.model';
+import { ManageTransRefData } from './models/manage-transaction.model';
 import { FormGroup } from '@angular/forms';
 import { CategoryOverlayComponent } from './category-overlay/category-overlay.component';
 import { DateOverlayComponent } from './date-overlay/date-overlay.component';
@@ -15,13 +14,13 @@ import { SummaryAccountBalance } from '../core/models/account.model';
 })
 export class ManageTransactionPage implements OnInit, ViewDidEnter {
 
-  @ViewChild('categoryOverlay') categoryOverlay: CategoryOverlayComponent;
-  @ViewChild('dateOverlay') dateOverlay: DateOverlayComponent;
+  @ViewChild('categoryOverlay') categoryOverlay: CategoryOverlayComponent = {} as CategoryOverlayComponent;
+  @ViewChild('dateOverlay') dateOverlay: DateOverlayComponent = {} as DateOverlayComponent;
 
-  accounts: SummaryAccountBalance[];
+  accounts: SummaryAccountBalance[] = [];
   showAccountOverlay = false;
 
-  refData: ManageTransRefData;
+  refData: ManageTransRefData = {} as ManageTransRefData;
   formGroup: FormGroup = this.manageTranService.manageTransactionForm;
 
   get accountFormControl() { return this.formGroup?.get('account'); }
@@ -46,13 +45,15 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
 
   onAccountSelect(id: string) {
     this.resetAccountActive();
-    if (this.accountFormControl.value === id) {
+    if (this.accountFormControl?.value === id) {
       this.accountFormControl.setValue(null);
-      this.accounts.find(item => item.id === id).active = false;
+      const account = this.accounts.find(item => item.id === id) as SummaryAccountBalance;
+      account.active = false;
       return;
     }
-    this.accountFormControl.setValue(id);
-    this.accounts.find(item => item.id === id).active = true;
+    this.accountFormControl?.setValue(id);
+    const account = this.accounts.find(item => item.id === id) as SummaryAccountBalance;
+    account.active = true;
   }
 
   onConfirm() {
@@ -77,16 +78,16 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
     this.formGroup.reset();
   }
 
-  onSelectCategory(value) {
-    this.selectedCategory.setValue(value);
+  onSelectCategory(value: any) {
+    this.selectedCategory?.setValue(value);
   }
 
-  onSelectDate(value) {
-    this.formGroup.get('date').setValue(value);
+  onSelectDate(value: any) {
+    this.formGroup.get('date')?.setValue(value);
   }
 
   getSelCategory() {
-    return this.refData?.categories.find(category => category.id === this.selectedCategory.value);
+    return this.refData?.categories.find(category => category.id === this.selectedCategory?.value);
   }
 
   resetAccountActive() {

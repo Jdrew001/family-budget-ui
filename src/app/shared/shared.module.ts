@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { CircleGaugeComponent } from './components/circle-gauge/circle-gauge.component';
 import { SharedService } from './services/shared/shared.service';
+import { ReportGridComponent } from './components/report-grid/report-grid.component';
 
 
 
@@ -12,7 +13,8 @@ import { SharedService } from './services/shared/shared.service';
   declarations: [
     CardComponent,
     NavigationBarComponent,
-    CircleGaugeComponent
+    CircleGaugeComponent,
+    ReportGridComponent
   ],
   providers: [
     SharedService
@@ -24,7 +26,8 @@ import { SharedService } from './services/shared/shared.service';
   exports: [
     CardComponent,
     NavigationBarComponent,
-    CircleGaugeComponent
+    CircleGaugeComponent,
+    ReportGridComponent
   ]
 })
 export class SharedModule { }

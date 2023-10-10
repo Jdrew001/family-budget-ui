@@ -23,6 +23,7 @@ import { TransactionPage } from '../transaction/transaction.page';
 import { TransactionService } from '../transaction/transaction.service';
 import { BudgetPage } from '../budget/budget.page';
 import { BudgetService } from '../budget/budget.service';
+import { ManageCategoryPage } from '../manage-category/manage-category.page';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { BudgetService } from '../budget/budget.service';
     BudgetPage,
     CategoryOverlayComponent,
     DateOverlayComponent,
-    AddCategoryComponent
+    AddCategoryComponent,
+    ManageCategoryPage
   ],
   providers: [
     ManageTransactionService,

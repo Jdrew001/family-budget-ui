@@ -50,6 +50,10 @@ const routes: Routes = [
   {
     path: 'manage-budget',
     component: ManageBudgetPage,
+  },
+  {
+    path: 'manage-category',
+    component: ManageBudgetPage
   }
 ];
 

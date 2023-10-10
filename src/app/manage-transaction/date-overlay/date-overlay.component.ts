@@ -9,7 +9,7 @@ import { IonModal } from '@ionic/angular';
 export class DateOverlayComponent  implements OnInit {
 
   selectedDate = new Date();
-  @ViewChild('modal') modalElement: IonModal;
+  @ViewChild('modal') modalElement: IonModal = {} as IonModal;
   @Output() onConfirm: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { }
@@ -25,7 +25,7 @@ export class DateOverlayComponent  implements OnInit {
     this.modalElement.dismiss();
   }
 
-  onDateSelected(event) {
+  onDateSelected(event: any) {
     this.selectedDate = event?.detail?.value;
   }
 

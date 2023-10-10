@@ -29,11 +29,11 @@ export class TransactionPage implements OnInit, ViewDidEnter {
     this.transactionService.initialize();
   }
 
-  handleAccountAction(id) {
+  handleAccountAction(id: any) {
     
   }
 
-  onIonInfinite(event) {
+  onIonInfinite(event: any) {
     this.transactionService.getTransactionGroups(event);
   }
 
