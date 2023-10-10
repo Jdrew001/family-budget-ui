@@ -13,8 +13,6 @@ import { ManageCategoryPage } from '../manage-category/manage-category.page';
 })
 export class BudgetPage implements OnInit, ViewDidEnter {
 
-  @ViewChild('manageCategory') manageCategory: ManageCategoryPage;
-
   get budgetSummary() { return this.budgetService.budgetSummary; }
   get categoriesForBudget() { return this.budgetService.categoriesForBudget; }
 
@@ -50,9 +48,5 @@ export class BudgetPage implements OnInit, ViewDidEnter {
     if (activeIndex !== undefined) {
       this.budgetService.currentBudget.accountName = this.budgetSummary[activeIndex]?.accountName;
     }
-  }
-
-  openManageCategory(data) {
-    this.manageCategory.presentModal(data);
   }
 }

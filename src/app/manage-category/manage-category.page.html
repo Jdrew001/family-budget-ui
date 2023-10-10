@@ -1,4 +1,4 @@
-<ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.90" [breakpoints]="[0, 0.90]">
+<ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.60" [breakpoints]="[0, 0.60]" [handle]="false">
   <ng-template>
     <ion-toolbar>
       <ion-grid>
@@ -46,18 +46,18 @@
             </app-card>
           </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row [formGroup]="formGroup">
           <ion-col>
             <div class="input-group mt-4 mb-5">
               <div class="group mb-0">
                 <ion-label position="stacked">Budget Amount</ion-label>
-                <ion-input placeholder="Select Amount">
+                <ion-input formControlName="amount" currencyMask placeholder="Select Amount">
                 </ion-input>
               </div>
             </div>
           </ion-col>
         </ion-row>
-        <ion-row>
+        <!-- <ion-row>
           <ion-col>
             <ion-label position="stacked">History</ion-label>
           </ion-col>
@@ -65,6 +65,11 @@
         <ion-row>
           <ion-col>
             <app-report-grid></app-report-grid>
+          </ion-col>
+        </ion-row> -->
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" color="primary">Confirm</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>

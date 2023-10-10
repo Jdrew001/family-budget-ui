@@ -2,6 +2,7 @@
   trigger="open-modal" 
   [initialBreakpoint]="0.90" 
   [breakpoints]="[0, 0.90]"
+  [handle]="false"
   (willDismiss)="modalWillDismiss($event)">
   <ng-template [formGroup]="formGroup">
     <ion-toolbar>

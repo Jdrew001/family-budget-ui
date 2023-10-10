@@ -83,8 +83,7 @@
   <div>
     <app-card *ngFor="let item of categoriesForBudget"
       margin="10px 5px 5px 5px" 
-      padding="5px"
-      (click)="openManageCategory(item)">
+      padding="5px">
         <ion-grid>
           <ion-row class="ion-justify-content-start">
             <ion-col size="2">
@@ -98,14 +97,13 @@
               <p class="text-sm strong ion-float-right" [ngClass]="{'showRed': item?.showRed}">{{ item?.remainingAmount | currency:'USD':'symbol':'1.2-2' }}</p><br>
               <p class="text-xs light-text-color ion-float-right strong">Spent: {{ item?.spentAmount | currency:'USD':'symbol':'1.2-2' }}</p>
             </ion-col>
-            <ion-col class="ion-align-self-center" size="1">
+            <!-- <ion-col class="ion-align-self-center" size="1">
               <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
-            </ion-col>
+            </ion-col> -->
           </ion-row>
         </ion-grid>
     </app-card>
   </div>
 
-  <app-manage-category #manageCategory
-    ></app-manage-category>
+  
 </ion-content>

@@ -4,6 +4,7 @@ import { ManageBudgetService } from './services/manage-budget.service';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { TransactionType } from '../core/models/transaction-type.model';
 import { CoreService } from '../core/services/core.service';
+import { ManageCategoryPage } from '../manage-category/manage-category.page';
 
 @Component({
   selector: 'app-manage-budget',
@@ -12,7 +13,8 @@ import { CoreService } from '../core/services/core.service';
 })
 export class ManageBudgetPage implements OnInit {
 
-  @ViewChild('addCategoryModal') addCategoryOverlay: AddCategoryComponent
+  @ViewChild('addCategoryModal') addCategoryOverlay: AddCategoryComponent;
+  @ViewChild('manageCategory') manageCategory: ManageCategoryPage;
 
   @Input() budget: any;
 
@@ -40,6 +42,10 @@ export class ManageBudgetPage implements OnInit {
 
   addCategory() {
     this.addCategoryOverlay.presentModal();
+  }
+
+  openManageCategory(data) {
+    this.manageCategory.presentModal(data);
   }
 
   onAddCategory() {
