@@ -58,4 +58,13 @@ export class AuthService extends BaseService {
       this.userService.fetchUserInformation();
     });
   }
+
+  async logout() {
+    const url = this.BASE_URL + AuthConstants.LOGOUT_URL;
+    this.http.get(url).subscribe(async () => {
+      await this.tokenService.removeToken();
+      this.isAuthenticated$.next(false);
+      this.navController.navigateRoot('/auth/signin', { replaceUrl:true });
+    });
+  }
 }

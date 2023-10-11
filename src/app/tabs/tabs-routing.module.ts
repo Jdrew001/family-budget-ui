@@ -6,6 +6,7 @@ import { SummaryPage } from '../summary/summary.page';
 import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
 import { TransactionPage } from '../transaction/transaction.page';
 import { BudgetPage } from '../budget/budget.page';
+import { SettingsPage } from '../settings/settings.page';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
       {
         path: 'budget',
         component: BudgetPage
+      },
+      {
+        path: 'settings',
+        component: SettingsPage
       },
       {
         path: '',

@@ -1,0 +1,118 @@
+<ion-header [translucent]="true">
+  <app-navigation-bar [title]="'Settings'"></app-navigation-bar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div style="margin-bottom: 10rem">
+
+    <div>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h5 class=""><strong>Profile</strong></h5>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="mb-4">
+      <app-card
+        margin="10px 5px 5px 5px" 
+        padding="5px">
+        <ion-grid>
+          <ion-row class="ion-justify-content-start">
+            <ion-col size="3">
+              <ion-avatar>
+                <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+              </ion-avatar>
+            </ion-col>
+            <ion-col size="7">
+              <p class="text-sm strong description">{{ userInformation?.firstname }} {{ userInformation?.lastname }}</p>
+              <p class="pt-0 mt-2 text-xs light-text-color">{{ userInformation?.email }}</p>
+            </ion-col> 
+            <ion-col class="ion-justify-content-center ion-align-self-center" size="2">
+              <ion-icon src="assets/icon/edit.svg" color="primary" class="text-lg"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </app-card>
+    </div>
+
+    <ion-accordion-group class="mt-5">
+      <ion-accordion value="family">
+        <ion-item slot="header" color="light">
+          <ion-label>Family</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <app-card *ngFor="let user of userInformation?.family?.users"
+            margin="10px 5px 5px 5px" 
+            padding="5px">
+            <ion-grid>
+              <ion-row class="ion-justify-content-start">
+                <ion-col size="3">
+                  <ion-avatar>
+                    <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                  </ion-avatar>
+                </ion-col>
+                <ion-col size="7">
+                  <p class="text-sm strong description">{{ user?.firstname }} {{ user?.lastname }}</p>
+                  <p class="pt-0 mt-2 text-xs light-text-color">{{ user?.email }}a</p>
+                </ion-col> 
+                <ion-col class="ion-justify-content-center ion-align-self-center" size="2">
+                  <ion-icon src="assets/icon/edit.svg" color="primary" class="text-lg"></ion-icon>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </app-card>
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="account">
+        <ion-item slot="header" color="light">
+          <ion-label>Accounts</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          Account Content
+        </div>
+      </ion-accordion>
+
+      <ion-accordion value="category">
+        <ion-item slot="header" color="light">
+          <ion-label>Categories</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          Category Content
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+
+    <div class="button-group mb-3 mt-5">
+      <ion-button 
+        class="shadow" 
+        type="submit" 
+        expand="block" 
+        shape="round" 
+        size="large">Terms of Service</ion-button>
+    </div>
+
+    <div class="button-group mb-3 mt-2">
+      <ion-button 
+        class="shadow" 
+        type="submit" 
+        expand="block" 
+        shape="round" 
+        size="large">Feedback</ion-button>
+    </div>
+
+    <div class="button-group mb-3 mt-2">
+      <ion-button 
+        class="shadow" 
+        type="submit" 
+        expand="block" 
+        shape="round" 
+        size="large"
+        (click)="logout()">Logout</ion-button>
+    </div>
+
+  </div>
+</ion-content>

@@ -16,9 +16,9 @@
       <ion-label>Budget</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="tab4">
+    <ion-tab-button tab="settings">
       <ion-icon name="square"></ion-icon>
-      <ion-label>Tab 3</ion-label>
+      <ion-label>Settings</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 
@@ -37,19 +37,19 @@
       <ion-icon [ngClass]="{'tab-active': selectedTab === 'summary'}" src="assets/icon/overview.svg"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="transaction" class="comments" (ionSelect)="handleTabSelect('summary')">
+    <ion-tab-button tab="transaction" class="comments" (ionSelect)="handleTabSelect('transaction')">
       <ion-icon [ngClass]="{'tab-active': selectedTab === 'transaction'}" src="assets/icon/transaction-list.svg" name="cash-outline"></ion-icon>
       <!-- <ion-badge *ngIf="new_message">{{new_message}}</ion-badge> -->
     </ion-tab-button>
 
     <svg height="50" viewBox="0 0 100 50" width="100" xmlns="http://www.w3.org/2000/svg"><path d="M100 0v50H0V0c.543 27.153 22.72 49 50 49S99.457 27.153 99.99 0h.01z" fill="red" fill-rule="evenodd"></path></svg>
 
-    <ion-tab-button tab="budget" (ionSelect)="handleTabSelect('summary')">
+    <ion-tab-button tab="budget" (ionSelect)="handleTabSelect('budget')">
       <ion-icon [ngClass]="{'tab-active': selectedTab === 'budget'}" src="assets/icon/budget.svg"></ion-icon>
       <!-- <ion-badge *ngIf="new_activities">{{new_activities}}</ion-badge> -->
     </ion-tab-button>
 
-    <ion-tab-button tab="tab-profile" (ionSelect)="handleTabSelect('summary')">
+    <ion-tab-button tab="settings" (ionSelect)="handleTabSelect('settings')">
       <ion-icon [ngClass]="{'tab-active': selectedTab === 'settings'}" src="assets/icon/tech.svg"></ion-icon>
     </ion-tab-button>
   </ion-tab-bar>

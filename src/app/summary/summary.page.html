@@ -87,7 +87,9 @@
                 <app-circle-gauge [config]="currentBudgetSummary?.circleGuage"></app-circle-gauge>
               </ion-col>
               <ion-col>
-                <p class="text-sm strong">Left to Spend for next<br> {{currentBudgetSummary?.leftSpendingDays}} days</p>
+                <p *ngIf="currentBudgetSummary?.leftSpendingDays > 1" class="text-sm strong">Left to Spend for next<br> {{currentBudgetSummary?.leftSpendingDays}} days</p>
+                <p *ngIf="currentBudgetSummary?.leftSpendingDays == 1" class="text-sm strong">Left to Spend for next<br> {{currentBudgetSummary?.leftSpendingDays}} day</p>
+                <p *ngIf="currentBudgetSummary?.leftSpendingDays == 0" class="text-sm strong">Left to Spend for the <br>last day</p>
               </ion-col> 
               <ion-col class="ion-align-self-center" size="3">
                 <p class="text-sm strong" style="float: right;">{{currentBudgetSummary?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'}}</p>
