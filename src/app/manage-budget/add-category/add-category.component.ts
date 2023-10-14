@@ -8,7 +8,7 @@ import { ManageBudgetService } from '../services/manage-budget.service';
   templateUrl: './add-category.component.html',
   styleUrls: ['./add-category.component.scss'],
 })
-export class AddCategoryComponent  implements OnInit, ViewDidEnter {
+export class AddCategoryComponent  implements OnInit {
 
   @ViewChild('modal') modalElement: IonModal;
   @ViewChild('scrollContainer') scrollContainer: IonGrid;
@@ -32,10 +32,8 @@ export class AddCategoryComponent  implements OnInit, ViewDidEnter {
   ngOnInit() {
   }
 
-  ionViewDidEnter(): void {
-    this.modalElement.ionModalDidPresent.subscribe(async () => {
-      (this.scrollContainer as any)['el'].ontouchmove = (e) => e.stopPropagation();
-    });
+  modalDidPresent(e) {
+    (this.scrollContainer as any)['el'].ontouchmove = (e) => {e.stopPropagation(); console.log('hello')};
   }
 
   modalWillDismiss(e): void {

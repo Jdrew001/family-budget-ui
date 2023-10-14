@@ -38,53 +38,113 @@
       </app-card>
     </div>
 
-    <ion-accordion-group class="mt-5">
-      <ion-accordion value="family">
-        <ion-item slot="header" color="light">
-          <ion-label>Family</ion-label>
-        </ion-item>
-        <div class="ion-padding" slot="content">
-          <app-card *ngFor="let user of userInformation?.family?.users"
-            margin="10px 5px 5px 5px" 
-            padding="5px">
-            <ion-grid>
-              <ion-row class="ion-justify-content-start">
-                <ion-col size="3">
-                  <ion-avatar>
-                    <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-                  </ion-avatar>
-                </ion-col>
-                <ion-col size="7">
-                  <p class="text-sm strong description">{{ user?.firstname }} {{ user?.lastname }}</p>
-                  <p class="pt-0 mt-2 text-xs light-text-color">{{ user?.email }}a</p>
-                </ion-col> 
-                <ion-col class="ion-justify-content-center ion-align-self-center" size="2">
-                  <ion-icon src="assets/icon/edit.svg" color="primary" class="text-lg"></ion-icon>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </app-card>
-        </div>
-      </ion-accordion>
+    <div>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h5 class=""><strong>Accounts</strong></h5>
+          </ion-col>
+          <ion-col class="ion-align-self-end">
+            <ion-button size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+              Manage
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
 
-      <ion-accordion value="account">
-        <ion-item slot="header" color="light">
-          <ion-label>Accounts</ion-label>
-        </ion-item>
-        <div class="ion-padding" slot="content">
-          Account Content
-        </div>
-      </ion-accordion>
+    <div>
+      <app-card
+        margin="10px 5px 5px 5px" 
+        padding="5px">
+        <ion-grid>
+          <ion-row class="ion-justify-content-start">
+            <ion-col class="ion-align-self-center" size="2">
+              <ion-icon src="assets/icon/money.svg" color="primary" class="text-lg"></ion-icon>
+            </ion-col>
+            <ion-col size="8">
+              <p class="text-sm strong description">Checking</p>
+              <p class="pt-0 mt-2 text-xs light-text-color">Checking Acccount | Has Budget</p>
+            </ion-col> 
+            <ion-col class="ion-align-self-center" size="2">
+              <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </app-card>
 
-      <ion-accordion value="category">
-        <ion-item slot="header" color="light">
-          <ion-label>Categories</ion-label>
-        </ion-item>
-        <div class="ion-padding" slot="content">
-          Category Content
-        </div>
-      </ion-accordion>
-    </ion-accordion-group>
+      <app-card
+        margin="10px 5px 5px 5px" 
+        padding="5px">
+        <ion-grid>
+          <ion-row class="ion-justify-content-start">
+            <ion-col class="ion-align-self-center" size="2">
+              <ion-icon src="assets/icon/money.svg" color="primary" class="text-lg"></ion-icon>
+            </ion-col>
+            <ion-col size="8">
+              <p class="text-sm strong description">Savings</p>
+              <p class="pt-0 mt-2 text-xs light-text-color">Savings Account</p>
+            </ion-col> 
+            <ion-col class="ion-align-self-center" size="2">
+              <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </app-card>
+    </div>
+
+    <div>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h5 class=""><strong>Family</strong></h5>
+          </ion-col>
+          <ion-col class="ion-align-self-end">
+            <ion-button size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+              Manage
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div>
+      <app-card *ngFor="let user of userInformation?.family?.users"
+        margin="10px 5px 5px 5px" 
+        padding="5px">
+        <ion-grid>
+          <ion-row class="ion-justify-content-start">
+            <ion-col class="ion-align-self-center" size="3">
+              <ion-avatar>
+                <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+              </ion-avatar>
+            </ion-col>
+            <ion-col size="7">
+              <p class="text-sm strong description">{{ user?.firstname }} {{ user?.lastname }}</p>
+              <p class="pt-0 mt-2 text-xs light-text-color">{{ user?.email }}</p>
+            </ion-col> 
+            <ion-col class="ion-align-self-center" size="2">
+              <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </app-card>
+    </div>
+
+    <div>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h5 class=""><strong>Categories</strong></h5>
+          </ion-col>
+          <ion-col class="ion-align-self-end">
+            <ion-button size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+              Create
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
 
     <div class="button-group mb-3 mt-5">
       <ion-button 

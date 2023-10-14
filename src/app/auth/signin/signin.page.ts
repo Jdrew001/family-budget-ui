@@ -6,6 +6,7 @@ import { TokenService } from 'src/app/core/services/token.service';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { UserService } from 'src/app/core/services/user/user.service';
 
 @Component({
   selector: 'app-signin',
@@ -24,7 +25,8 @@ export class SigninPage implements OnInit {
     private toastService: ToastService,
     private tokenService: TokenService,
     private navController: NavController,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -36,6 +38,7 @@ export class SigninPage implements OnInit {
       .subscribe(async result => {
         await this.tokenService.setToken(result);
         this.authService.isAuthenticated$.next(true);
+        this.userService.fetchUserInformation();
 
         //navigate to summary page
         setTimeout(async() => {this.navController.navigateForward('/tabs/summary', { replaceUrl:true })}, 1000);
