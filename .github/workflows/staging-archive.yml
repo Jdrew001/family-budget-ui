@@ -1,15 +1,44 @@
-name: Family Budget App Development Pipeline
+name: Family Budget App Staging [Archiving] Pipeline
 
 on:
-  push:
-    branches: [ development ]
+  pull_request:
+    types:
+      - closed
 
 jobs:
 
-#### Run the android build and ios build concurrently ####
+  #### Intention is to check what alias has been added to the commit message ####
+  check-commit-message:
+    name: Check Commit Message
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Commit Message
+        id: check-commit-message
+        uses: actions/checkout@v2
+
+      - name: Get Commit Message
+        id: get-commit-message
+        run: echo "::set-output name=commit_message::$(git log --format=%B -n 1 ${{ github.event.pull_request.head.sha }})"
+
+      - name: Check for "archive" alias
+        id: check-archive-alias
+        run: |
+          if [[ "${{ steps.get-commit-message.outputs.commit_message }}" == *"ARCHIVE"* ]]; then
+            echo "Commit message contains 'ARCHIVE'"
+            echo "::set-output name=archive_present::true"
+          else
+            echo "Commit message does not contain 'ARCHIVE'"
+            echo "::set-output name=archive_present::false"
+          fi
+
+  #### Run the android build and ios build concurrently -- run only if archive true ####
   build-android:
     name: Build Android
+    needs: check-commit-message
     runs-on: ubuntu-latest
+    if: ${{ needs.check-commit-message.outputs.check-archive-alias.outputs.bundle_present == 'true' }}
+
     steps:
       - name: Checkout source
         uses: actions/checkout@v2
