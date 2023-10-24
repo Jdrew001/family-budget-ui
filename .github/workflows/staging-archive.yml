@@ -10,9 +10,6 @@ jobs:
   check-commit-message:
     name: Check Commit Message
     runs-on: ubuntu-latest
-    outputs:
-      get-commit-message: ${{ steps.get-commit-message.outputs.headCommitMsg }}
-      check-archive-alias: ${{ steps.check-archive-alias.outputs.archive_present }}
 
     steps:
       - name: Check Commit Message
@@ -39,7 +36,6 @@ jobs:
     name: Build Android
     #needs: check-commit-message
     runs-on: ubuntu-latest
-    if: ${{ needs.check-commit-message.outputs.check-archive-alias == 'true' }}
 
     steps:
       - name: Checkout source
