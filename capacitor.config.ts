@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'family-budget-ui',
+  appId: 'com.familybudget.app',
+  appName: 'Family Budget',
   webDir: 'www',
   server: {
     androidScheme: 'https'

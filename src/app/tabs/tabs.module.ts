@@ -25,6 +25,7 @@ import { BudgetPage } from '../budget/budget.page';
 import { BudgetService } from '../budget/budget.service';
 import { ManageCategoryPage } from '../manage-category/manage-category.page';
 import { SettingsPage } from '../settings/settings.page';
+import { AddAccountComponent } from '../settings/add-account/add-account.component';
 
 @NgModule({
   imports: [
@@ -48,7 +49,8 @@ import { SettingsPage } from '../settings/settings.page';
     DateOverlayComponent,
     AddCategoryComponent,
     ManageCategoryPage,
-    SettingsPage
+    SettingsPage,
+    AddAccountComponent
   ],
   providers: [
     ManageTransactionService,

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ViewDidEnter } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalController, ViewDidEnter } from '@ionic/angular';
 import { SettingsService } from './settings.service';
 import { AuthService } from '../core/services/auth.service';
+import { AddAccountComponent } from './add-account/add-account.component';
+import { IdName } from '../core/models/account.model';
 
 @Component({
   selector: 'app-settings',
@@ -10,11 +12,17 @@ import { AuthService } from '../core/services/auth.service';
 })
 export class SettingsPage implements OnInit, ViewDidEnter {
 
+  @ViewChild('addAccount') addAccountComponent: AddAccountComponent;
+
   userInformation: any;
+
+  get accounts() { return this.settingsService.accounts; }
+  get categories() { return this.settingsService.categories; }
 
   constructor(
     private settingsService: SettingsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -26,6 +34,19 @@ export class SettingsPage implements OnInit, ViewDidEnter {
 
   async ionViewDidEnter() {
       this.userInformation = await this.settingsService.fetchProfileInfo();
+      this.settingsService.fetchAccount();
+      this.settingsService.fetchCategories();
   }
 
+  async manageAccount() {
+    this.addAccountComponent.presentModal();
+  }
+
+  handleAccountClick(account) {
+    this.addAccountComponent.presentModal(account);
+  }
+
+  handleNewAccount(data: IdName) {
+    this.settingsService.createAccount(data);
+  }
 }

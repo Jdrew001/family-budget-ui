@@ -11,6 +11,11 @@
           <ion-col>
             <h5 class=""><strong>Profile</strong></h5>
           </ion-col>
+          <ion-col class="ion-align-self-end">
+            <ion-button size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+              Manage
+            </ion-button>
+          </ion-col>
         </ion-row>
       </ion-grid>
     </div>
@@ -29,9 +34,6 @@
             <ion-col size="7">
               <p class="text-sm strong description">{{ userInformation?.firstname }} {{ userInformation?.lastname }}</p>
               <p class="pt-0 mt-2 text-xs light-text-color">{{ userInformation?.email }}</p>
-            </ion-col> 
-            <ion-col class="ion-justify-content-center ion-align-self-center" size="2">
-              <ion-icon src="assets/icon/edit.svg" color="primary" class="text-lg"></ion-icon>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -45,8 +47,8 @@
             <h5 class=""><strong>Accounts</strong></h5>
           </ion-col>
           <ion-col class="ion-align-self-end">
-            <ion-button size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
-              Manage
+            <ion-button (click)="manageAccount()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+              Add
             </ion-button>
           </ion-col>
         </ion-row>
@@ -54,43 +56,33 @@
     </div>
 
     <div>
-      <app-card
-        margin="10px 5px 5px 5px" 
-        padding="5px">
-        <ion-grid>
-          <ion-row class="ion-justify-content-start">
-            <ion-col class="ion-align-self-center" size="2">
-              <ion-icon src="assets/icon/money.svg" color="primary" class="text-lg"></ion-icon>
-            </ion-col>
-            <ion-col size="8">
-              <p class="text-sm strong description">Checking</p>
-              <p class="pt-0 mt-2 text-xs light-text-color">Checking Acccount | Has Budget</p>
-            </ion-col> 
-            <ion-col class="ion-align-self-center" size="2">
-              <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </app-card>
-
-      <app-card
-        margin="10px 5px 5px 5px" 
-        padding="5px">
-        <ion-grid>
-          <ion-row class="ion-justify-content-start">
-            <ion-col class="ion-align-self-center" size="2">
-              <ion-icon src="assets/icon/money.svg" color="primary" class="text-lg"></ion-icon>
-            </ion-col>
-            <ion-col size="8">
-              <p class="text-sm strong description">Savings</p>
-              <p class="pt-0 mt-2 text-xs light-text-color">Savings Account</p>
-            </ion-col> 
-            <ion-col class="ion-align-self-center" size="2">
-              <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </app-card>
+      <swiper-container 
+        slides-per-view="2" 
+        speed="500" 
+        pagination="true"
+        css-mode="false">
+        <swiper-slide>
+          <app-card
+            margin="10px 5px 5px 5px" 
+            padding="5px"
+            *ngFor="let account of accounts"
+            (click)="handleAccountClick(account)">
+            <ion-grid>
+              <ion-row class="ion-justify-content-start">
+                <ion-col class="ion-align-self-center mr-1" size="3">
+                  <ion-icon [src]="'assets/icon/'+account?.icon+'.svg'" color="primary" class="text-lg"></ion-icon>
+                </ion-col>
+                <ion-col>
+                  <p class="text-sm strong description">{{ account.name }}</p>
+              <p class="pt-0 mt-2 text-xs light-text-color">{{ account?.type }}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+              </ion-row>
+            </ion-grid>
+          </app-card>
+        </swiper-slide>
+      </swiper-container>
     </div>
 
     <div>
@@ -101,34 +93,42 @@
           </ion-col>
           <ion-col class="ion-align-self-end">
             <ion-button size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
-              Manage
+              Add
             </ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
     </div>
 
-    <div>
-      <app-card *ngFor="let user of userInformation?.family?.users"
-        margin="10px 5px 5px 5px" 
-        padding="5px">
-        <ion-grid>
-          <ion-row class="ion-justify-content-start">
-            <ion-col class="ion-align-self-center" size="3">
-              <ion-avatar>
-                <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-              </ion-avatar>
-            </ion-col>
-            <ion-col size="7">
-              <p class="text-sm strong description">{{ user?.firstname }} {{ user?.lastname }}</p>
-              <p class="pt-0 mt-2 text-xs light-text-color">{{ user?.email }}</p>
-            </ion-col> 
-            <ion-col class="ion-align-self-center" size="2">
-              <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </app-card>
+    <div *ngIf="userInformation?.family?.users != 0">
+      <swiper-container 
+        slides-per-view="2" 
+        speed="500" 
+        pagination="true"
+        css-mode="false">
+        <swiper-slide>
+          <app-card
+            margin="10px 5px 5px 5px" 
+            padding="5px"
+            *ngFor="let user of userInformation?.family?.users">
+            <ion-grid>
+              <ion-row class="ion-justify-content-start">
+                <ion-col class="ion-align-self-center mr-1" size="3">
+                  <ion-avatar class="img-sm">
+                    <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                  </ion-avatar>
+                </ion-col>
+                <ion-col>
+                  <p class="text-sm strong description">{{ user?.firstname }} {{ user?.lastname }}</p>
+                  <p class="pt-0 mt-2 text-xs light-text-color">{{ user?.email }}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+              </ion-row>
+            </ion-grid>
+          </app-card>
+        </swiper-slide>
+      </swiper-container>
     </div>
 
     <div>
@@ -139,11 +139,39 @@
           </ion-col>
           <ion-col class="ion-align-self-end">
             <ion-button size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
-              Create
+              Add
             </ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
+    </div>
+
+    <div *ngIf="categories.length != 0">
+      <swiper-container 
+        slides-per-view="2" 
+        speed="500" 
+        pagination="true"
+        css-mode="false">
+        <swiper-slide
+        *ngFor="let item of categories">
+          <app-card
+            margin="10px 5px 5px 5px" 
+            padding="5px">
+            <ion-grid>
+              <ion-row class="ion-justify-content-start">
+                <ion-col class="ion-align-self-center mr-3" size="2">
+                  <ion-icon style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+item?.icon+'.svg'" color="primary"></ion-icon>
+                </ion-col>
+                <ion-col>
+                  <p class="strong text-sm pb-0 mb-0">{{ item?.name }}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+              </ion-row>
+            </ion-grid>
+          </app-card>
+        </swiper-slide>
+      </swiper-container>
     </div>
 
     <div class="button-group mb-3 mt-5">
@@ -175,4 +203,8 @@
     </div>
 
   </div>
+
+  <app-add-account #addAccount
+    (dismissData$)="handleNewAccount($event)">
+  </app-add-account>
 </ion-content>

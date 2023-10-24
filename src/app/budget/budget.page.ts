@@ -19,6 +19,8 @@ export class BudgetPage implements OnInit, ViewDidEnter {
   get currentBudget() { return this.budgetService.currentBudget; }
 
   budgetCategoryRefData: Array<{id: string, name: string, type: TransactionType}> = [];
+
+  transactionType = TransactionType;
   
   constructor(
     private budgetService: BudgetService,
