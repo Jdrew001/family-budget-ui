@@ -11,6 +11,9 @@ jobs:
   check-commit-message:
     name: Check Commit Message
     runs-on: ubuntu-latest
+    outputs:
+      get-commit-message: ${{ steps.get-commit-message.outputs.headCommitMsg }}
+      check-bundle-alias: ${{ steps.check-bundle-alias.outputs.bundle_present }}
 
     steps:
       - name: Check Commit Message
@@ -19,12 +22,12 @@ jobs:
 
       - name: Get Commit Message
         id: get-commit-message
-        run: echo "::set-output name=commit_message::$(git log --format=%B -n 1 ${{ github.event.pull_request.head.sha }})"
+        run: echo "::set-output name=headCommitMsg::$(git show -s --format=%s)"
 
       - name: Check for "bundle" alias
         id: check-bundle-alias
         run: |
-          if [[ "${{ steps.get-commit-message.outputs.commit_message }}" == *"BUNDLE"* ]]; then
+          if [[ "${{ steps.get-commit-message.outputs.headCommitMsg, '[BUNDLE]' }} ]]; then
             echo "Commit message contains 'BUNDLE'"
             echo "::set-output name=bundle_present::true"
           else
@@ -37,7 +40,7 @@ jobs:
     name: Bundle Android
     needs: check-commit-message
     runs-on: ubuntu-latest
-    if: ${{ needs.check-commit-message.outputs.check-bundle-alias.outputs.bundle_present == 'true' }}
+    if: ${{ needs.check-commit-message.outputs.check-bundle-alias == 'true' }}
 
     steps:
       - name: Checkout source
