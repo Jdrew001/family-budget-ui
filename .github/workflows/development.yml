@@ -64,4 +64,4 @@ jobs:
           serviceCredentialsFileContent: ${{secrets.CREDENTIAL_FILE_CONTENT}}
           groups: DEVELOPMENT
           file: project/apk/app-debug.apk
-          debug: false #this will show the verbose log
+          debug: true #this will show the verbose log
