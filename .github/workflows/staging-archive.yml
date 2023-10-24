@@ -1,9 +1,8 @@
 name: Family Budget App Staging [Archiving] Pipeline
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
+    branches: [ staging ]
 
 jobs:
 
