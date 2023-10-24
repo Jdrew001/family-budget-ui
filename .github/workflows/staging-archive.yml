@@ -11,8 +11,9 @@ jobs:
   check-commit-message:
     name: Check Commit Message
     runs-on: ubuntu-latest
-    get-commit-message: ${{ steps.get-commit-message.outputs.headCommitMsg }}
-    check-archive-alias: ${{ steps.check-archive-alias.outputs.archive_present }}
+    outputs:
+      get-commit-message: ${{ steps.get-commit-message.outputs.headCommitMsg }}
+      check-archive-alias: ${{ steps.check-archive-alias.outputs.archive_present }}
 
     steps:
       - name: Check Commit Message

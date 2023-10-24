@@ -1,4 +1,4 @@
-name: Family Budget App Staging [Archiving] Pipeline
+name: Family Budget App Staging [Bundling] Pipeline
 
 on:
   pull_request:
