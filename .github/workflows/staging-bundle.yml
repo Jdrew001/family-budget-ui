@@ -27,7 +27,7 @@ jobs:
       - name: Check for "bundle" alias
         id: check-bundle-alias
         run: |
-          if [[ "${{ steps.get-commit-message.outputs.headCommitMsg, '[BUNDLE]' }} ]]; then
+          if [[ ${{ contains(steps.get-commit-message.outputs.headCommitMsg, '[BUNDLE]') }} ]]; then
             echo "Commit message contains 'BUNDLE'"
             echo "::set-output name=bundle_present::true"
           else

@@ -27,7 +27,7 @@ jobs:
       - name: Check for "archive" alias
         id: check-archive-alias
         run: |
-          if [[ "${{ steps.get-commit-message.outputs.headCommitMsg, '[ARCHIVE]' }} ]]; then
+          if [[ ${{ contains(steps.get-commit-message.outputs.headCommitMsg, '[ARCHIVE]') }} ]]; then
             echo "Commit message contains 'ARCHIVE'"
             echo "::set-output name=archive_present::true"
           else
