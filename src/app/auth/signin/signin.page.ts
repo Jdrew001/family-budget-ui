@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserService } from 'src/app/core/services/user/user.service';
+import { HelperService } from 'src/app/core/services/helper.service';
 
 @Component({
   selector: 'app-signin',
@@ -18,6 +19,7 @@ export class SigninPage implements OnInit {
   get signInForm() { return this.signInFormService.signInForm; }
   get email() { return this.signInForm.get('email'); }
   get password() { return this.signInForm.get('password'); }
+  get test() { return this.helperService.getResourceUrl('test');}
 
   constructor(
     private signInService: SigninService,
@@ -26,7 +28,8 @@ export class SigninPage implements OnInit {
     private tokenService: TokenService,
     private navController: NavController,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private helperService: HelperService
   ) { }
 
   ngOnInit() {
