@@ -4,8 +4,12 @@ const config: CapacitorConfig = {
   appId: 'com.familybudget.app',
   appName: 'Family Budget',
   webDir: 'www',
-  server: {
-    androidScheme: 'https'
+  "server": {
+    "androidScheme": "http",
+    "cleartext": true,
+    "allowNavigation": [
+      "http://192.168.12.72:9000/api/*"
+    ]
   },
   plugins: {
     extConfig: {},
