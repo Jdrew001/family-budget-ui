@@ -9,11 +9,12 @@ import { TokenService } from './token.service';
 import { NavController } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { UserService } from './user/user.service';
+import { HelperService } from './helper.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends BaseService {
+export class AuthService {
 
   isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -21,23 +22,24 @@ export class AuthService extends BaseService {
     private http: HttpClient,
     private tokenService: TokenService,
     private navController: NavController,
-    private userService: UserService
+    private userService: UserService,
+    private helperService: HelperService
   ) {
-    super();
+    
   }
 
   signIn(signInModel: SignInModel): Observable<any> {
-    const url = this.BASE_URL + AuthConstants.SIGN_IN_URL;
+    const url = this.helperService.getResourceUrl(AuthConstants.SIGN_IN_URL);
     return this.http.post(url, signInModel);
   }
 
   signUp(signUpModel: any): Observable<any> {
-    const url = this.BASE_URL + AuthConstants.SIGN_UP_URL;
+    const url = this.helperService.getResourceUrl(AuthConstants.SIGN_UP_URL);
     return this.http.post(url, signUpModel);
   }
 
   refreshToken(): Observable<TokenModel> {
-    const url = this.BASE_URL + AuthConstants.REFRESH_TOKEN_URL;
+    const url = this.helperService.getResourceUrl(AuthConstants.REFRESH_TOKEN_URL);
     return this.http.get(url) as Observable<TokenModel>;
   }
 
@@ -60,7 +62,7 @@ export class AuthService extends BaseService {
   }
 
   async logout() {
-    const url = this.BASE_URL + AuthConstants.LOGOUT_URL;
+    const url = this.helperService.getResourceUrl(AuthConstants.LOGOUT_URL);
     this.http.get(url).subscribe(async () => {
       await this.tokenService.removeToken();
       this.isAuthenticated$.next(false);

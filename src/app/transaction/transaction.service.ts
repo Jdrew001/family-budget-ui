@@ -7,11 +7,12 @@ import { UserService } from '../core/services/user/user.service';
 import { SummaryAccountBalance } from '../core/models/account.model';
 import { TransactionConstant } from './transaction.constant';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
+import { HelperService } from '../core/services/helper.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TransactionService extends BaseService {
+export class TransactionService {
 
   private _groupTransactions: GroupTransaction[] = [];
   get groupTransactions(): GroupTransaction[] { return this._groupTransactions; }
@@ -30,10 +31,9 @@ export class TransactionService extends BaseService {
 
   constructor(
     private http: HttpClient,
-    private userService: UserService
-  ) {
-    super();
-  }
+    private userService: UserService,
+    private helperService: HelperService
+  ) {}
 
   async initialize() {
     this.userService.fetchAccountBalancesForUser().pipe(
@@ -60,7 +60,8 @@ export class TransactionService extends BaseService {
       size: this.pageSize,
       accountId: this.accountId
     }
-    return this.http.post(`${this.BASE_URL}${TransactionConstant.GROUPED_TRANSACTION_URL}`, body) as Observable<any>;
+    const url = this.helperService.getResourceUrl(TransactionConstant.GROUPED_TRANSACTION_URL);
+    return this.http.post(url, body) as Observable<any>;
   }
 
   private updateTransactionData(response: TransactionGroupResponse) {

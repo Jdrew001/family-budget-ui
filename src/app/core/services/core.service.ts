@@ -5,6 +5,7 @@ import { BaseService } from './base.service';
 import { HttpClient } from '@angular/common/http';
 import { CoreConstants } from '../constants/core.constants';
 import { MasterRefdata } from '../models/master-ref.model';
+import { HelperService } from './helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,18 +18,19 @@ export class CoreService extends BaseService {
   masterRefData: MasterRefdata;
 
   constructor(
-    private readonly http: HttpClient
+    private readonly http: HttpClient,
+    private helperService: HelperService
   ) { 
     super();
   }
 
   getBudgetCategoryRefData(id: string) {
-    const url = `${this.BASE_URL}${ManageBudgetConstant.MANAGE_BUDGET_REF_DATA}/${id}`;
-    return this.http.get(url) as Observable<any>;
+    const url = this.helperService.getResourceUrl(ManageBudgetConstant.MANAGE_BUDGET_REF_DATA);
+    return this.http.get(`${url}/${id}`) as Observable<any>;
   }
 
   getMasterRefData() {
-    const url = `${this.BASE_URL}${CoreConstants.MASTER_REF_DATA}`;
+    const url = this.helperService.getResourceUrl(CoreConstants.MASTER_REF_DATA);
     this.http.get<MasterRefdata>(url).subscribe((result: MasterRefdata) => {
       this.masterRefData = result;
     });

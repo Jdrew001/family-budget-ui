@@ -6,21 +6,22 @@ import { Storage } from '@ionic/storage-angular';
 import { UserAccountModel, UserModel } from '../../models/user.model';
 import { Observable } from 'rxjs';
 import { SummaryAccountBalance } from '../../models/account.model';
+import { HelperService } from '../helper.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends BaseService {
+export class UserService {
 
   constructor(
     private http: HttpClient,
-    private storage: Storage
+    private storage: Storage,
+    private helperService: HelperService
   ) {
-    super();
   }
 
   fetchUserInformation() {
-    const url = `${this.BASE_URL}${UserConstants.GET_USERINFO}`;
+    const url = this.helperService.getResourceUrl(UserConstants.GET_USERINFO);
     this.http.get<UserModel>(url).subscribe(async (response: UserModel) => {
       this.storeUserInformation(response);
       console.log('userInformation', await this.storage.get('userInformation'));
@@ -28,12 +29,12 @@ export class UserService extends BaseService {
   }
 
   fetchAccountsForUser() {
-    const url = `${this.BASE_URL}${UserConstants.GET_ACCOUNTS}`;
+    const url = this.helperService.getResourceUrl(UserConstants.GET_ACCOUNTS);
     return this.http.get(url) as Observable<UserAccountModel[]>;
   }
 
   fetchAccountBalancesForUser(): Observable<SummaryAccountBalance[]> {
-    const url = `${this.BASE_URL}${UserConstants.GET_ACCOUNT_BALANCES}`;
+    const url = this.helperService.getResourceUrl(UserConstants.GET_ACCOUNT_BALANCES);
     return this.http.get(url) as Observable<SummaryAccountBalance[]>;
   }
 
