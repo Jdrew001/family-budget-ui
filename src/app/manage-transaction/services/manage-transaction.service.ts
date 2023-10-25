@@ -9,11 +9,12 @@ import { error } from 'console';
 import { HandleErrorHelper } from 'src/app/core/helpers/handle-error';
 import { ModalController, NavController } from '@ionic/angular';
 import { CoreService } from 'src/app/core/services/core.service';
+import { HelperService } from 'src/app/core/services/helper.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ManageTransactionService extends BaseService {
+export class ManageTransactionService {
 
   get manageTransactionForm(): FormGroup {return this.formGroup; }
   private formGroup: FormGroup = new FormGroup({
@@ -27,13 +28,13 @@ export class ManageTransactionService extends BaseService {
   constructor(
     private http: HttpClient,
     private modalController: ModalController,
-    private coreService: CoreService
+    private coreService: CoreService,
+    private helperService: HelperService
   ) {
-    super();
   }
 
   confirmTransaction(action: TransactionAction) {
-    const url = `${this.BASE_URL}${ManageTransactionConstant.CONFIRM_TRANSACTION}`;
+    const url = this.helperService.getResourceUrl(ManageTransactionConstant.CONFIRM_TRANSACTION);
     const body = {
       data: this.manageTransactionForm.getRawValue(),
       action: action
@@ -52,7 +53,7 @@ export class ManageTransactionService extends BaseService {
   }
 
   getRefData() {
-    const url = `${this.BASE_URL}${ManageTransactionConstant.REF_DATA}`;
+    const url = this.helperService.getResourceUrl(ManageTransactionConstant.REF_DATA);
     return this.http.get(url) as Observable<any>;
   }
 }

@@ -8,6 +8,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorService } from './interceptors/http-interceptor.service';
 import { UserService } from './services/user/user.service';
 import { CurrencyMaskDirective } from './directives/currency-mask.directive';
+import { HelperService } from './services/helper.service';
 
 
 
@@ -25,6 +26,7 @@ import { CurrencyMaskDirective } from './directives/currency-mask.directive';
     ToastService,
     AuthService,
     UserService,
+    HelperService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,

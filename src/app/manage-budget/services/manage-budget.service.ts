@@ -5,10 +5,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, zip } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoriesForBudget, LeftSpendingManage } from 'src/app/core/models/left-spending.model';
+import { HelperService } from 'src/app/core/services/helper.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ManageBudgetService extends BaseService {
+export class ManageBudgetService {
 
   addCategoryForm: FormGroup = new FormGroup({
     amount: new FormControl('', [Validators.required]),
@@ -34,13 +35,13 @@ export class ManageBudgetService extends BaseService {
   }
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private helperService: HelperService
   ) {
-    super();
   }
 
   addCategoryToBudget(id: string) {
-    const url = `${this.BASE_URL}${ManageBudgetConstant.CREATE_BUDGET_CATEGORIES}`;
+    const url = this.helperService.getResourceUrl(ManageBudgetConstant.CREATE_BUDGET_CATEGORIES);
     const body = {
       budgetId: id,
       category: this.addCategoryForm.value
@@ -59,17 +60,17 @@ export class ManageBudgetService extends BaseService {
   }
 
   getManageBudgetSummary(id: string) {
-    const url = `${this.BASE_URL}${ManageBudgetConstant.MANAGE_BUDGET_SUMMARY}/${id}`;
-    return this.http.get(url) as Observable<LeftSpendingManage>;
+    const url = this.helperService.getResourceUrl(ManageBudgetConstant.MANAGE_BUDGET_SUMMARY);
+    return this.http.get(`${url}/${id}`) as Observable<LeftSpendingManage>;
   }
 
   getManageBudgetCategories(id: string) {
-    const url = `${this.BASE_URL}${ManageBudgetConstant.MANAGE_BUDGET_CATEGORIES}/${id}`;
-    return this.http.get(url) as Observable<CategoriesForBudget[]>;
+    const url = this.helperService.getResourceUrl(ManageBudgetConstant.MANAGE_BUDGET_CATEGORIES);
+    return this.http.get(`${url}/${id}`) as Observable<CategoriesForBudget[]>;
   }
 
   getBudgetCategoryRefData(id: string) {
-    const url = `${this.BASE_URL}${ManageBudgetConstant.MANAGE_BUDGET_REF_DATA}/${id}`;
-    return this.http.get(url) as Observable<any>;
+    const url = this.helperService.getResourceUrl(ManageBudgetConstant.MANAGE_BUDGET_REF_DATA);
+    return this.http.get(`${url}/${id}`) as Observable<any>;
   }
 }

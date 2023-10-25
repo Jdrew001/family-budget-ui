@@ -4,11 +4,12 @@ import { BudgetConstant } from './budget.constant';
 import { HttpClient } from '@angular/common/http';
 import { Observable, switchMap } from 'rxjs';
 import { CategoriesForBudget, LeftSpendingManage } from '../core/models/left-spending.model';
+import { HelperService } from '../core/services/helper.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BudgetService extends BaseService {
+export class BudgetService {
 
   private _budgetSummary: Array<LeftSpendingManage> = [];
   get budgetSummary() { return this._budgetSummary; }
@@ -23,9 +24,9 @@ export class BudgetService extends BaseService {
   set currentBudget(value) { this._currentBudget = value; }
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private helperService: HelperService
   ) {
-    super();
   }
 
   initialize() {
@@ -41,12 +42,12 @@ export class BudgetService extends BaseService {
   }
 
   getBudgetCategories(budgetSummary: LeftSpendingManage): Observable<Array<CategoriesForBudget>> {
-    const url = BudgetConstant.GET_CATEGORIES_FOR_BUDGET;
-    return this.http.get(`${this.BASE_URL}${url}${budgetSummary.id}`) as Observable<Array<CategoriesForBudget>>;
+    const url = this.helperService.getResourceUrl(BudgetConstant.GET_CATEGORIES_FOR_BUDGET);
+    return this.http.get(`${url}${budgetSummary.id}`) as Observable<Array<CategoriesForBudget>>;
   }
 
   private getAllBudgets(): Observable<Array<LeftSpendingManage>> {
-    const url = BudgetConstant.GET_ALL_BUDGETS;
-    return this.http.get(`${this.BASE_URL}${url}`) as Observable<Array<LeftSpendingManage>>;
+    const url = this.helperService.getResourceUrl(BudgetConstant.GET_CATEGORIES_FOR_BUDGET);
+    return this.http.get(`${url}`) as Observable<Array<LeftSpendingManage>>;
   }
 }

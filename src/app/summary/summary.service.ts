@@ -8,11 +8,12 @@ import { SummaryAccountBalance } from '../core/models/account.model';
 import { SharedService } from '../shared/services/shared/shared.service';
 import { CircleGuageConstant } from '../shared/constants/circle-guage.constant';
 import { CircleGaugeComponent } from '../shared/components/circle-gauge/circle-gauge.component';
+import { HelperService } from '../core/services/helper.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SummaryService extends BaseService {
+export class SummaryService {
 
   private _currentBudgetSummary: CurrentBudgetSummary = {} as CurrentBudgetSummary;
   get currentBudgetSummary() { return this._currentBudgetSummary; }
@@ -31,9 +32,9 @@ export class SummaryService extends BaseService {
   set accountId(value) { this._accountId = value; }
 
   constructor(
-    private readonly http: HttpClient
+    private readonly http: HttpClient,
+    private readonly helperService: HelperService
   ) { 
-    super();
   }
 
   getSummaryData() {
@@ -65,14 +66,17 @@ export class SummaryService extends BaseService {
   }
 
   public getCurrentBudgetSummary() {
-    return this.http.get(`${this.BASE_URL}${SummaryConstant.CURRENT_BUDGET}/${this.accountId}`);
+    const url = this.helperService.getResourceUrl(SummaryConstant.CURRENT_BUDGET);
+    return this.http.get(`${url}/${this.accountId}`);
   }
 
   public getAccountBalances(): Observable<SummaryAccountBalance[]> {
-    return this.http.get(`${this.BASE_URL}${SummaryConstant.ACCOUNT_BALANCES}`) as Observable<SummaryAccountBalance[]>;
+    const url = this.helperService.getResourceUrl(SummaryConstant.ACCOUNT_BALANCES);
+    return this.http.get(url) as Observable<SummaryAccountBalance[]>;
   }
 
   public getAccountTransactions() {
-    return this.http.get(`${this.BASE_URL}${SummaryConstant.TRANSACTIONS}/${this.accountId}`);
+    const url = this.helperService.getResourceUrl(SummaryConstant.TRANSACTIONS);
+    return this.http.get(`${url}/${this.accountId}`);
   }
 }

@@ -1,9 +1,8 @@
-name: Family Budget App Staging [Archiving] Pipeline
+name: Family Budget App Staging Pipeline
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
+    branches: [ staging ]
 
 jobs:
 
@@ -11,36 +10,17 @@ jobs:
   check-commit-message:
     name: Check Commit Message
     runs-on: ubuntu-latest
-    outputs:
-      get-commit-message: ${{ steps.get-commit-message.outputs.headCommitMsg }}
-      check-archive-alias: ${{ steps.check-archive-alias.outputs.archive_present }}
 
     steps:
       - name: Check Commit Message
         id: check-commit-message
         uses: actions/checkout@v2
 
-      # - name: Get Commit Message
-      #   id: get-commit-message
-      #   run: echo "::set-output name=headCommitMsg::$(git show -s --format=%s)"
-
-      # - name: Check for "archive" alias
-      #   id: check-archive-alias
-      #   run: |
-      #     if [[ ${{ contains(steps.get-commit-message.outputs.headCommitMsg, '[ARCHIVE]') }} ]]; then
-      #       echo "Commit message contains 'ARCHIVE'"
-      #       echo "::set-output name=archive_present::true"
-      #     else
-      #       echo "Commit message does not contain 'ARCHIVE'"
-      #       echo "::set-output name=archive_present::false"
-      #     fi
-
   #### Run the android build and ios build concurrently -- run only if archive true ####
   build-android:
     name: Build Android
     #needs: check-commit-message
     runs-on: ubuntu-latest
-    if: ${{ needs.check-commit-message.outputs.check-archive-alias == 'true' }}
 
     steps:
       - name: Checkout source
@@ -63,7 +43,7 @@ jobs:
         run: npm install --force
 
       - name: sync android
-        run: ionic cap sync android -c=development
+        run: ionic cap sync android -c=staging
 
       - name: Generate the Android App Bundle
         working-directory: ./android/
