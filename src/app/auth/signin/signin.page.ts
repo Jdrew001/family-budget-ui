@@ -45,6 +45,8 @@ export class SigninPage implements OnInit {
 
         //navigate to summary page
         setTimeout(async() => {this.navController.navigateForward('/tabs/summary', { replaceUrl:true })}, 1000);
+    }, error => {
+      this.toastService.showMessage(error.error.message, true);
     });
     } else {
       this.signInForm.markAllAsTouched();
