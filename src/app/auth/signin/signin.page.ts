@@ -19,7 +19,9 @@ export class SigninPage implements OnInit {
   get signInForm() { return this.signInFormService.signInForm; }
   get email() { return this.signInForm.get('email'); }
   get password() { return this.signInForm.get('password'); }
-  get test() { return this.helperService.getResourceUrl('test');}
+  
+
+  errorMessage: string = '';
 
   constructor(
     private signInService: SigninService,
@@ -46,7 +48,7 @@ export class SigninPage implements OnInit {
         //navigate to summary page
         setTimeout(async() => {this.navController.navigateForward('/tabs/summary', { replaceUrl:true })}, 1000);
     }, error => {
-      this.toastService.showMessage(error.error.message, true);
+      this.errorMessage = JSON.stringify(error);
     });
     } else {
       this.signInForm.markAllAsTouched();
