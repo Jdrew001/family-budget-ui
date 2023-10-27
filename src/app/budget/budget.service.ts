@@ -47,7 +47,7 @@ export class BudgetService {
   }
 
   private getAllBudgets(): Observable<Array<LeftSpendingManage>> {
-    const url = this.helperService.getResourceUrl(BudgetConstant.GET_CATEGORIES_FOR_BUDGET);
+    const url = this.helperService.getResourceUrl(BudgetConstant.GET_ALL_BUDGETS);
     return this.http.get(`${url}`) as Observable<Array<LeftSpendingManage>>;
   }
 }
