@@ -1,76 +1,79 @@
-<ion-modal #modal 
-  trigger="open-modal" 
-  [initialBreakpoint]="0.90" 
-  [breakpoints]="[0, 0.90]"
-  [handle]="false"
-  (ionModalDidPresent)="modalDidPresent($event)"
-  (willDismiss)="modalWillDismiss($event)">
-  <ng-template>
-    <ion-toolbar>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <h5 *ngIf="manageAccount?.id" class="text-center bold-text mb-1">Manage Account</h5>
-            <h5 *ngIf="!manageAccount?.id" class="text-center bold-text mb-1">Add Account</h5>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-toolbar>
-    <ion-content #ionContent [scrollY]="true" [formGroup]="formGroup">
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <div class="input-group mt-5 mb-1">
-              <div class="group mb-0">
-                <ion-label position="stacked">Name</ion-label>
-                  <ion-input formControlName="name" placeholder="Provide Name">
-                    <ion-icon *ngIf="(name.dirty || name.touched) && !name.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
-                    <ion-icon *ngIf="(name.dirty || name.touched) && name.errors" class="incorrect" name="close-circle" item-right></ion-icon>
-                  </ion-input>
-              </div>
+<ion-header [translucent]="true" class="mb-5">
+  <ion-toolbar style="--border-style: none !important;">
+    <h5 class="text-center strong">Manage Account</h5>
+    <ion-buttons (click)="closeAccountPopup()" class="mr-5" slot="end">
+      <ion-icon class="text-md pt-3 strong" name="close-outline"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content #ionContent [scrollY]="true" [formGroup]="formGroup">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div class="input-group mt-4 mb-1">
+          <div class="group mb-0">
+            <ion-label position="stacked">Account Name</ion-label>
+              <ion-input formControlName="name" placeholder="Provide Name">
+                <ion-icon *ngIf="(name.dirty || name.touched) && !name.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
+                <ion-icon *ngIf="(name.dirty || name.touched) && name.errors" class="incorrect" name="close-circle" item-right></ion-icon>
+              </ion-input>
+          </div>
+        </div>
+
+        <div class="input-group mt-3 mb-1">
+          <div class="group mb-0">
+            <ion-label position="stacked">Description</ion-label>
+            <ion-textarea formControlName="description" placeholder="Type something here"></ion-textarea>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="input-group mt-3 mb-1">
+          <div class="group mb-0">
+            <ion-label position="stacked">Account Type</ion-label>
+            <div (click)="chooseType()" class="input-lookalike">
+              <p *ngIf="!accountType" class="placeholder">Select Type</p>
+              <p *ngIf="accountType">{{ getSelAccountTypeLabel(accountType) }}</p>
             </div>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <div class="input-group mt-5 mb-1">
-              <div class="group mb-0">
-                <ion-label position="stacked">Type</ion-label>
-                <div (click)="chooseType()" class="input-lookalike">
-                  <p *ngIf="!accountType" class="placeholder">Select Type</p>
-                  <p *ngIf="accountType">{{ getSelAccountTypeLabel(accountType) }}</p>
-                </div>
-              </div>
-            </div> 
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+          </div>
+        </div> 
 
-      <div class="button-group mb-3 mt-2">
-        <ion-button 
-          class="shadow" 
-          type="submit" 
-          expand="block" 
-          shape="round" 
-          size="large"
-          (click)="confirm()">Confirm</ion-button>
-      </div>
+        <div class="input-group mt-4 mb-1">
+          <div class="group mb-0">
+            <ion-toggle justify="space-between" [checked]="false">Does this account have a budget?</ion-toggle>
+          </div>
+        </div> 
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-      <div class="button-group mb-3 mt-2">
-        <ion-button *ngIf="manageAccount?.id"
-          color="danger"
-          class="shadow" 
-          type="submit" 
-          expand="block" 
-          shape="round" 
-          size="large">Delete</ion-button>
-      </div>
-    </ion-content>
+  <div class="button-group mb-3 mt-5">
+    <ion-button 
+      class="shadow" 
+      type="submit" 
+      expand="block" 
+      shape="round" 
+      size="large"
+      (click)="confirm()">Confirm</ion-button>
+  </div>
 
-    <ion-alert #accountTypeAlert
-      header="Select Account Type"
-      [buttons]="accountTypeButtons"
-      [inputs]="accountTypeInputs"
-    ></ion-alert>
-  </ng-template>
-</ion-modal>
+  <div class="button-group mb-3 mt-2">
+    <ion-button *ngIf="manageAccount?.id"
+      color="danger"
+      class="shadow" 
+      type="submit" 
+      expand="block" 
+      shape="round" 
+      size="large">Delete</ion-button>
+  </div>
+</ion-content>
+
+<ion-alert #accountTypeAlert
+  header="Select Account Type"
+  [buttons]="accountTypeButtons"
+  [inputs]="accountTypeInputs"
+></ion-alert>

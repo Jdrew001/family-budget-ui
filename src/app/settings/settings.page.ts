@@ -39,14 +39,25 @@ export class SettingsPage implements OnInit, ViewDidEnter {
   }
 
   async manageAccount() {
-    this.addAccountComponent.presentModal();
+    this.presetAccountModal(); 
   }
 
   handleAccountClick(account) {
-    this.addAccountComponent.presentModal(account);
+    this.presetAccountModal(account);  
   }
 
   handleNewAccount(data: IdName) {
     this.settingsService.createAccount(data);
+  }
+
+  private async presetAccountModal(account = null) {
+    const modal = await this.modalController.create({
+      component: AddAccountComponent,
+      componentProps: {
+        account: account
+      }
+    });
+
+    modal.present();
   }
 }

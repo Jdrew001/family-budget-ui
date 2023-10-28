@@ -1,6 +1,6 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IonAlert, IonModal } from '@ionic/angular';
+import { IonAlert, IonModal, ModalController } from '@ionic/angular';
 import { IdName } from 'src/app/core/models/account.model';
 import { CoreService } from 'src/app/core/services/core.service';
 
@@ -11,8 +11,15 @@ import { CoreService } from 'src/app/core/services/core.service';
 })
 export class AddAccountComponent  implements OnInit {
   
-  @ViewChild('modal') modalElement: IonModal = {} as IonModal;
   @ViewChild('accountTypeAlert') accountTypeAlert: IonAlert;
+
+  _account: any;
+  @Input() set account(value) {
+    if (value) {
+      this._account = value;
+      this.presentModal(value);
+    }
+  }
   @Output() dismissData$: EventEmitter<any> = new EventEmitter<any>();
 
   manageAccount: IdName = {} as IdName;
@@ -34,14 +41,16 @@ export class AddAccountComponent  implements OnInit {
 
   formGroup = new FormGroup({
     name: new FormControl('', Validators.required),
-    type: new FormControl('', Validators.required)
+    description: new FormControl(''),
+    accountType: new FormControl('', Validators.required)
   });
 
   get name() { return this.formGroup.get('name'); }
   get accountType() { return this.formGroup.get('type')?.value; }
 
   constructor(
-    private coreService: CoreService
+    private coreService: CoreService,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {}
@@ -58,8 +67,7 @@ export class AddAccountComponent  implements OnInit {
     this.manageAccount = data || {} as IdName;
     const selType = this.accountTypeInputs.find(o => o.id === this.manageAccount.typeId);
     this.formGroup.get('name').setValue(data?.name || '');
-    this.formGroup.get('type').setValue(selType?.id || '');
-    this.modalElement.present();
+    this.formGroup.get('accountType').setValue(selType?.id || '');
   }
 
   chooseType() {
@@ -79,7 +87,7 @@ export class AddAccountComponent  implements OnInit {
       return false;
     }
 
-    this.formGroup.get('type').setValue(data);
+    this.formGroup.get('accountType').setValue(data);
     return true;
   }
 
@@ -98,5 +106,10 @@ export class AddAccountComponent  implements OnInit {
       typeId: this.accountType
     } as IdName;
     this.dismissData$.emit(data);
+  }
+
+  closeAccountPopup() {
+    this.formGroup.reset();
+    this.modalController.dismiss();
   }
 }

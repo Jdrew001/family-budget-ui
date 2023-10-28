@@ -74,7 +74,7 @@
                 </ion-col>
                 <ion-col>
                   <p class="text-sm strong description">{{ account.name }}</p>
-              <p class="pt-0 mt-2 text-xs light-text-color">{{ account?.type }}</p>
+                  <p class="pt-0 mt-2 text-xs light-text-color">{{ account?.type }}</p>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -201,10 +201,5 @@
         size="large"
         (click)="logout()">Logout</ion-button>
     </div>
-
   </div>
-
-  <app-add-account #addAccount
-    (dismissData$)="handleNewAccount($event)">
-  </app-add-account>
 </ion-content>
