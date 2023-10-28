@@ -66,7 +66,7 @@ export class AuthService {
     this.http.get(url).subscribe(async () => {
       await this.tokenService.removeToken();
       this.isAuthenticated$.next(false);
-      this.navController.navigateRoot('/auth/signin', { replaceUrl:true });
+      this.navController.navigateRoot('/signin', { replaceUrl:true });
     });
   }
 }

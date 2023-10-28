@@ -46,7 +46,10 @@ export class SigninPage implements OnInit {
         this.userService.fetchUserInformation();
 
         //navigate to summary page
-        setTimeout(async() => {this.navController.navigateForward('/tabs/summary', { replaceUrl:true })}, 1000);
+        setTimeout(async() => {
+          this.navController.navigateForward('/tabs/summary', { replaceUrl:true });
+          this.signInFormService.signInForm.reset();
+        }, 1000);
     });
     } else {
       this.signInForm.markAllAsTouched();
