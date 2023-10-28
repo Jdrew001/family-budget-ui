@@ -12,6 +12,7 @@ import { CoreService } from 'src/app/core/services/core.service';
 export class AddAccountComponent  implements OnInit {
   
   @ViewChild('accountTypeAlert') accountTypeAlert: IonAlert;
+  @ViewChild('frequencyAlert') frequencyAlert: IonAlert;
 
   _account: any;
   @Input() set account(value) {
@@ -35,6 +36,18 @@ export class AddAccountComponent  implements OnInit {
     }
   ];
 
+  public frequencyButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => this.handleCancelFrequency()
+    },
+    {
+      text: 'Confirm',
+      handler: (data) => this.handleConfirmFrequency(data)
+    }
+  ];
+
   get accountTypeInputs() {
     return this.coreService.masterRefData?.accountTypes || [];
   }
@@ -42,11 +55,16 @@ export class AddAccountComponent  implements OnInit {
   formGroup = new FormGroup({
     name: new FormControl('', Validators.required),
     description: new FormControl(''),
-    accountType: new FormControl('', Validators.required)
+    accountType: new FormControl('', Validators.required),
+    createBudget: new FormControl(false),
+    frequency: new FormControl('')
   });
 
   get name() { return this.formGroup.get('name'); }
   get accountType() { return this.formGroup.get('type')?.value; }
+  get createBudget() { return this.formGroup.get('createBudget')?.value; }
+  get frequencies() { return this.coreService.masterRefData?.frequencies || []; }
+  get selFrequency() { return this.formGroup.get('frequency')?.value; }
 
   constructor(
     private coreService: CoreService,
@@ -82,6 +100,19 @@ export class AddAccountComponent  implements OnInit {
     this.accountTypeAlert.present();
   }
 
+  chooseFrequency() {
+    this.frequencyAlert.inputs = this.frequencies.map(o => {
+      return {
+        type: 'radio',
+        label: o.label,
+        value: o.id,
+        checked: o.id == this.selFrequency
+      }
+    });
+
+    this.frequencyAlert.present();
+  }
+
   handleConfirmAccountType(data) {
     if (!data) {
       return false;
@@ -91,12 +122,29 @@ export class AddAccountComponent  implements OnInit {
     return true;
   }
 
+  handleConfirmFrequency(data) {
+    if (!data) {
+      return false;
+    }
+
+    this.formGroup.get('frequency').setValue(data);
+    return true;
+  }
+
   handleCancelAccountType() {
+
+  }
+
+  handleCancelFrequency() {
 
   }
 
   getSelAccountTypeLabel(id: string) {
     return this.accountTypeInputs.find(o => o.id === id)?.label;
+  }
+
+  getSelFrequencyLabel(id: string) {
+    return this.frequencies.find(o => o.id == id)?.label;
   }
 
   confirm() {
