@@ -5,8 +5,9 @@ import { Storage } from '@ionic/storage-angular';
 import { UserService } from '../core/services/user/user.service';
 import { IdName } from '../core/models/account.model';
 import { SettingsConstant } from './settings.constant';
-import { CategoriesModel } from './models/settings.model';
+import { AccountModel, CategoriesModel } from './models/settings.model';
 import { HelperService } from '../core/services/helper.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -47,10 +48,13 @@ export class SettingsService {
     });
   }
 
-  async createAccount(data: IdName) {
+  createAccount(data: any): Observable<any> {
     const url = this.helperService.getResourceUrl(SettingsConstant.CREATE_ACCOUNT);
-    this.http.post(url, data).subscribe((result: any) => {
-      this.fetchAccount();
-    });
+    return this.http.post(url, [data]) as Observable<any>;
+  }
+
+  getAccountById(id: string): Observable<AccountModel> {
+    const url = this.helperService.getResourceUrl(SettingsConstant.GET_ACCOUNT_BY_ID);
+    return this.http.get(`${url}/${id}`) as Observable<AccountModel>;
   }
 }

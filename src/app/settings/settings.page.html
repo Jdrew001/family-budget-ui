@@ -60,11 +60,11 @@
         speed="500" 
         pagination="true"
         css-mode="false">
-        <swiper-slide>
+        <swiper-slide
+        *ngFor="let account of accounts">
           <app-card
             margin="10px 5px 5px 5px" 
             padding="5px"
-            *ngFor="let account of accounts"
             (click)="handleAccountClick(account)">
             <ion-grid>
               <ion-row class="ion-justify-content-start">

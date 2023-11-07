@@ -1,6 +1,13 @@
-<ion-header [translucent]="true" class="mb-5">
+<ion-header [translucent]="true" class="mb-1">
   <ion-toolbar style="--border-style: none !important;">
-    <h5 class="text-center strong">Manage Account</h5>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <h5 class="text-left strong">Manage Account</h5>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
     <ion-buttons (click)="closeAccountPopup()" class="mr-5" slot="end">
       <ion-icon class="text-md pt-3 strong" name="close-outline"></ion-icon>
     </ion-buttons>
@@ -52,7 +59,7 @@
       <ion-col>
         <div class="input-group mt-4 mb-1">
           <div class="group mb-0">
-            <ion-toggle formControlName="createBudget" justify="space-between" [checked]="false">Does this account have a budget?</ion-toggle>
+            <ion-toggle [disabled]="disableCreateBudget()" formControlName="createBudget" justify="space-between" [checked]="false">Does this account have a budget?</ion-toggle>
           </div>
         </div> 
       </ion-col>
@@ -83,7 +90,7 @@
   </div>
 
   <div class="button-group mb-3 mt-2">
-    <ion-button *ngIf="manageAccount?.id"
+    <ion-button *ngIf="accountId?.value"
       color="danger"
       class="shadow" 
       type="submit" 
