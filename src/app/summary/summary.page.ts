@@ -7,7 +7,6 @@ import { ManageTransactionPage } from '../manage-transaction/manage-transaction.
 import * as _ from 'lodash';
 import { ManageBudgetPage } from '../manage-budget/manage-budget.page';
 import { CircleGuageConstant } from '../shared/constants/circle-guage.constant';
-import { CircleGaugeComponent } from '../shared/components/circle-gauge/circle-gauge.component';
 
 @Component({
   selector: 'app-summary',

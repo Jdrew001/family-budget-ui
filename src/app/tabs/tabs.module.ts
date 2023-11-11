@@ -15,7 +15,6 @@ import { SummaryPage } from '../summary/summary.page';
 import { SharedModule } from '../shared/shared.module';
 import { SummaryService } from '../summary/summary.service';
 import { CategoryOverlayComponent } from '../manage-transaction/category-overlay/category-overlay.component';
-import { DateOverlayComponent } from '../manage-transaction/date-overlay/date-overlay.component';
 import { AddCategoryComponent } from '../manage-budget/add-category/add-category.component';
 import { ManageBudgetPage } from '../manage-budget/manage-budget.page';
 import { ManageBudgetService } from '../manage-budget/services/manage-budget.service';
@@ -46,7 +45,6 @@ import { AddAccountComponent } from '../settings/add-account/add-account.compone
     TransactionPage,
     BudgetPage,
     CategoryOverlayComponent,
-    DateOverlayComponent,
     AddCategoryComponent,
     ManageCategoryPage,
     SettingsPage,

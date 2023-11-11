@@ -5,6 +5,8 @@ import { IdName } from 'src/app/core/models/account.model';
 import { CoreService } from 'src/app/core/services/core.service';
 import { SettingsService } from '../settings.service';
 import { AccountModel } from '../models/settings.model';
+import { DateOverlayComponent } from 'src/app/shared/components/date-overlay/date-overlay.component';
+import { DateUtils } from 'src/app/shared/utils/date.utils';
 
 @Component({
   selector: 'app-add-account',
@@ -15,6 +17,7 @@ export class AddAccountComponent  implements OnInit {
   
   @ViewChild('accountTypeAlert') accountTypeAlert: IonAlert;
   @ViewChild('frequencyAlert') frequencyAlert: IonAlert;
+  @ViewChild('dateOverlay') dateOverlay: DateOverlayComponent = {} as DateOverlayComponent;
 
   _account: any;
   @Input() set account(value) {
@@ -27,6 +30,7 @@ export class AddAccountComponent  implements OnInit {
 
   manageAccount: IdName = {} as IdName;
   shouldDisable: boolean = false;
+  minDate: string = DateUtils.formatYYYYMMDD(new Date());
 
   public accountTypeButtons = [
     {
@@ -59,19 +63,23 @@ export class AddAccountComponent  implements OnInit {
   formGroup = new FormGroup({
     id: new FormControl(''),
     name: new FormControl('', Validators.required),
+    beginningBalance: new FormControl('$0.00', Validators.required),
     description: new FormControl(''),
     icon: new FormControl(''),
     accountType: new FormControl('', Validators.required),
     createBudget: new FormControl(false),
-    frequency: new FormControl(null) // condtionally required based on createBudget
+    frequency: new FormControl(null), // condtionally required based on createBudget
+    startDate: new FormControl('')
   });
 
   get accountId() { return this.formGroup.get('id'); }
+  get beginningBalance() { return this.formGroup.get('beginningBalance'); }
   get name() { return this.formGroup.get('name'); }
   get accountType() { return this.formGroup.get('accountType')?.value; }
   get createBudget() { return this.formGroup.get('createBudget')?.value; }
   get frequencies() { return this.coreService.masterRefData?.frequencies || []; }
   get selFrequency() { return this.formGroup.get('frequency')?.value; }
+  get selectedDate() { return this.formGroup?.get('startDate'); }
 
   constructor(
     private coreService: CoreService,
@@ -120,6 +128,18 @@ export class AddAccountComponent  implements OnInit {
     });
 
     this.frequencyAlert.present();
+  }
+
+  onSelectDate(value: any) {
+    this.formGroup.get('startDate')?.setValue(value);
+  }
+
+  chooseDate() {
+    this.dateOverlay.presentModal();
+  }
+
+  getSelDate() {
+
   }
 
   handleConfirmAccountType(data) {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
 
 @Component({
@@ -10,6 +10,8 @@ export class DateOverlayComponent  implements OnInit {
 
   selectedDate = new Date();
   @ViewChild('modal') modalElement: IonModal = {} as IonModal;
+  @Input() title: string = '';
+  @Input() minDate: string = null;
   @Output() onConfirm: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { }

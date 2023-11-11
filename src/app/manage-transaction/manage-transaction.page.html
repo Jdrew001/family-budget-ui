@@ -31,7 +31,7 @@
               </ion-row>
               <ion-row>
                 <ion-col class="pt-0 m-0" size="10">
-                  <p class="pt-0 m-0">${{item?.amount}}</p>
+                  <p class="pt-0 m-0">{{item?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
                 </ion-col>
                 <ion-col size="2">
                 </ion-col>
@@ -96,6 +96,7 @@
   </app-category-overlay>
 
   <app-date-overlay #dateOverlay
+    [title]="'Transaction Date'"
     (onConfirm)="onSelectDate($event)"></app-date-overlay>
 
 </ion-content>

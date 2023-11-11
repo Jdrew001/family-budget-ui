@@ -55,8 +55,9 @@ export class TransactionService {
   }
 
   private getTransactionsForAccount(page?: number) {
+    const selPage = page || this.page;
     const body: TransactionGroupRequest = {
-      page: page || this.page,
+      page: selPage <= 0 ? 1 : selPage,
       size: this.pageSize,
       accountId: this.accountId
     }

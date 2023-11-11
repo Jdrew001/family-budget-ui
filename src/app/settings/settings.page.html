@@ -54,7 +54,7 @@
       </ion-grid>
     </div>
 
-    <div>
+    <div *ngIf="accounts.length > 0">
       <swiper-container 
         slides-per-view="2" 
         speed="500" 
@@ -72,7 +72,7 @@
                   <ion-icon [src]="'assets/icon/'+account?.icon+'.svg'" color="primary" class="text-lg"></ion-icon>
                 </ion-col>
                 <ion-col>
-                  <p class="text-sm strong description">{{ account.name }}</p>
+                  <p class="text-sm strong description ellipse" style="max-width: 5rem">{{ account.name }}</p>
                   <p class="pt-0 mt-2 text-xs light-text-color">{{ account?.type }}</p>
                 </ion-col>
               </ion-row>
@@ -105,11 +105,10 @@
         speed="500" 
         pagination="true"
         css-mode="false">
-        <swiper-slide>
+        <swiper-slide *ngFor="let user of userInformation?.family?.users">
           <app-card
             margin="10px 5px 5px 5px" 
-            padding="5px"
-            *ngFor="let user of userInformation?.family?.users">
+            padding="5px">
             <ion-grid>
               <ion-row class="ion-justify-content-start">
                 <ion-col class="ion-align-self-center mr-1" size="3">
@@ -118,8 +117,8 @@
                   </ion-avatar>
                 </ion-col>
                 <ion-col>
-                  <p class="text-sm strong description">{{ user?.firstname }} {{ user?.lastname }}</p>
-                  <p class="pt-0 mt-2 text-xs light-text-color">{{ user?.email }}</p>
+                  <p class="text-sm strong description ellipse" style="max-width: 5rem">{{ user?.firstname }} {{ user?.lastname }}</p>
+                  <p class="pt-0 mt-2 text-xs light-text-color ellipse" style="max-width: 5rem">{{ user?.email }}</p>
                 </ion-col>
               </ion-row>
               <ion-row>

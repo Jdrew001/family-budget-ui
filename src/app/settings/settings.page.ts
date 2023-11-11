@@ -14,7 +14,11 @@ export class SettingsPage implements OnInit, ViewDidEnter {
 
   @ViewChild('addAccount') addAccountComponent: AddAccountComponent;
 
-  userInformation: any;
+  userInformation: any = {
+    family: {
+      users: []
+    }
+  };
 
   get accounts() { return this.settingsService.accounts; }
   get categories() { return this.settingsService.categories; }

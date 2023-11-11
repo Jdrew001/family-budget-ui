@@ -6,6 +6,7 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
 import { CircleGaugeComponent } from './components/circle-gauge/circle-gauge.component';
 import { SharedService } from './services/shared/shared.service';
 import { ReportGridComponent } from './components/report-grid/report-grid.component';
+import { DateOverlayComponent } from './components/date-overlay/date-overlay.component';
 
 
 
@@ -14,7 +15,8 @@ import { ReportGridComponent } from './components/report-grid/report-grid.compon
     CardComponent,
     NavigationBarComponent,
     CircleGaugeComponent,
-    ReportGridComponent
+    ReportGridComponent,
+    DateOverlayComponent
   ],
   providers: [
     SharedService
@@ -27,7 +29,8 @@ import { ReportGridComponent } from './components/report-grid/report-grid.compon
     CardComponent,
     NavigationBarComponent,
     CircleGaugeComponent,
-    ReportGridComponent
+    ReportGridComponent,
+    DateOverlayComponent
   ]
 })
 export class SharedModule { }

@@ -34,6 +34,7 @@
     "@ionic/storage-angular": "^4.0.0",
     "@types/lodash": "^4.14.199",
     "ionicons": "^7.0.0",
+    "moment": "^2.29.4",
     "lodash": "^4.17.21",
     "rxjs": "~7.8.0",
     "swiper": "^10.3.0",
