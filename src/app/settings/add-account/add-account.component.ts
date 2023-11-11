@@ -31,6 +31,7 @@ export class AddAccountComponent  implements OnInit {
   manageAccount: IdName = {} as IdName;
   shouldDisable: boolean = false;
   minDate: string = DateUtils.formatYYYYMMDD(new Date());
+  creatingAccount: boolean = true;
 
   public accountTypeButtons = [
     {
@@ -67,7 +68,7 @@ export class AddAccountComponent  implements OnInit {
     description: new FormControl(''),
     icon: new FormControl(''),
     accountType: new FormControl('', Validators.required),
-    createBudget: new FormControl(false),
+    createBudget: new FormControl(true),
     frequency: new FormControl(null), // condtionally required based on createBudget
     startDate: new FormControl('')
   });
@@ -89,19 +90,13 @@ export class AddAccountComponent  implements OnInit {
 
   ngOnInit() {}
 
-  modalDidPresent(e) {
-    console.log('Modal did present');
-  }
-
-  modalWillDismiss(e) {
-    console.log('Modal will dismiss');
-  }
-
   presentModal(data?: any) {
+    this.creatingAccount = true;
     if (!data?.id) return;
+    this.creatingAccount = false;
     this.settingsService.getAccountById(data?.id).subscribe((result: AccountModel) => {
       this.shouldDisable = result.shouldDisable;
-      this.formGroup.setValue(result);
+      this.formGroup.setValue(result.data);
     }); 
   }
 
@@ -186,6 +181,12 @@ export class AddAccountComponent  implements OnInit {
     this.dismissData$.emit(this.formGroup.getRawValue());
 
     this.settingsService.createAccount(this.formGroup.getRawValue()).subscribe((result: any) => {
+      this.closeAccountPopup();
+    });
+  }
+
+  delete() {
+    this.settingsService.markAccountInactive(this.accountId.value).subscribe(() => {
       this.closeAccountPopup();
     });
   }

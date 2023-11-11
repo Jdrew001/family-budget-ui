@@ -53,6 +53,11 @@ export class SettingsService {
     return this.http.post(url, [data]) as Observable<any>;
   }
 
+  markAccountInactive(id: string): Observable<any> {
+    const url = this.helperService.getResourceUrl(SettingsConstant.MARK_ACCOUNT_INACTIVE);
+    return this.http.get(`${url}/${id}`) as Observable<any>;
+  }
+
   getAccountById(id: string): Observable<AccountModel> {
     const url = this.helperService.getResourceUrl(SettingsConstant.GET_ACCOUNT_BY_ID);
     return this.http.get(`${url}/${id}`) as Observable<AccountModel>;

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalController, ViewDidEnter } from '@ionic/angular';
+import { ModalController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { SettingsService } from './settings.service';
 import { AuthService } from '../core/services/auth.service';
 import { AddAccountComponent } from './add-account/add-account.component';
@@ -10,7 +10,7 @@ import { IdName } from '../core/models/account.model';
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
 })
-export class SettingsPage implements OnInit, ViewDidEnter {
+export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
 
   @ViewChild('addAccount') addAccountComponent: AddAccountComponent;
 
@@ -40,6 +40,12 @@ export class SettingsPage implements OnInit, ViewDidEnter {
       this.userInformation = await this.settingsService.fetchProfileInfo();
       this.settingsService.fetchAccount();
       this.settingsService.fetchCategories();
+  }
+
+  ionViewDidLeave(): void {
+    this.settingsService.accounts = [];
+    this.settingsService.categories = [];
+    this.userInformation = { family: { users: [] } };
   }
 
   async manageAccount() {
