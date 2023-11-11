@@ -19,3 +19,10 @@ export interface AccountModel {
     },
     shouldDisable?: boolean;
 }
+
+export interface FamilyUserModel {
+    id: string;
+    email: string;
+    label: string;
+    invitePending: boolean;
+}

@@ -62,4 +62,9 @@ export class SettingsService {
     const url = this.helperService.getResourceUrl(SettingsConstant.GET_ACCOUNT_BY_ID);
     return this.http.get(`${url}/${id}`) as Observable<AccountModel>;
   }
+
+  inviteUser(familyId: string, email: string) {
+    const url = this.helperService.getResourceUrl(SettingsConstant.INVITE_USER);
+    return this.http.post(url, { familyId, email, action: 'INVITE' }) as Observable<any>;
+  }
 }

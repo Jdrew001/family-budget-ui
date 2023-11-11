@@ -5,4 +5,5 @@ export class SettingsConstant {
     public static readonly CREATE_ACCOUNT = 'account/createAccounts';
     public static readonly GET_ACCOUNT_BY_ID = 'account/getAccountById';
     public static readonly MARK_ACCOUNT_INACTIVE = 'account/markAccountInactive';
+    public static readonly INVITE_USER = 'user/inviteUser';
 }

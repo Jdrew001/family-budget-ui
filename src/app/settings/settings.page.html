@@ -91,7 +91,7 @@
             <h5 class=""><strong>Family</strong></h5>
           </ion-col>
           <ion-col class="ion-align-self-end">
-            <ion-button size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+            <ion-button (click)="manageFamily()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
               Add
             </ion-button>
           </ion-col>
@@ -105,10 +105,11 @@
         speed="500" 
         pagination="true"
         css-mode="false">
-        <swiper-slide *ngFor="let user of userInformation?.family?.users">
+        <swiper-slide *ngFor="let user of userInformation?.displayValues">
           <app-card
             margin="10px 5px 5px 5px" 
-            padding="5px">
+            padding="5px"
+            (click)="editFamilyUser(user)">
             <ion-grid>
               <ion-row class="ion-justify-content-start">
                 <ion-col class="ion-align-self-center mr-1" size="3">
@@ -117,7 +118,7 @@
                   </ion-avatar>
                 </ion-col>
                 <ion-col>
-                  <p class="text-sm strong description ellipse" style="max-width: 5rem">{{ user?.firstname }} {{ user?.lastname }}</p>
+                  <p class="text-sm strong description ellipse" style="max-width: 5rem">{{ user?.label }}</p>
                   <p class="pt-0 mt-2 text-xs light-text-color ellipse" style="max-width: 5rem">{{ user?.email }}</p>
                 </ion-col>
               </ion-row>
@@ -200,4 +201,8 @@
         (click)="logout()">Logout</ion-button>
     </div>
   </div>
+
+  <app-add-family #addFam
+    (onConfirm)="onFamilyConfirm($event)"
+    (onRemove)="onFamilyRemove($event)"></app-add-family>
 </ion-content>

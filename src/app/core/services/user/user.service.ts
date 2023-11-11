@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserConstants } from './user.constant';
 import { Storage } from '@ionic/storage-angular';
 import { UserAccountModel, UserModel } from '../../models/user.model';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { SummaryAccountBalance } from '../../models/account.model';
 import { HelperService } from '../helper.service';
 

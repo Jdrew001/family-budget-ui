@@ -25,6 +25,7 @@ import { BudgetService } from '../budget/budget.service';
 import { ManageCategoryPage } from '../manage-category/manage-category.page';
 import { SettingsPage } from '../settings/settings.page';
 import { AddAccountComponent } from '../settings/add-account/add-account.component';
+import { AddFamilyComponent } from '../settings/add-family/add-family.component';
 
 @NgModule({
   imports: [
@@ -48,7 +49,8 @@ import { AddAccountComponent } from '../settings/add-account/add-account.compone
     AddCategoryComponent,
     ManageCategoryPage,
     SettingsPage,
-    AddAccountComponent
+    AddAccountComponent,
+    AddFamilyComponent
   ],
   providers: [
     ManageTransactionService,
