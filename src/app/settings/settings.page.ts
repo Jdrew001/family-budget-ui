@@ -3,10 +3,8 @@ import { ModalController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { SettingsService } from './settings.service';
 import { AuthService } from '../core/services/auth.service';
 import { AddAccountComponent } from './add-account/add-account.component';
-import { IdName } from '../core/models/account.model';
 import { AddFamilyComponent } from './add-family/add-family.component';
 import { FamilyUserModel } from './models/settings.model';
-import { UserModel } from '../core/models/user.model';
 
 @Component({
   selector: 'app-settings',
@@ -27,6 +25,7 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
 
   get accounts() { return this.settingsService.accounts; }
   get categories() { return this.settingsService.categories; }
+  get familyMembers() { return this.settingsService.familyMembers; }
 
   constructor(
     private settingsService: SettingsService,
@@ -43,11 +42,13 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
 
   async ionViewDidEnter() {
       this.userInformation = await this.settingsService.fetchProfileInfo();
+      this.settingsService.getFamilyMembers();
       this.settingsService.fetchAccount();
       this.settingsService.fetchCategories();
   }
 
   ionViewDidLeave(): void {
+    this.settingsService.familyMembers = [];
     this.settingsService.accounts = [];
     this.settingsService.categories = [];
     this.userInformation = {
@@ -77,11 +78,15 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
   onFamilyConfirm(email: string) {
     this.settingsService.inviteUser(this.userInformation.family.id, email).subscribe(result => {
       this.AddFamilyComponent.dismissModal();
+      this.settingsService.resetFamilyMembers();
     });
   }
 
-  onFamilyRemove({id, invitePending}) {
-    
+  onFamilyRemove({email, invitePending}) {
+    this.settingsService.removeInvite(this.userInformation.family.id, email, invitePending).subscribe(result => {
+      this.AddFamilyComponent.dismissModal();
+      this.settingsService.resetFamilyMembers();
+    });
   }
 
   private async presetAccountModal(account = null) {

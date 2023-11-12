@@ -99,13 +99,13 @@
       </ion-grid>
     </div>
 
-    <div *ngIf="userInformation?.family?.users != 0">
+    <div *ngIf="familyMembers?.length != 0">
       <swiper-container 
         slides-per-view="2" 
         speed="500" 
         pagination="true"
         css-mode="false">
-        <swiper-slide *ngFor="let user of userInformation?.displayValues">
+        <swiper-slide *ngFor="let user of familyMembers">
           <app-card
             margin="10px 5px 5px 5px" 
             padding="5px"

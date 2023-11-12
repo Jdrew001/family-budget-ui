@@ -22,6 +22,10 @@ export class SettingsService {
   get categories(): CategoriesModel[] { return this._categories; }
   set categories(value: CategoriesModel[]) { this._categories = value; }
 
+  private _familyMembers: any[] = [];
+  get familyMembers(): any[] { return this._familyMembers; }
+  set familyMembers(value: any[]) { this._familyMembers = value; }
+
   constructor(
     private http: HttpClient,
     private userService: UserService,
@@ -48,6 +52,13 @@ export class SettingsService {
     });
   }
 
+  async getFamilyMembers() {
+    const url = this.helperService.getResourceUrl(SettingsConstant.GET_FAMILY_MEMBERS);
+    this.http.get(url).subscribe((result: any) => {
+      this.familyMembers = result;
+    });
+  }
+
   createAccount(data: any): Observable<any> {
     const url = this.helperService.getResourceUrl(SettingsConstant.CREATE_ACCOUNT);
     return this.http.post(url, [data]) as Observable<any>;
@@ -64,7 +75,23 @@ export class SettingsService {
   }
 
   inviteUser(familyId: string, email: string) {
-    const url = this.helperService.getResourceUrl(SettingsConstant.INVITE_USER);
+    const url = this.helperService.getResourceUrl(SettingsConstant.MANAGE_INVITE);
     return this.http.post(url, { familyId, email, action: 'INVITE' }) as Observable<any>;
+  }
+
+  removeInvite(familyId: string, email: string, invitePending: boolean) {
+    const url = this.helperService.getResourceUrl(SettingsConstant.MANAGE_INVITE);
+
+    if (invitePending) {
+      return this.http.post(url, { familyId, email, action: 'REMOVE' }) as Observable<any>;
+    }
+
+    // TODO: remove user from family
+    return null;
+  }
+
+  resetFamilyMembers() {
+    this.familyMembers = [];
+    this.getFamilyMembers();
   }
 }

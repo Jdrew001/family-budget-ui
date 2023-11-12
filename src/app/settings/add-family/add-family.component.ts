@@ -45,7 +45,7 @@ export class AddFamilyComponent  implements OnInit {
   }
 
   onRemoveUser() {
-    this.onRemove.emit({id: this.familyUser.id, invitePending: this.familyUser.invitePending});
+    this.onRemove.emit({email: this.familyUser.email, invitePending: this.familyUser.invitePending});
   }
 
   modalDidDismiss() {

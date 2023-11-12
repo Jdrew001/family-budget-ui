@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserConstants } from './user.constant';
 import { Storage } from '@ionic/storage-angular';
 import { UserAccountModel, UserModel } from '../../models/user.model';
-import { Observable, map } from 'rxjs';
+import { Observable, Subject, map } from 'rxjs';
 import { SummaryAccountBalance } from '../../models/account.model';
 import { HelperService } from '../helper.service';
 
@@ -12,6 +12,8 @@ import { HelperService } from '../helper.service';
   providedIn: 'root'
 })
 export class UserService {
+
+  resyncUserInformation$: Subject<any> = new Subject();
 
   constructor(
     private http: HttpClient,
@@ -23,8 +25,8 @@ export class UserService {
   fetchUserInformation() {
     const url = this.helperService.getResourceUrl(UserConstants.GET_USERINFO);
     this.http.get<UserModel>(url).subscribe(async (response: UserModel) => {
-      this.storeUserInformation(response);
-      console.log('userInformation', await this.storage.get('userInformation'));
+      await this.storeUserInformation(response);
+      this.resyncUserInformation$.next(true);
     });
   }
 
