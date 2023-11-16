@@ -34,7 +34,7 @@
 
       <div class="button-group mt-5">
         <ion-button *ngIf="!familyUser" (click)="onConfirmInvite()" class="shadow" type="submit" expand="block" shape="round" size="large" >Confirm</ion-button>
-        <ion-button *ngIf="familyUser" (click)="onRemoveUser()" color="danger" class="shadow" type="submit" expand="block" shape="round" size="large" >Remove</ion-button>
+        <ion-button [disabled]="familyUser?.isOwner" *ngIf="familyUser" (click)="onRemoveUser()" color="danger" class="shadow" type="submit" expand="block" shape="round" size="large" >Remove</ion-button>
       </div>
     </ion-content>
   </ng-template>

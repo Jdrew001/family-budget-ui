@@ -5,6 +5,7 @@ import { AuthService } from '../core/services/auth.service';
 import { AddAccountComponent } from './add-account/add-account.component';
 import { AddFamilyComponent } from './add-family/add-family.component';
 import { FamilyUserModel } from './models/settings.model';
+import { UserService } from '../core/services/user/user.service';
 
 @Component({
   selector: 'app-settings',
@@ -30,7 +31,8 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
   constructor(
     private settingsService: SettingsService,
     private authService: AuthService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -82,8 +84,8 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
     });
   }
 
-  onFamilyRemove({email, invitePending}) {
-    this.settingsService.removeInvite(this.userInformation.family.id, email, invitePending).subscribe(result => {
+  async onFamilyRemove({email, invitePending}) {
+    (await this.settingsService.removeFamilyMember(this.userInformation.family.id, email, invitePending)).subscribe(result => {
       this.AddFamilyComponent.dismissModal();
       this.settingsService.resetFamilyMembers();
     });

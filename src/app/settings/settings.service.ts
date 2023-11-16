@@ -79,15 +79,21 @@ export class SettingsService {
     return this.http.post(url, { familyId, email, action: 'INVITE' }) as Observable<any>;
   }
 
-  removeInvite(familyId: string, email: string, invitePending: boolean) {
+  async removeFamilyMember(familyId: string, email: string, invitePending: boolean) {
     const url = this.helperService.getResourceUrl(SettingsConstant.MANAGE_INVITE);
+    const removeUserUrl = this.helperService.getResourceUrl(SettingsConstant.REMOVE_FAMILY_MEMBER);
+    const leaveFamilyUrl = this.helperService.getResourceUrl(SettingsConstant.LEAVE_FAMILY);
+    const isUserLeaving = email === (await this.userService.getUserInformation()).email;
 
     if (invitePending) {
       return this.http.post(url, { familyId, email, action: 'REMOVE' }) as Observable<any>;
     }
 
-    // TODO: remove user from family
-    return null;
+    if (isUserLeaving) {
+      return this.http.get(leaveFamilyUrl) as Observable<any>;
+    } else {
+      return this.http.post(removeUserUrl, { familyId, email }) as Observable<any>;
+    }
   }
 
   resetFamilyMembers() {

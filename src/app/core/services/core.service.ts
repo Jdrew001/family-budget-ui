@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { CoreConstants } from '../constants/core.constants';
 import { MasterRefdata } from '../models/master-ref.model';
 import { HelperService } from './helper.service';
+import { GenericModel } from '../models/generic.model';
+import { AlertModal } from 'src/app/shared/components/alert-box/alert-box.model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +36,10 @@ export class CoreService extends BaseService {
     this.http.get<MasterRefdata>(url).subscribe((result: MasterRefdata) => {
       this.masterRefData = result;
     });
+  }
+
+  checkFamilyStatus() {
+    const url = this.helperService.getResourceUrl(CoreConstants.CHECK_FAMILY_STATUS);
+    return this.http.get<GenericModel<{familyId: string, dialogConfig: AlertModal}>>(url);
   }
 }

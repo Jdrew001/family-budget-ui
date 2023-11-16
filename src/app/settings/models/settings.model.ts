@@ -25,4 +25,5 @@ export interface FamilyUserModel {
     email: string;
     label: string;
     invitePending: boolean;
+    isOwner: boolean;
 }
