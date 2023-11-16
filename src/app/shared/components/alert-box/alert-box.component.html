@@ -21,8 +21,8 @@
       </div>
 
       <div class="footer mt-5">
-        <ion-button *ngIf="config?.dialogType == alertDialogType?.CONFIRM" size="medium" color="primary" fill="outline" class="text-sm">Cancel</ion-button>
-        <ion-button size="medium" color="primary" class="text-sm">Confirm</ion-button>
+        <ion-button (click)="dismissDialog(false)" *ngIf="config?.dialogType == alertDialogType?.CONFIRM" size="medium" color="primary" fill="outline" class="text-sm">Cancel</ion-button>
+        <ion-button (click)="dismissDialog(true)" size="medium" color="primary" class="text-sm">Confirm</ion-button>
       </div>
     </div>
   </ng-template>

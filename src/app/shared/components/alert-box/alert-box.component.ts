@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AlertDialogType, AlertModal, AlertType } from './alert-box.model';
 import { IonModal } from '@ionic/angular';
+import { AlertControllerService } from '../../services/alert-controller.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-alert-box',
@@ -10,20 +12,43 @@ import { IonModal } from '@ionic/angular';
 export class AlertBoxComponent  implements OnInit {
 
   @ViewChild('alertBox', { static: false }) alertBox: IonModal;
-  @Output() onButtonClick: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() onButtonClick: EventEmitter<any> = new EventEmitter<any>();
 
   public config: AlertModal;
   public alertDialogType = AlertDialogType;
   public alertType = AlertType;
 
-  ngOnInit() {}
+  private subscription: Subscription;
 
-  openDialog(config: AlertModal) {
+  constructor(
+    private alertControllerService: AlertControllerService
+  ) {}
+
+  ngOnInit() {
+    if (!this.subscription) {
+      this.subscription = this.alertControllerService.alertBoxSubject$.subscribe(data => {
+        if (data.show) {
+          this.openDialog(data.config);
+        } else {
+          this.closeDialog(data.config);
+        }
+    });
+    }
+  }
+
+  private openDialog(config: AlertModal) {
     this.config = config;
     this.alertBox.present();
   }
 
+  closeDialog(config: AlertModal) {
+    this.alertBox.dismiss();
+    this.config = config;
+  }
+
   dismissDialog(isConfirm: boolean) {
-    this.onButtonClick.emit(isConfirm);
+    const payload = {action: this.config?.key, data: this.config?.data}
+    this.onButtonClick.emit(isConfirm ? payload: null);
+    setTimeout(() => {this.alertControllerService.closeAlertBox()}, 100);
   }
 }

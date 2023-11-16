@@ -8,6 +8,7 @@ import { MasterRefdata } from '../models/master-ref.model';
 import { HelperService } from './helper.service';
 import { GenericModel } from '../models/generic.model';
 import { AlertModal } from 'src/app/shared/components/alert-box/alert-box.model';
+import { ActionStrategyMapping } from '../constants/alert-key.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,17 @@ export class CoreService extends BaseService {
     super();
   }
 
+  handleAlertAction(payload: {action: string, data: any}) {
+    if (!!payload.action) {
+      try {
+        const actionHandler = new ActionStrategyMapping[payload.action](this);
+        actionHandler.execute(payload.data);
+      } catch (error) {
+        console.log('action handler err', error);
+      }
+    }
+  }
+
   getBudgetCategoryRefData(id: string) {
     const url = this.helperService.getResourceUrl(ManageBudgetConstant.MANAGE_BUDGET_REF_DATA);
     return this.http.get(`${url}/${id}`) as Observable<any>;
@@ -41,5 +53,10 @@ export class CoreService extends BaseService {
   checkFamilyStatus() {
     const url = this.helperService.getResourceUrl(CoreConstants.CHECK_FAMILY_STATUS);
     return this.http.get<GenericModel<{familyId: string, dialogConfig: AlertModal}>>(url);
+  }
+
+  confirmFamilySwitch(familyId: string) {
+    const url = this.helperService.getResourceUrl(CoreConstants.CONFIRM_FAMILY_SWITCH);
+    return this.http.get(`${url}/${familyId}`);
   }
 }

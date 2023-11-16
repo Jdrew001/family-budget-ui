@@ -4,6 +4,7 @@ import { CoreService } from '../core/services/core.service';
 import { GenericModel } from '../core/models/generic.model';
 import { AlertBoxComponent } from '../shared/components/alert-box/alert-box.component';
 import { AlertDialogType, AlertModal, AlertType } from '../shared/components/alert-box/alert-box.model';
+import { AlertControllerService } from '../shared/services/alert-controller.service';
 
 @Component({
   selector: 'app-tabs',
@@ -18,14 +19,15 @@ export class TabsPage implements OnInit {
 
   constructor(
     private navController: NavController,
-    private coreService: CoreService
+    private coreService: CoreService,
+    private alertControllerService: AlertControllerService
   ) { }
 
   ngOnInit() {
     this.coreService.getMasterRefData();
     this.coreService.checkFamilyStatus().subscribe((result: GenericModel<{familyId: string, dialogConfig: AlertModal}>) => {
       if (!result.data.dialogConfig) return;
-      this.alertBox.openDialog(result.data.dialogConfig);
+      this.alertControllerService.alertBoxSubject$.next({config: result.data.dialogConfig, show: true});
     });
   }
 
@@ -37,8 +39,8 @@ export class TabsPage implements OnInit {
     this.selectedTab = event;
   }
 
-  onAlertAction(action: boolean) {
-    console.log(action);
+  onAlertAction(payload: {action: string, data: any}) {
+    this.coreService.handleAlertAction(payload);
   }
 
 }
