@@ -11,6 +11,7 @@ import { register } from 'swiper/element/bundle';
 import { CoreModule } from './core/core.module';
 import { SigninPageModule } from './auth/signin/signin.module';
 import { SignupPageModule } from './auth/signup/signup.module';
+import { SharedModule } from './shared/shared.module';
 
 register();
 
@@ -22,7 +23,8 @@ register();
     BrowserModule,
     AppRoutingModule,
     SigninPageModule,
-    SignupPageModule
+    SignupPageModule,
+    SharedModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

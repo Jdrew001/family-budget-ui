@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SignInModel } from '../models/auth.model';
 import { BaseService } from './base.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, finalize, from, switchMap, zip } from 'rxjs';
 import { AuthConstants } from '../constants/auth.constants';
 import { HttpClient } from '@angular/common/http';
 import { TokenModel } from '../models/token.model';
@@ -10,6 +10,8 @@ import { NavController } from '@ionic/angular';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { UserService } from './user/user.service';
 import { HelperService } from './helper.service';
+import { CoreService } from './core.service';
+import { AlertControllerService } from 'src/app/shared/services/alert-controller.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +25,9 @@ export class AuthService {
     private tokenService: TokenService,
     private navController: NavController,
     private userService: UserService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private coreService: CoreService,
+    private alertControllerService: AlertControllerService
   ) {
     
   }
@@ -44,20 +48,36 @@ export class AuthService {
   }
 
   async validateRefreshToken() {
-    this.refreshToken().subscribe(async result => {
-      if (!result) {
-        this.navController.navigateRoot('/auth/signin', { replaceUrl:true });
-        this.isAuthenticated$.next(false);
-        return;
-      }
+    this.refreshToken()
+    .pipe(
+      switchMap((result) => {
+        if (!result) {
+          this.navController.navigateRoot('/auth/signin', { replaceUrl:true });
+          this.isAuthenticated$.next(false);
+          return EMPTY;
+        }
 
-      await this.tokenService.setToken(result);
-      this.isAuthenticated$.next(true);
-      setTimeout(async() => {await SplashScreen.hide();}, 2000);
-
-      //redirect the user to /summary page
+        return from(this.tokenService.setToken(result));
+      }),
+      switchMap(() => {
+        this.isAuthenticated$.next(true);
+        return this.coreService.checkFamilyStatus();
+      }),
+      switchMap((familyStatus) => {
+        if (familyStatus?.data?.dialogConfig) {
+          this.alertControllerService.alertBoxSubject$.next({config: familyStatus?.data?.dialogConfig, show: true});
+        } 
+        return this.userService.fetchUserInformation();
+      }),
+      switchMap((userInformation) => {
+        return zip(
+          from(this.userService.storeUserInformation(userInformation)),
+          from(SplashScreen.hide())
+        )
+      })
+    ).subscribe(() => {
+      this.userService.resyncUserInformation$.next(true);
       this.navController.navigateRoot('/tabs/summary', { replaceUrl:true });
-      this.userService.fetchUserInformation();
     });
   }
 

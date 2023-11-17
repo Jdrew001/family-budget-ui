@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable, Subject, catchError, finalize, from, lastValueFrom, switchMap, take } from 'rxjs';
+import { EMPTY, Observable, Subject, catchError, finalize, from, switchMap, take } from 'rxjs';
 import { TokenService } from '../services/token.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';

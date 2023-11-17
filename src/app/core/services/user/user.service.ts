@@ -24,10 +24,7 @@ export class UserService {
 
   fetchUserInformation() {
     const url = this.helperService.getResourceUrl(UserConstants.GET_USERINFO);
-    this.http.get<UserModel>(url).subscribe(async (response: UserModel) => {
-      await this.storeUserInformation(response);
-      this.resyncUserInformation$.next(true);
-    });
+    return this.http.get<UserModel>(url);
   }
 
   fetchAccountsForUser() {
@@ -40,7 +37,7 @@ export class UserService {
     return this.http.get(url) as Observable<SummaryAccountBalance[]>;
   }
 
-  private async storeUserInformation(userInformation: UserModel) {
+  async storeUserInformation(userInformation: UserModel) {
     await this.storage.set('userInformation', null);
     await this.storage.set('userInformation', userInformation);
   }

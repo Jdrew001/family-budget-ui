@@ -13,22 +13,14 @@ import { AlertControllerService } from '../shared/services/alert-controller.serv
 })
 export class TabsPage implements OnInit {
 
-  @ViewChild(AlertBoxComponent, { static: false }) alertBox: AlertBoxComponent;
-
   selectedTab = 'summary';
 
   constructor(
-    private navController: NavController,
-    private coreService: CoreService,
-    private alertControllerService: AlertControllerService
+    private coreService: CoreService
   ) { }
 
   ngOnInit() {
     this.coreService.getMasterRefData();
-    this.coreService.checkFamilyStatus().subscribe((result: GenericModel<{familyId: string, dialogConfig: AlertModal}>) => {
-      if (!result.data.dialogConfig) return;
-      this.alertControllerService.alertBoxSubject$.next({config: result.data.dialogConfig, show: true});
-    });
   }
 
   handleFabClick() {
@@ -37,10 +29,6 @@ export class TabsPage implements OnInit {
 
   handleTabSelect(event: any) {
     this.selectedTab = event;
-  }
-
-  onAlertAction(payload: {action: string, data: any}) {
-    this.coreService.handleAlertAction(payload);
   }
 
 }
