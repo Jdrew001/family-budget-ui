@@ -14,7 +14,7 @@
       </ion-grid>
     </div>
 
-    <div *ngIf="accountBalanceSummary.length > 0" class="pb-2">
+    <div *ngIf="accountBalanceSummary.length > 0">
       <swiper
         [allowTouchMove]="true"
         direction="horizontal"
@@ -59,7 +59,7 @@
         <ion-grid>
           <ion-row class="ion-justify-content-start">
             <ion-col size="8">
-              <h5 class="pb-1 mb-0"><strong>Current</strong> Budget</h5>
+              <h5 class="pt-0 pb-1 mb-0"><strong>Current</strong> Budget</h5>
               <p class="pt-0 mt-2 text-xs light-text-color">{{currentBudgetSummary?.displayDate}}</p>
             </ion-col>
           </ion-row>

@@ -9,7 +9,8 @@
     "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "start:ios": "ionic cap run ios -l" 
   },
   "private": true,
   "dependencies": {
