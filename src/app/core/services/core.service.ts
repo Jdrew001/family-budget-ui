@@ -27,17 +27,6 @@ export class CoreService extends BaseService {
     super();
   }
 
-  handleAlertAction(payload: {action: string, data: any}) {
-    if (!!payload.action) {
-      try {
-        const actionHandler = new ActionStrategyMapping[payload.action](this);
-        actionHandler.execute(payload.data);
-      } catch (error) {
-        console.log('action handler err', error);
-      }
-    }
-  }
-
   getBudgetCategoryRefData(id: string) {
     const url = this.helperService.getResourceUrl(ManageBudgetConstant.MANAGE_BUDGET_REF_DATA);
     return this.http.get(`${url}/${id}`) as Observable<any>;

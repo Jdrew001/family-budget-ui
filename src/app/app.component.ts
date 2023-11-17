@@ -3,6 +3,7 @@ import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { AuthService } from './core/services/auth.service';
 import { CoreService } from './core/services/core.service';
+import { AlertControllerService } from './shared/services/alert-controller.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent implements OnInit {
     private storage: Storage,
     private platForm: Platform,
     private authService: AuthService,
-    private coreService: CoreService
+    private alertControllerService: AlertControllerService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -25,6 +26,6 @@ export class AppComponent implements OnInit {
   }
 
   onAlertAction(payload: {action: string, data: any}) {
-    this.coreService.handleAlertAction(payload);
+    this.alertControllerService.handleAlertAction(payload);
   }
 }
