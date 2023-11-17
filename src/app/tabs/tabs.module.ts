@@ -26,6 +26,10 @@ import { ManageCategoryPage } from '../manage-category/manage-category.page';
 import { SettingsPage } from '../settings/settings.page';
 import { AddAccountComponent } from '../settings/add-account/add-account.component';
 import { AddFamilyComponent } from '../settings/add-family/add-family.component';
+import { SwiperModule } from "swiper/angular";
+
+import SwiperCore, { Pagination} from 'swiper';
+SwiperCore.use([Pagination]);
 
 @NgModule({
   imports: [
@@ -37,6 +41,7 @@ import { AddFamilyComponent } from '../settings/add-family/add-family.component'
     CoreModule,
     HttpClientModule,
     SharedModule,
+    SwiperModule
   ],
   declarations: [
     TabsPage,

@@ -47,6 +47,13 @@ export class AuthService {
     return this.http.get(url) as Observable<TokenModel>;
   }
 
+  /**
+   * Validates the refresh token and performs necessary actions based on the result.
+   * If the refresh token is valid, it sets the token, checks the family status,
+   * displays an alert if necessary, fetches user information, stores it,
+   * hides the splash screen, and navigates to the summary page.
+   * If the refresh token is invalid, it navigates to the sign-in page and sets the authentication status to false.
+   */
   async validateRefreshToken() {
     this.refreshToken()
     .pipe(

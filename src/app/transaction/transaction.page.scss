@@ -1,0 +1,11 @@
+:host ::ng-deep .swiper {
+    padding-bottom: 1rem !important;
+}
+
+::ng-deep .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: #24388E !important;
+}
+
+::ng-deep .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: 0px !important;
+}

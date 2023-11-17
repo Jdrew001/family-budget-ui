@@ -55,13 +55,12 @@
     </div>
 
     <div *ngIf="accounts.length > 0">
-      <swiper-container 
-        slides-per-view="2" 
-        speed="500" 
-        pagination="true"
-        css-mode="false">
-        <swiper-slide
-        *ngFor="let account of accounts">
+      <swiper
+        [allowTouchMove]="true"
+        direction="horizontal"
+        [slidesPerView]="2"
+        [pagination]="true">
+        <ng-template *ngFor="let account of accounts" swiperSlide>
           <app-card
             margin="10px 5px 5px 5px" 
             padding="5px"
@@ -80,8 +79,8 @@
               </ion-row>
             </ion-grid>
           </app-card>
-        </swiper-slide>
-      </swiper-container>
+        </ng-template>
+      </swiper>
     </div>
 
     <div>
@@ -99,13 +98,13 @@
       </ion-grid>
     </div>
 
-    <div *ngIf="familyMembers?.length != 0">
-      <swiper-container 
-        slides-per-view="2" 
-        speed="500" 
-        pagination="true"
-        css-mode="false">
-        <swiper-slide *ngFor="let user of familyMembers">
+    <div *ngIf="familyMembers?.length > 0">
+      <swiper
+        [allowTouchMove]="true"
+        direction="horizontal"
+        [slidesPerView]="2"
+        [pagination]="true">
+        <ng-template *ngFor="let user of familyMembers" swiperSlide>
           <app-card
             margin="10px 5px 5px 5px" 
             padding="5px"
@@ -122,12 +121,10 @@
                   <p class="pt-0 mt-2 text-xs light-text-color ellipse" style="max-width: 5rem">{{ user?.email }}</p>
                 </ion-col>
               </ion-row>
-              <ion-row>
-              </ion-row>
             </ion-grid>
           </app-card>
-        </swiper-slide>
-      </swiper-container>
+        </ng-template>
+      </swiper>
     </div>
 
     <div>
@@ -145,14 +142,13 @@
       </ion-grid>
     </div>
 
-    <div *ngIf="categories.length != 0">
-      <swiper-container 
-        slides-per-view="2" 
-        speed="500" 
-        pagination="true"
-        css-mode="false">
-        <swiper-slide
-        *ngFor="let item of categories">
+    <div class="pb-5" *ngIf="categories.length != 0">
+      <swiper
+        [allowTouchMove]="true"
+        direction="horizontal"
+        [slidesPerView]="2"
+        [pagination]="true">
+        <ng-template *ngFor="let item of categories" swiperSlide>
           <app-card
             margin="10px 5px 5px 5px" 
             padding="5px">
@@ -169,8 +165,8 @@
               </ion-row>
             </ion-grid>
           </app-card>
-        </swiper-slide>
-      </swiper-container>
+        </ng-template>
+      </swiper>
     </div>
 
     <div class="button-group mb-3 mt-5">

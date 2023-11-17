@@ -1,16 +1,11 @@
-::host :ng-deep swiper-container {
-    height: 100%;
+:host ::ng-deep .swiper {
+    padding-bottom: 1rem !important;
 }
 
-:host ::ng-deep .swiper-pagination-bullet .swiper-pagination-bullet-active {
+::ng-deep .swiper-pagination-bullet.swiper-pagination-bullet-active {
     background-color: #24388E !important;
 }
 
-:host ::ng-deep .swiper-initialized {
-    padding: 20px 0px;
-}
-
-:host ::ng-deep .swiper-pagination {
-    position: absolute;
-    bottom: 0px;
+::ng-deep .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: 0px !important;
 }

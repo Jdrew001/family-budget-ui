@@ -7,13 +7,11 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { register } from 'swiper/element/bundle';
 import { CoreModule } from './core/core.module';
 import { SigninPageModule } from './auth/signin/signin.module';
 import { SignupPageModule } from './auth/signup/signup.module';
 import { SharedModule } from './shared/shared.module';
-
-register();
+import { TabsPageModule } from './tabs/tabs.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +22,8 @@ register();
     AppRoutingModule,
     SigninPageModule,
     SignupPageModule,
-    SharedModule
+    SharedModule,
+    TabsPageModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

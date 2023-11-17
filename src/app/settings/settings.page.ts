@@ -39,6 +39,7 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
   }
 
   async logout() {
+    this.ionViewDidLeave();
     await this.authService.logout();
   }
 

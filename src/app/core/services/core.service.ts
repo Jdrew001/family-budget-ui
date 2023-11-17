@@ -8,7 +8,7 @@ import { MasterRefdata } from '../models/master-ref.model';
 import { HelperService } from './helper.service';
 import { GenericModel } from '../models/generic.model';
 import { AlertModal } from 'src/app/shared/components/alert-box/alert-box.model';
-import { ActionStrategyMapping } from '../constants/alert-key.constants';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,8 @@ export class CoreService extends BaseService {
 
   constructor(
     private readonly http: HttpClient,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private router: Router
   ) { 
     super();
   }
@@ -48,4 +49,8 @@ export class CoreService extends BaseService {
     const url = this.helperService.getResourceUrl(CoreConstants.CONFIRM_FAMILY_SWITCH);
     return this.http.get(`${url}/${familyId}`);
   }
+
+  refreshView() {
+    this.router.navigate(['/', this.router.url.split('/')[1]]);
+  }  
 }

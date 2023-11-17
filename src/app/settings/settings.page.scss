@@ -1,15 +1,20 @@
 swiper-container {
     height: 12vh !important;
 }
-::ng-deep .swiper-pagination-bullet .swiper-pagination-bullet-active {
-    background-color: #24388E !important;
-}
-
-::ng-deep .swiper {
-    padding: 20px 0px !important;
-}
 
 ::ng-deep .swiper-pagination {
     position: absolute;
     bottom: 0px;
+}
+
+:host ::ng-deep .swiper {
+    padding-bottom: 1rem !important;
+}
+
+::ng-deep .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: #24388E !important;
+}
+
+::ng-deep .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: 0px !important;
 }

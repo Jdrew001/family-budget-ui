@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { SummaryService } from './summary.service';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController, ViewDidEnter } from '@ionic/angular';
+import { ModalController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { CoreService } from '../core/services/core.service';
 import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
 import * as _ from 'lodash';
@@ -13,7 +13,7 @@ import { CircleGuageConstant } from '../shared/constants/circle-guage.constant';
   templateUrl: './summary.page.html',
   styleUrls: ['./summary.page.scss'],
 })
-export class SummaryPage implements OnInit, ViewDidEnter {
+export class SummaryPage implements OnInit, ViewDidEnter, ViewDidLeave {
 
   @ViewChild('slider') slider: ElementRef = {} as ElementRef;
 
@@ -34,9 +34,20 @@ export class SummaryPage implements OnInit, ViewDidEnter {
     this.summaryService.getSummaryData();
   }
 
+  ionViewDidLeave(): void {
+    this.summaryService.resetSummaryData();
+  }
+
   ngOnInit() {
     this.handleNavigation();
-    
+    this.coreService.$shouldRefreshScreen.subscribe((value: boolean) => {
+      if (value) {
+        this.summaryService.resetSummaryData();
+        setTimeout(() => {
+          this.summaryService.getSummaryData();
+        }, 100)
+      }
+    })
   }
 
   handleNavigation() {

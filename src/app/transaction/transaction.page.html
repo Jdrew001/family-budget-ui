@@ -5,13 +5,12 @@
 <ion-content [fullscreen]="true">
   <div style="margin-bottom: 3rem;">
     <div class="mb-4">
-      <swiper-container 
-        slides-per-view="2" 
-        speed="500" 
-        pagination="true"
-        css-mode="true">
-
-        <swiper-slide *ngFor="let item of accountBalanceSummary">
+      <swiper
+        [allowTouchMove]="true"
+        direction="horizontal"
+        [slidesPerView]="2"
+        [pagination]="true">
+        <ng-template *ngFor="let item of accountBalanceSummary" swiperSlide>
           <app-card
             id="1"
             margin="10px 5px 5px 5px" 
@@ -33,9 +32,8 @@
               </ion-row>
             </ion-grid>
           </app-card>
-        </swiper-slide>
-
-      </swiper-container>
+        </ng-template>
+      </swiper>
     </div>
 
     <div class="pt-3" *ngFor="let group of groupedTransactions">

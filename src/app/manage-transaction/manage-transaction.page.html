@@ -11,12 +11,12 @@
   <div class="input-group mb-2">
     <div class="group mb-0">
       <ion-label position="stacked">Account</ion-label>
-      <swiper-container 
-        slides-per-view="2" 
-        speed="500" 
-        pagination="true"
-        css-mode="true">
-        <swiper-slide *ngFor="let item of accounts">
+      <swiper
+        [allowTouchMove]="true"
+        direction="horizontal"
+        [slidesPerView]="2"
+        [pagination]="true">
+        <ng-template *ngFor="let item of accounts" swiperSlide>
           <app-card
             [id]="item?.id!"
             [active]="item?.active!"
@@ -38,8 +38,8 @@
               </ion-row>
             </ion-grid>
           </app-card>
-        </swiper-slide>
-      </swiper-container>
+        </ng-template>
+      </swiper>
     </div>
   </div>
 

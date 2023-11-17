@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreService } from './services/core.service';
 import { ToastService } from './services/toast.service';
@@ -22,7 +22,6 @@ import { HelperService } from './services/helper.service';
     HttpClientModule
   ],
   providers: [
-    CoreService,
     ToastService,
     AuthService,
     UserService,
@@ -37,4 +36,13 @@ import { HelperService } from './services/helper.service';
     CurrencyMaskDirective
   ]
 })
-export class CoreModule { }
+export class CoreModule {
+  static forRoot(): ModuleWithProviders<CoreModule> {
+    return {
+      ngModule: CoreModule,
+      providers: [
+        CoreService
+      ],
+    };
+  }
+}

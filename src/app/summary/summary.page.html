@@ -14,13 +14,13 @@
       </ion-grid>
     </div>
 
-    <div *ngIf="accountBalanceSummary.length != 0" class="pb-2">
-      <swiper-container 
-        slides-per-view="2" 
-        speed="500" 
-        pagination="true"
-        css-mode="true">
-        <swiper-slide *ngFor="let item of accountBalanceSummary">
+    <div *ngIf="accountBalanceSummary.length > 0" class="pb-2">
+      <swiper
+        [allowTouchMove]="true"
+        direction="horizontal"
+        [slidesPerView]="2"
+        [pagination]="true">
+        <ng-template *ngFor="let item of accountBalanceSummary" swiperSlide>
           <app-card
             [id]="item?.id!"
             margin="10px 5px 5px 5px" 
@@ -41,8 +41,17 @@
               </ion-row>
             </ion-grid>
           </app-card>
+        </ng-template>
+      </swiper>
+      <!-- <swiper-container 
+        slides-per-view="2" 
+        speed="500" 
+        pagination="true"
+        css-mode="true">
+        <swiper-slide *ngFor="let item of accountBalanceSummary">
+          
         </swiper-slide>
-      </swiper-container>
+      </swiper-container> -->
     </div>
 
     <ng-container *ngIf="currentBudgetSummary">
