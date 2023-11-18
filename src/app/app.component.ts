@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   constructor(
     private storage: Storage,
     private platForm: Platform,
-    private authService: AuthService,
+    private authService: AuthService,//
     private alertControllerService: AlertControllerService
   ) {}
 
@@ -23,9 +23,5 @@ export class AppComponent implements OnInit {
       await this.storage.create();
       await this.authService.validateRefreshToken();
     });
-  }
-
-  onAlertAction(payload: {action: string, data: any}) {
-    this.alertControllerService.handleAlertAction(payload);
   }
 }

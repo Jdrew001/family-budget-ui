@@ -12,7 +12,6 @@ import { Subscription } from 'rxjs';
 export class AlertBoxComponent  implements OnInit {
 
   @ViewChild('alertBox', { static: false }) alertBox: IonModal;
-  @Output() onButtonClick: EventEmitter<any> = new EventEmitter<any>();
 
   public config: AlertModal;
   public alertDialogType = AlertDialogType;
@@ -47,8 +46,8 @@ export class AlertBoxComponent  implements OnInit {
   }
 
   dismissDialog(isConfirm: boolean) {
-    const payload = {action: this.config?.key, data: this.config?.data}
-    this.onButtonClick.emit(isConfirm ? payload: null);
+    const payload = isConfirm ? {action: this.config?.key, data: this.config?.data}: null;
+    this.alertControllerService.handleAlertAction(payload);
     setTimeout(() => {this.alertControllerService.closeAlertBox()}, 100);
   }
 }
