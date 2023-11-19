@@ -31,7 +31,7 @@ export class AlertBoxComponent  implements OnInit {
         } else {
           this.closeDialog(data.config);
         }
-    });
+      });
     }
   }
 

@@ -27,6 +27,7 @@ import { SettingsPage } from '../settings/settings.page';
 import { AddAccountComponent } from '../settings/add-account/add-account.component';
 import { AddFamilyComponent } from '../settings/add-family/add-family.component';
 import { SwiperModule } from "swiper/angular";
+import { AddCategoryComponent as AddCategoryComponentSettings } from '../settings/add-category/add-category.component';
 
 import SwiperCore, { Pagination} from 'swiper';
 SwiperCore.use([Pagination]);
@@ -55,7 +56,8 @@ SwiperCore.use([Pagination]);
     ManageCategoryPage,
     SettingsPage,
     AddAccountComponent,
-    AddFamilyComponent
+    AddFamilyComponent,
+    AddCategoryComponentSettings
   ],
   providers: [
     ManageTransactionService,

@@ -14,8 +14,7 @@ export class AppComponent implements OnInit {
   constructor(
     private storage: Storage,
     private platForm: Platform,
-    private authService: AuthService,//
-    private alertControllerService: AlertControllerService
+    private authService: AuthService
   ) {}
 
   async ngOnInit(): Promise<void> {

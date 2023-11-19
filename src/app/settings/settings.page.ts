@@ -6,6 +6,7 @@ import { AddAccountComponent } from './add-account/add-account.component';
 import { AddFamilyComponent } from './add-family/add-family.component';
 import { FamilyUserModel } from './models/settings.model';
 import { UserService } from '../core/services/user/user.service';
+import { AddCategoryComponent } from './add-category/add-category.component';
 
 @Component({
   selector: 'app-settings',
@@ -31,8 +32,7 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
   constructor(
     private settingsService: SettingsService,
     private authService: AuthService,
-    private modalController: ModalController,
-    private userService: UserService
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -66,6 +66,10 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
     this.presetAccountModal(); 
   }
 
+  manageCategory() {
+    this.presentCategoryModal();
+  }
+
   manageFamily() {
     this.AddFamilyComponent.presentModal();
   }
@@ -90,6 +94,17 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
       this.AddFamilyComponent.dismissModal();
       this.settingsService.resetFamilyMembers();
     });
+  }
+
+  private async presentCategoryModal(category = null) {
+    const modal = await this.modalController.create({
+      component: AddCategoryComponent,
+      componentProps: {
+        category: category
+      }
+    });
+
+    modal.present();
   }
 
   private async presetAccountModal(account = null) {
