@@ -18,7 +18,7 @@
   <div style="margin-bottom: 10rem">
     <ion-grid>
       <ion-row>
-        <ion-col>
+        <ion-col size="9">
           <div class="input-group mt-4 mb-1">
             <div class="group mb-0">
               <ion-label position="stacked">Category Name</ion-label>
@@ -26,6 +26,16 @@
                   <ion-icon *ngIf="(categoryName.dirty || categoryName.touched) && !categoryName.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
                   <ion-icon *ngIf="(categoryName.dirty || categoryName.touched) && categoryName.errors" class="incorrect" name="close-circle" item-right></ion-icon>
                 </ion-input>
+            </div>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="input-group mt-3 mb-1">
+            <div class="group mb-0">
+              <ion-label position="stacked">Icon</ion-label>
+              <div (click)="chooseIcon()" class="input-lookalike">
+                <ion-icon *ngIf="icon?.value" style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+icon?.value+'.svg'" color="primary"></ion-icon>
+              </div>
             </div>
           </div>
         </ion-col>
@@ -66,19 +76,7 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>
-          <div class="input-group mt-3 mb-1">
-            <div class="group mb-0">
-              <ion-label position="stacked">Icon</ion-label>
-              <div (click)="chooseIcon()" class="input-lookalike">
-                <p *ngIf="!icon?.value" class="placeholder">Select Icon</p>
-                <p *ngIf="icon?.value">
-                  <ion-icon style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+icon?.value+'.svg'" color="primary"></ion-icon>
-                </p>
-              </div>
-            </div>
-          </div>
-        </ion-col>
+        
       </ion-row>
     </ion-grid>
 
@@ -90,6 +88,17 @@
         shape="round" 
         size="large"
         >Confirm</ion-button>
+    </div>
+
+    <div class="button-group mb-3 mt-5">
+      <ion-button *ngIf="categoryId?.value"
+        color="danger"
+        class="shadow" 
+        type="submit" 
+        expand="block" 
+        shape="round" 
+        size="large"
+        >Archive</ion-button>
     </div>
 
   </div>

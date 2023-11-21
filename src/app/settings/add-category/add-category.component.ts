@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { CoreService } from 'src/app/core/services/core.service';
 import { IconFieldComponent } from 'src/app/shared/components/icon-field/icon-field.component';
+import { CategoryType } from '../models/settings.model';
 
 @Component({
   selector: 'app-add-category-settings',
@@ -12,12 +13,24 @@ import { IconFieldComponent } from 'src/app/shared/components/icon-field/icon-fi
 export class AddCategoryComponent  implements OnInit {
 
   @ViewChild('iconField') iconField: IconFieldComponent;
+  @Input() set category(value: {id: string, name: string, type: CategoryType, icon: string}) {
+    if (value) {
+      console.log('value', value);
+      this.categoryName.setValue(value.name);
+      this.formGroup.get('categoryType').setValue(value.type);
+      this.icon.setValue(value.icon);
+      this.categoryId.setValue(value.id);
+    }
+  }
 
   formGroup: FormGroup = new FormGroup({
+    id: new FormControl(''),
     categoryName: new FormControl('', Validators.required),
     categoryType: new FormControl(-1, Validators.required),
     icon: new FormControl('', Validators.required)
   })
+
+  get categoryId() { return this.formGroup.get('id'); }
 
   get categoryName() { return this.formGroup.get('categoryName'); }
   get categoryType() { return this.formGroup.get('categoryType').value; }

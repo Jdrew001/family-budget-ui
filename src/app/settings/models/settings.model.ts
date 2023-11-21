@@ -29,6 +29,6 @@ export interface FamilyUserModel {
 }
 
 export enum CategoryType {
-    Income = 0,
-    Expense = 1
+    Income,
+    Expense
 }
