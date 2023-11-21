@@ -9,6 +9,7 @@ import { ReportGridComponent } from './components/report-grid/report-grid.compon
 import { DateOverlayComponent } from './components/date-overlay/date-overlay.component';
 import { AlertBoxComponent } from './components/alert-box/alert-box.component';
 import { AlertControllerService } from './services/alert-controller.service';
+import { IconFieldComponent } from './components/icon-field/icon-field.component';
 
 
 
@@ -19,7 +20,8 @@ import { AlertControllerService } from './services/alert-controller.service';
     CircleGaugeComponent,
     ReportGridComponent,
     DateOverlayComponent,
-    AlertBoxComponent
+    AlertBoxComponent,
+    IconFieldComponent
   ],
   providers: [
     SharedService,
@@ -35,7 +37,8 @@ import { AlertControllerService } from './services/alert-controller.service';
     CircleGaugeComponent,
     ReportGridComponent,
     DateOverlayComponent,
-    AlertBoxComponent
+    AlertBoxComponent,
+    IconFieldComponent
   ]
 })
 export class SharedModule { }

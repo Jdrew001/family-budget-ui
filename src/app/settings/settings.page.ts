@@ -66,8 +66,9 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
     this.presetAccountModal(); 
   }
 
-  manageCategory() {
-    this.presentCategoryModal();
+  manageCategory(category = null) {
+    console.log('category', category);
+    this.presentCategoryModal(category);
   }
 
   manageFamily() {

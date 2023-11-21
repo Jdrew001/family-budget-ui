@@ -27,3 +27,8 @@ export interface FamilyUserModel {
     invitePending: boolean;
     isOwner: boolean;
 }
+
+export enum CategoryType {
+    Income = 0,
+    Expense = 1
+}

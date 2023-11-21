@@ -151,7 +151,8 @@
         <ng-template *ngFor="let item of categories" swiperSlide>
           <app-card
             margin="10px 5px 5px 5px" 
-            padding="5px">
+            padding="5px"
+            (click)="manageCategory(item)">
             <ion-grid>
               <ion-row class="ion-justify-content-start">
                 <ion-col class="ion-align-self-center mr-3" size="2">
