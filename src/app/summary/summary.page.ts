@@ -51,23 +51,7 @@ export class SummaryPage implements OnInit, ViewDidEnter, ViewDidLeave {
   }
 
   handleNavigation() {
-    this.coreService.$showManageTransaction.subscribe(async (value: any) => {
-      const val = value?.data;
-      if (value.show) {
-        const modal = await this.modalController.create({
-          component: ManageTransactionPage,
-          componentProps: {
-            accounts: _.cloneDeep(this.accountBalanceSummary)
-          }
-        });
-
-        modal.present();
-        const { data } = await modal.onWillDismiss();
-        if (data && data?.refresh) {
-          this.summaryService.getSummaryData();
-        }
-      }
-   });
+    
   }
 
   handleAccountAction(id: string) {

@@ -5,7 +5,7 @@ import { Storage } from '@ionic/storage-angular';
 import { UserService } from '../core/services/user/user.service';
 import { IdName } from '../core/models/account.model';
 import { SettingsConstant } from './settings.constant';
-import { AccountModel, CategoriesModel } from './models/settings.model';
+import { AccountModel, CategoriesModel, CreateCategoryDto } from './models/settings.model';
 import { HelperService } from '../core/services/helper.service';
 import { Observable } from 'rxjs';
 
@@ -77,6 +77,11 @@ export class SettingsService {
   inviteUser(familyId: string, email: string) {
     const url = this.helperService.getResourceUrl(SettingsConstant.MANAGE_INVITE);
     return this.http.post(url, { familyId, email, action: 'INVITE' }) as Observable<any>;
+  }
+
+  createCategory(data: CreateCategoryDto): Observable<any> {
+    const url = this.helperService.getResourceUrl(SettingsConstant.CREATE_CATEGORY);
+    return this.http.post(url, data) as Observable<any>;
   }
 
   async removeFamilyMember(familyId: string, email: string, invitePending: boolean) {

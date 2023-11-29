@@ -1,9 +1,12 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { CoreService } from 'src/app/core/services/core.service';
 import { IconFieldComponent } from 'src/app/shared/components/icon-field/icon-field.component';
 import { CategoryType } from '../models/settings.model';
+import { ToastService } from 'src/app/core/services/toast.service';
+import { CoreConstants } from 'src/app/core/constants/core.constants';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-add-category-settings',
@@ -15,13 +18,14 @@ export class AddCategoryComponent  implements OnInit {
   @ViewChild('iconField') iconField: IconFieldComponent;
   @Input() set category(value: {id: string, name: string, type: CategoryType, icon: string}) {
     if (value) {
-      console.log('value', value);
       this.categoryName.setValue(value.name);
       this.formGroup.get('categoryType').setValue(value.type);
       this.icon.setValue(value.icon);
       this.categoryId.setValue(value.id);
     }
   }
+
+  @Output() categoryCreated$: EventEmitter<any> = new EventEmitter<any>();
 
   formGroup: FormGroup = new FormGroup({
     id: new FormControl(''),
@@ -38,17 +42,15 @@ export class AddCategoryComponent  implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private coreService: CoreService
+    private coreService: CoreService,
+    private toastService: ToastService,
+    private settingsService: SettingsService
   ) { }
 
   ngOnInit() {}
 
   categoryTypeSelected(type: number) {
     this.formGroup.get('categoryType').setValue(type);
-  }
-
-  presentModal(data?: any) {
-
   }
 
   closeCategoryPopup() {
@@ -67,8 +69,19 @@ export class AddCategoryComponent  implements OnInit {
     return type == 0 ? 'Income' : 'Expense';
   }
 
-  getSelectedIcon(icon) {
-    
+  confirmCategory() {
+    if (this.formGroup.invalid) {
+      this.toastService.showMessage(CoreConstants.FORM_ERROR_MSG);
+      return;
+    }
+
+    this.settingsService.createCategory(this.formGroup.value).subscribe((result) => {
+      if (result && result.success) {
+        this.closeCategoryPopup();
+      }
+
+      this.toastService.showMessage(result.message, true);
+    });
   }
 
 }

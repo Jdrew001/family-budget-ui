@@ -9,6 +9,7 @@ export class SettingsConstant {
     public static readonly REMOVE_FAMILY_MEMBER = 'family/removeFamilyMember';
     public static readonly GET_FAMILY_MEMBERS = 'family/getFamilyMembers';
     public static readonly LEAVE_FAMILY = 'family/leaveFamily';
+    public static readonly CREATE_CATEGORY = 'category/createCategory';
 }
 
 

@@ -58,7 +58,7 @@ export class SigninPage implements OnInit {
         switchMap(() => {
           this.authService.isAuthenticated$.next(true);
           this.authenticated = true;
-          this.navController.navigateForward('/tabs/summary', { replaceUrl:true });
+          this.navController.navigateRoot('/tabs/summary', { replaceUrl:true });
           this.signInFormService.signInForm.reset();
           return this.coreService.checkFamilyStatus()
         }),
@@ -78,13 +78,13 @@ export class SigninPage implements OnInit {
     });
     } else {
       this.signInForm.markAllAsTouched();
-      this.toastService.showMessage('Please fill in the form correctly', true);
+      this.toastService.showMessage('Please provide all the required fields!', true);
     }
     
   }
 
-  registerPage() {
-    
+  registerPage() {console.log('registerPage')
+    this.navController.navigateRoot('/signup', { replaceUrl:true });
   }
 
 }

@@ -9,6 +9,8 @@ import { HelperService } from './helper.service';
 import { GenericModel } from '../models/generic.model';
 import { AlertModal } from 'src/app/shared/components/alert-box/alert-box.model';
 import { Router } from '@angular/router';
+import { SummaryAccountBalance } from '../models/account.model';
+import { SummaryConstant } from 'src/app/summary/summary.constant';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,10 @@ export class CoreService extends BaseService {
   $showManageTransaction: Subject<{data: any, show: boolean}> = new Subject<{data: any, show: boolean}>();
 
   masterRefData: MasterRefdata;
+
+  private _accountBalanceSummary: SummaryAccountBalance[] = [];
+  get accountBalanceSummary() { return this._accountBalanceSummary; }
+  set accountBalanceSummary(value) { this._accountBalanceSummary = value; }
 
   constructor(
     private readonly http: HttpClient,
@@ -45,6 +51,11 @@ export class CoreService extends BaseService {
     return this.http.get<GenericModel<{familyId: string, dialogConfig: AlertModal}>>(url);
   }
 
+  checkRegistrationStatus(): Observable<{success: string, message: string, data: boolean}> {
+    const url = this.helperService.getResourceUrl(CoreConstants.CHECK_REGISTRATION_STATUS);
+    return this.http.get(url) as Observable<{success: string, message: string, data: boolean}>;
+  }
+
   confirmFamilySwitch(familyId: string) {
     const url = this.helperService.getResourceUrl(CoreConstants.CONFIRM_FAMILY_SWITCH);
     return this.http.get(`${url}/${familyId}`);
@@ -53,4 +64,9 @@ export class CoreService extends BaseService {
   refreshView() {
     this.router.navigate(['/', this.router.url.split('/')[1]]);
   }  
+
+  public getAccountBalances(): Observable<SummaryAccountBalance[]> {
+    const url = this.helperService.getResourceUrl(SummaryConstant.ACCOUNT_BALANCES);
+    return this.http.get(url) as Observable<SummaryAccountBalance[]>;
+  }
 }

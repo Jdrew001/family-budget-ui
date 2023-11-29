@@ -68,7 +68,24 @@ export class AuthService {
       }),
       switchMap(() => {
         this.isAuthenticated$.next(true);
-        return this.coreService.checkFamilyStatus();
+        return this.coreService.checkRegistrationStatus();
+      }),
+      switchMap((result: {success: string, message: string, data: any}) => {
+        if (!result.success) {
+          return EMPTY;
+        }
+
+        if (!result?.data) return EMPTY;
+
+        const userInvited = result.data?.userInvited;
+        const userOnboarded = result.data?.onboarded;
+        if (userInvited || userOnboarded) {
+          return this.coreService.checkFamilyStatus();
+        }
+
+        //TODO: if the user has not been invited, we  want to redirect to onboarding page
+        console.warn('TODO: redirect to onboarding page')
+        return EMPTY;
       }),
       switchMap((familyStatus) => {
         if (familyStatus?.data?.dialogConfig) {

@@ -27,14 +27,13 @@
               <ion-row class="ion-justify-content-start">
                 <ion-col>
                   <p class="strong text-sm pb-0 mb-0">{{item?.name}}</p>
+                  <p class="pt-0 m-0">{{item?.amount | currency:'USD':'symbol':'1.2-2'}}</p>
+                </ion-col>
+                <ion-col class="ion-align-self-center mr-3" size="2">
+                  <ion-icon style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+item?.icon+'.svg'" color="primary"></ion-icon>
                 </ion-col>
               </ion-row>
               <ion-row>
-                <ion-col class="pt-0 m-0" size="10">
-                  <p class="pt-0 m-0">{{item?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
-                </ion-col>
-                <ion-col size="2">
-                </ion-col>
               </ion-row>
             </ion-grid>
           </app-card>

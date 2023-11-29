@@ -32,3 +32,10 @@ export enum CategoryType {
     Income,
     Expense
 }
+
+export interface CreateCategoryDto {
+    id: string;
+    categoryName: string;
+    categoryType: CategoryType;
+    icon: string;
+}

@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { CoreService } from '../core/services/core.service';
-import { GenericModel } from '../core/models/generic.model';
-import { AlertBoxComponent } from '../shared/components/alert-box/alert-box.component';
-import { AlertDialogType, AlertModal, AlertType } from '../shared/components/alert-box/alert-box.model';
-import { AlertControllerService } from '../shared/services/alert-controller.service';
+import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-tabs',
@@ -16,15 +14,33 @@ export class TabsPage implements OnInit {
   selectedTab = 'summary';
 
   constructor(
-    private coreService: CoreService
+    private coreService: CoreService,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
     this.coreService.getMasterRefData();
   }
 
-  handleFabClick() {
-    this.coreService.$showManageTransaction.next({data: null, show: true});
+  async handleFabClick() {
+    this.coreService.getAccountBalances().subscribe(async result => {
+      this.coreService.accountBalanceSummary = result;
+
+      const modal = await this.modalController.create({
+        component: ManageTransactionPage,
+        componentProps: {
+          accounts: _.cloneDeep(this.coreService.accountBalanceSummary)
+        }
+      });
+  
+      modal.present();
+      // const { data } = await modal.onWillDismiss();
+      // if (data && data?.refresh) {
+      //   this.summaryService.getSummaryData();
+      // }
+    });
+    //this.coreService.$showManageTransaction.next({data: null, show: true});
+    
   }
 
   handleTabSelect(event: any) {
