@@ -7,6 +7,7 @@ import { SigninPage } from './auth/signin/signin.page';
 import { SignupPage } from './auth/signup/signup.page';
 import { ManageTransactionPage } from './manage-transaction/manage-transaction.page';
 import { ManageBudgetPage } from './manage-budget/manage-budget.page';
+import { OnboardingPage } from './onboarding/onboarding.page';
 
 const isAuthenticated = (): | boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> => {
   const authService = inject(AuthService);
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'signup',
     component: SignupPage
+  },
+  {
+    path: 'onboarding',
+    component: OnboardingPage
   },
   {
     path: '',

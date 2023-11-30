@@ -1,0 +1,38 @@
+<div class="auth">
+  <ion-content [fullscreen]="true">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <!-- radial here -->
+        </ion-col>
+        <ion-col>
+          <h5>{{ getTitleDescription('title') }}</h5>
+          <p>{{ getTitleDescription('description') }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col [ngSwitch]="currentPage">
+          <div *ngSwitchCase="0">
+            <app-profile></app-profile>
+          </div>
+          <div *ngSwitchCase="1">
+            <app-account></app-account>
+          </div>
+          <div *ngSwitchCase="2">
+            <app-categories></app-categories>
+          </div>
+          <div *ngSwitchCase="3">
+            <app-invite-family></app-invite-family>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-footer class="ion-no-border" slot="fixed">
+      <div class="ion-padding button-group">
+        <ion-button class="shadow" type="submit" expand="block" shape="round" size="large" (click)="nextStep()">Next</ion-button>
+      </div>
+    </ion-footer>
+  </ion-content>
+  
+</div>

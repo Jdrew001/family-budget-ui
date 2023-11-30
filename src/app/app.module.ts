@@ -12,9 +12,21 @@ import { SigninPageModule } from './auth/signin/signin.module';
 import { SignupPageModule } from './auth/signup/signup.module';
 import { SharedModule } from './shared/shared.module';
 import { TabsPageModule } from './tabs/tabs.module';
+import { OnboardingPage } from './onboarding/onboarding.page';
+import { ProfileComponent } from './onboarding/profile/profile.component';
+import { AccountComponent } from './onboarding/account/account.component';
+import { CategoriesComponent } from './onboarding/categories/categories.component';
+import { InviteFamilyComponent } from './onboarding/invite-family/invite-family.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent, 
+    OnboardingPage, 
+    ProfileComponent, 
+    AccountComponent,
+    CategoriesComponent,
+    InviteFamilyComponent
+  ],
   imports: [
     IonicModule.forRoot(),
     CoreModule,

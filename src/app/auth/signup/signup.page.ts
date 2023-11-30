@@ -49,56 +49,14 @@ export class SignupPage implements OnInit {
 
     this.signupService.signUp(this.signUpForm.getRawValue())
       .pipe(
-        //result of the registration service
         switchMap((result) => {
           if (result?.error) {
             this.toastService.showMessage(result.message);
             return EMPTY;
           }
           return from(this.tokenService.setToken(result));
-        }),
-        // result of storing the tokens from register service
-        switchMap(() => {
-          return this.coreService.checkRegistrationStatus();
-        }),
-        // result of checking registration status
-        switchMap((result: {success: string, message: string, data: any}) => {
-          if (!result.success) {
-            this.toastService.showMessage(result.message);
-            return EMPTY;
-          }
-
-          if (!result?.data) return EMPTY;
-
-          const userInvited = result.data?.userInvited;
-          if (userInvited) {
-            return this.coreService.checkFamilyStatus();
-          }
-
-          //TODO: if the user has not been invited, we want to redirect to onboarding page
-          console.warn('TODO: redirect to onboarding page')
-          return EMPTY;
-        }),
-        // result of checking family status
-        switchMap((familyStatus) => {
-          if (familyStatus?.data?.dialogConfig) {
-            this.alertControllerService.alertBoxSubject$.next({config: familyStatus?.data?.dialogConfig, show: true});
-          }  
-
-          return this.userService.fetchUserInformation();
-        }),
-        // result of fetching user information
-        switchMap((userInformation) => {
-          return from(this.userService.storeUserInformation(userInformation))
         })
-        // result of storing user information
-      ).subscribe(() => {
-        this.userService.resyncUserInformation$.next(true);
-
-        // a result that occurs down here means we can redirect to summary screen.
-        // User is registered and is a part of a family
-        this.navController.navigateRoot('/tabs/summary', { replaceUrl:true });
-      })
+      ).subscribe(() => this.navController.navigateRoot('/onboarding', { replaceUrl:true }));
   }
 
 }
