@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-account',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./account.component.scss'],
 })
 export class AccountComponent  implements OnInit {
+
+  @Input() accountForm: FormArray;
 
   constructor() { }
 

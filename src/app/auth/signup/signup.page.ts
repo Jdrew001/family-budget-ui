@@ -8,6 +8,7 @@ import { CoreService } from 'src/app/core/services/core.service';
 import { TokenService } from 'src/app/core/services/token.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { AlertControllerService } from 'src/app/shared/services/alert-controller.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -25,6 +26,7 @@ export class SignupPage implements OnInit {
   constructor(
     private navController: NavController,
     private signUpFormService: SignupFormService,
+    private authService: AuthService,
     private toastService: ToastService,
     private signupService: SignupService,
     private coreService: CoreService,
@@ -55,8 +57,15 @@ export class SignupPage implements OnInit {
             return EMPTY;
           }
           return from(this.tokenService.setToken(result));
+        }),
+        switchMap(() => {
+          this.authService.isAuthenticated$.next(true);
+          return this.coreService.checkOnboardingStatus();
         })
-      ).subscribe(() => this.navController.navigateRoot('/onboarding', { replaceUrl:true }));
+      ).subscribe((onboardingResult) => {
+        this.coreService.onboardingRequiredSections = onboardingResult?.data?.requiredSections;
+        this.navController.navigateRoot('/onboarding', { replaceUrl:true })
+      });
   }
 
 }

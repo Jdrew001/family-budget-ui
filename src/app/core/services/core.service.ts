@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, zip } from 'rxjs';
 import { ManageBudgetConstant } from 'src/app/manage-budget/manage-budget.constant';
 import { BaseService } from './base.service';
 import { HttpClient } from '@angular/common/http';
@@ -11,6 +11,10 @@ import { AlertModal } from 'src/app/shared/components/alert-box/alert-box.model'
 import { Router } from '@angular/router';
 import { SummaryAccountBalance } from '../models/account.model';
 import { SummaryConstant } from 'src/app/summary/summary.constant';
+import { RegistrationStatus } from '../models/registration-status.model';
+import { OnboardingStatus } from '../models/onboarding-status.model';
+import { UserService } from './user/user.service';
+import { AlertControllerService } from 'src/app/shared/services/alert-controller.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +26,8 @@ export class CoreService extends BaseService {
 
   masterRefData: MasterRefdata;
 
+  onboardingRequiredSections: string[] = [];
+
   private _accountBalanceSummary: SummaryAccountBalance[] = [];
   get accountBalanceSummary() { return this._accountBalanceSummary; }
   set accountBalanceSummary(value) { this._accountBalanceSummary = value; }
@@ -29,9 +35,17 @@ export class CoreService extends BaseService {
   constructor(
     private readonly http: HttpClient,
     private helperService: HelperService,
+    private userService: UserService,
     private router: Router
   ) { 
     super();
+  }
+
+  initializeUserInfo() {
+    const userInfo$ = this.userService.fetchUserInformation();
+    const checkFamStatus$ = this.checkFamilyStatus();
+
+    return zip(userInfo$, checkFamStatus$);
   }
 
   getBudgetCategoryRefData(id: string) {
@@ -51,9 +65,9 @@ export class CoreService extends BaseService {
     return this.http.get<GenericModel<{familyId: string, dialogConfig: AlertModal}>>(url);
   }
 
-  checkRegistrationStatus(): Observable<{success: string, message: string, data: boolean}> {
-    const url = this.helperService.getResourceUrl(CoreConstants.CHECK_REGISTRATION_STATUS);
-    return this.http.get(url) as Observable<{success: string, message: string, data: boolean}>;
+  checkOnboardingStatus() {
+    const url = this.helperService.getResourceUrl(CoreConstants.CHECK_ONBOARD_STATUS);
+    return (this.http.get(url)) as Observable<{success: string, message: string, data: OnboardingStatus}>;
   }
 
   confirmFamilySwitch(familyId: string) {

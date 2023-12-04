@@ -6,23 +6,27 @@
           <!-- radial here -->
         </ion-col>
         <ion-col>
-          <h5>{{ getTitleDescription('title') }}</h5>
-          <p>{{ getTitleDescription('description') }}</p>
+          <h5 class="text-md strong">{{ getTitleDescription('title') }}</h5>
+          <p class="text-xs light-text-color">{{ getTitleDescription('description') }}</p>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row [formGroup]="onboardingForm" class="mt-5">
         <ion-col [ngSwitch]="currentPage">
           <div *ngSwitchCase="0">
-            <app-profile></app-profile>
+            <app-profile 
+              [profileForm]="profileForm"></app-profile>
           </div>
           <div *ngSwitchCase="1">
-            <app-account></app-account>
+            <app-account
+              [accountForm]="accountsFormArray"></app-account>
           </div>
           <div *ngSwitchCase="2">
-            <app-categories></app-categories>
+            <app-categories 
+              [categoryForm]="categoriesFormArray"></app-categories>
           </div>
           <div *ngSwitchCase="3">
-            <app-invite-family></app-invite-family>
+            <app-invite-family
+              [familyInviteForm]="familyInvitesFormArray"></app-invite-family>
           </div>
         </ion-col>
       </ion-row>
@@ -30,7 +34,8 @@
 
     <ion-footer class="ion-no-border" slot="fixed">
       <div class="ion-padding button-group">
-        <ion-button class="shadow" type="submit" expand="block" shape="round" size="large" (click)="nextStep()">Next</ion-button>
+        <ion-button *ngIf="registrationStatus?.userInvited" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="submit()">Submit</ion-button>
+        <ion-button *ngIf="!registrationStatus?.userInvited" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="nextStep()">Next</ion-button>
       </div>
     </ion-footer>
   </ion-content>

@@ -68,40 +68,44 @@ export class AuthService {
       }),
       switchMap(() => {
         this.isAuthenticated$.next(true);
-        return this.coreService.checkRegistrationStatus();
+        return this.coreService.checkOnboardingStatus();
       }),
-      switchMap((result: {success: string, message: string, data: any}) => {
-        if (!result.success) {
-          return EMPTY;
+      // switchMap((result: {success: string, message: string, data: any}) => {
+      //   if (!result.success) {
+      //     return EMPTY;
+      //   }
+
+      //   if (!result?.data) return EMPTY;
+
+      //   const userInvited = result.data?.userInvited;
+      //   const userOnboarded = result.data?.onboarded;
+      //   if (userInvited || userOnboarded) {
+      //     return this.coreService.checkFamilyStatus();
+      //   }
+
+      //   //TODO: if the user has not been invited, we  want to redirect to onboarding page
+      //   console.warn('TODO: redirect to onboarding page')
+      //   return EMPTY;
+      // }),
+      // switchMap((familyStatus) => {
+      //   if (familyStatus?.data?.dialogConfig) {
+      //     this.alertControllerService.alertBoxSubject$.next({config: familyStatus?.data?.dialogConfig, show: true});
+      //   } 
+      //   return this.userService.fetchUserInformation();
+      // }),
+      // switchMap((userInformation) => {
+      //   return zip(
+      //     from(this.userService.storeUserInformation(userInformation)),
+      //     from(SplashScreen.hide())
+      //   )
+      // })
+    ).subscribe((onboardingResult) => {
+      this.coreService.onboardingRequiredSections = onboardingResult?.data?.requiredSections;
+        if (onboardingResult?.data?.requiredSections?.length > 0) {
+          this.navController.navigateRoot('/onboarding', { replaceUrl:true });
+        } else {
+          this.navController.navigateRoot('/tabs/summary', { replaceUrl:true });
         }
-
-        if (!result?.data) return EMPTY;
-
-        const userInvited = result.data?.userInvited;
-        const userOnboarded = result.data?.onboarded;
-        if (userInvited || userOnboarded) {
-          return this.coreService.checkFamilyStatus();
-        }
-
-        //TODO: if the user has not been invited, we  want to redirect to onboarding page
-        console.warn('TODO: redirect to onboarding page')
-        return EMPTY;
-      }),
-      switchMap((familyStatus) => {
-        if (familyStatus?.data?.dialogConfig) {
-          this.alertControllerService.alertBoxSubject$.next({config: familyStatus?.data?.dialogConfig, show: true});
-        } 
-        return this.userService.fetchUserInformation();
-      }),
-      switchMap((userInformation) => {
-        return zip(
-          from(this.userService.storeUserInformation(userInformation)),
-          from(SplashScreen.hide())
-        )
-      })
-    ).subscribe(() => {
-      this.userService.resyncUserInformation$.next(true);
-      this.navController.navigateRoot('/tabs/summary', { replaceUrl:true });
     });
   }
 

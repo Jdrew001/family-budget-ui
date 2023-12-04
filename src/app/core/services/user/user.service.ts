@@ -13,8 +13,6 @@ import { HelperService } from '../helper.service';
 })
 export class UserService {
 
-  resyncUserInformation$: Subject<any> = new Subject();
-
   constructor(
     private http: HttpClient,
     private storage: Storage,

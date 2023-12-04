@@ -18,7 +18,6 @@ import { HelperService } from './services/helper.service';
   ],
   imports: [
     CommonModule,
-    IonicStorageModule.forRoot(),
     HttpClientModule
   ],
   providers: [

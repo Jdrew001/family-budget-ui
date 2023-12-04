@@ -3,15 +3,12 @@ import { SigninService } from './services/signin.service';
 import { SigninFormService } from './services/signin-form.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { TokenService } from 'src/app/core/services/token.service';
-import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserService } from 'src/app/core/services/user/user.service';
-import { HelperService } from 'src/app/core/services/helper.service';
-import { EMPTY, finalize, from, switchMap, zip } from 'rxjs';
+import { EMPTY, from, switchMap } from 'rxjs';
 import { CoreService } from 'src/app/core/services/core.service';
 import { AlertControllerService } from 'src/app/shared/services/alert-controller.service';
-import { delay } from 'lodash';
 
 @Component({
   selector: 'app-signin',
@@ -36,8 +33,7 @@ export class SigninPage implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private coreService: CoreService,
-    private tokenService: TokenService,
-    private alertControllerService: AlertControllerService
+    private tokenService: TokenService
   ) { }
 
   ngOnInit() {
@@ -56,25 +52,38 @@ export class SigninPage implements OnInit {
           return from(this.tokenService.setToken(result));
         }),
         switchMap(() => {
+          // enable going to next screen
           this.authService.isAuthenticated$.next(true);
           this.authenticated = true;
-          this.navController.navigateRoot('/tabs/summary', { replaceUrl:true });
-          this.signInFormService.signInForm.reset();
-          return this.coreService.checkFamilyStatus()
-        }),
-        switchMap((familyStatus) => {
-          if (familyStatus?.data?.dialogConfig) {
-            this.alertControllerService.alertBoxSubject$.next({config: familyStatus?.data?.dialogConfig, show: true});
-          }  
 
-          return this.userService.fetchUserInformation();
-        }),
-        switchMap((userInformation) => {
-          return from(this.userService.storeUserInformation(userInformation))
-        }),
+          // we want to call check onboarding status
+          return this.coreService.checkOnboardingStatus();
+        })
+        // switchMap(() => {
+        //   this.authService.isAuthenticated$.next(true);
+        //   this.authenticated = true;
+        //   this.navController.navigateRoot('/tabs/summary', { replaceUrl:true });
+        //   this.signInFormService.signInForm.reset();
+        //   return this.coreService.checkFamilyStatus()
+        // }),
+        // switchMap((familyStatus) => {
+        //   if (familyStatus?.data?.dialogConfig) {
+        //     this.alertControllerService.alertBoxSubject$.next({config: familyStatus?.data?.dialogConfig, show: true});
+        //   }  
+
+        //   return this.userService.fetchUserInformation();
+        // }),
+        // switchMap((userInformation) => {
+        //   return from(this.userService.storeUserInformation(userInformation))
+        // }),
       )
-      .subscribe(() => {
-        this.userService.resyncUserInformation$.next(true);      
+      .subscribe((onboardingResult) => {
+        this.coreService.onboardingRequiredSections = onboardingResult?.data?.requiredSections;
+        if (onboardingResult?.data?.requiredSections?.length > 0) {
+          this.navController.navigateRoot('/onboarding', { replaceUrl:true });
+        } else {
+          this.navController.navigateRoot('/tabs/summary', { replaceUrl:true });
+        }
     });
     } else {
       this.signInForm.markAllAsTouched();

@@ -15,7 +15,6 @@ const isAuthenticated = (): | boolean | UrlTree | Observable<boolean | UrlTree> 
   return authService.isAuthenticated$.pipe(
       take(1),
       tap((isAuthenticated: boolean) => {
-        console.log('testing');
           if (!isAuthenticated) {
             navController.navigateRoot('/signin', { replaceUrl:true });
           }
@@ -36,7 +35,8 @@ const routes: Routes = [
   },
   {
     path: 'onboarding',
-    component: OnboardingPage
+    component: OnboardingPage,
+    canActivate: [canMatch]
   },
   {
     path: '',
@@ -51,14 +51,17 @@ const routes: Routes = [
   {
     path: 'manage-transaction',
     component: ManageTransactionPage,
+    canActivate: [canMatch]
   },
   {
     path: 'manage-budget',
     component: ManageBudgetPage,
+    canActivate: [canMatch]
   },
   {
     path: 'manage-category',
-    component: ManageBudgetPage
+    component: ManageBudgetPage,
+    canActivate: [canMatch]
   }
 ];
 

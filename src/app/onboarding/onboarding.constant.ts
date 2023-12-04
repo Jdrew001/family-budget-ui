@@ -1,4 +1,5 @@
 export class OnboardingConstant {
+    public static readonly ONBOARDING_URL = 'user/handleOnboarding';
     public static readonly ONBOARDING_PAGE_DATA = [
         {
             page: 0,

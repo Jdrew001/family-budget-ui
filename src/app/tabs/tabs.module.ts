@@ -30,6 +30,8 @@ import { SwiperModule } from "swiper/angular";
 import { AddCategoryComponent as AddCategoryComponentSettings } from '../settings/add-category/add-category.component';
 
 import SwiperCore, { Pagination} from 'swiper';
+import { OnboardingService } from '../onboarding/services/onboarding.service';
+import { OnboardingFormService } from '../onboarding/services/onboarding-form.service';
 SwiperCore.use([Pagination]);
 
 @NgModule({
@@ -64,7 +66,9 @@ SwiperCore.use([Pagination]);
     ManageBudgetService,
     SummaryService,
     TransactionService,
-    BudgetService
+    BudgetService,
+    OnboardingService,
+    OnboardingFormService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

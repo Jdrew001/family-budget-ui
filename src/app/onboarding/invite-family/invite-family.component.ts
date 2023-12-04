@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-invite-family',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./invite-family.component.scss'],
 })
 export class InviteFamilyComponent  implements OnInit {
+
+  @Input() familyInviteForm: FormArray;
 
   constructor() { }
 

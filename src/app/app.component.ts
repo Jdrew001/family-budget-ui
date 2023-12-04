@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage-angular';
 import { AuthService } from './core/services/auth.service';
 import { CoreService } from './core/services/core.service';
 import { AlertControllerService } from './shared/services/alert-controller.service';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -20,9 +21,9 @@ export class AppComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.platForm.ready().then(async (source) => {
-      await this.storage.create();
-      this.navController.navigateRoot('/onboarding', { replaceUrl: true });
-      //await this.authService.validateRefreshToken();
+      from(this.storage.create()).subscribe(async (result) => {
+        await this.authService.validateRefreshToken();
+      })
     });
   }
 }

@@ -32,10 +32,6 @@ export class ManageCategoryPage implements OnInit {
     this.categoryForBudget = data;
   }
 
-  modalWillDismiss(e): void {
-
-  }
-
   dismissModal() {
     this.modalElement.dismiss();
   }

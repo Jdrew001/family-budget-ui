@@ -17,6 +17,9 @@ import { ProfileComponent } from './onboarding/profile/profile.component';
 import { AccountComponent } from './onboarding/account/account.component';
 import { CategoriesComponent } from './onboarding/categories/categories.component';
 import { InviteFamilyComponent } from './onboarding/invite-family/invite-family.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CoreService } from './core/services/core.service';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 @NgModule({
   declarations: [
@@ -31,13 +34,16 @@ import { InviteFamilyComponent } from './onboarding/invite-family/invite-family.
     IonicModule.forRoot(),
     CoreModule,
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     SigninPageModule,
     SignupPageModule,
     SharedModule,
-    TabsPageModule
+    TabsPageModule,
+    IonicStorageModule.forRoot(),
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, CoreService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
