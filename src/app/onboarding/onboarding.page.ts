@@ -27,6 +27,7 @@ export class OnboardingPage implements OnInit {
   get accountsFormArray() { return this.onboardingForm.get('accounts') as FormArray; }
   get categoriesFormArray() { return this.onboardingForm.get('categories') as FormArray; }
   get familyInvitesFormArray() { return this.onboardingForm.get('familyInvites') as FormArray; }
+  get requiredSections() { return this.coreService.onboardingRequiredSections; }
 
   currentPage = 0;
 
@@ -34,8 +35,7 @@ export class OnboardingPage implements OnInit {
     private onboardingService: OnboardingService,
     private onboardingFormService: OnboardingFormService,
     private coreService: CoreService,
-    private toastService: ToastService,
-    private navController: NavController
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
@@ -55,11 +55,15 @@ export class OnboardingPage implements OnInit {
   }
 
   nextStep() {
-    
+    this.currentPage++;
   }
 
   previousStep() {
 
+  }
+
+  checkForStep(name) {
+    return this.coreService.onboardingRequiredSections.includes(name);
   }
 
   submit() {
@@ -69,11 +73,11 @@ export class OnboardingPage implements OnInit {
       return;
     }
 
-    this.onboardingService.onboardingSubmission(this.onboardingForm.value, this.registrationStatus.userInvited)
-      .subscribe((res) => {
-        if (res.success) {
-          this.navController.navigateRoot('/tabs/summary', { replaceUrl:true });
-        }
-    });
+    // this.onboardingService.onboardingSubmission(this.onboardingForm.value, this.registrationStatus.userInvited)
+    //   .subscribe((res) => {
+    //     if (res.success) {
+    //       this.navController.navigateRoot('/tabs/summary', { replaceUrl:true });
+    //     }
+    // });
   }
 }

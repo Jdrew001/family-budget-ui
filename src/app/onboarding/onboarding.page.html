@@ -12,30 +12,38 @@
       </ion-row>
       <ion-row [formGroup]="onboardingForm" class="mt-5">
         <ion-col [ngSwitch]="currentPage">
-          <div *ngSwitchCase="0">
-            <app-profile 
-              [profileForm]="profileForm"></app-profile>
-          </div>
-          <div *ngSwitchCase="1">
-            <app-account
-              [accountForm]="accountsFormArray"></app-account>
-          </div>
-          <div *ngSwitchCase="2">
-            <app-categories 
-              [categoryForm]="categoriesFormArray"></app-categories>
-          </div>
-          <div *ngSwitchCase="3">
-            <app-invite-family
-              [familyInviteForm]="familyInvitesFormArray"></app-invite-family>
-          </div>
+          <ng-container *ngIf="checkForStep('profile')">
+            <div *ngSwitchCase="0">
+              <app-profile 
+                [profileForm]="profileForm"></app-profile>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="checkForStep('account')">
+            <div *ngSwitchCase="1">
+              <app-account
+                [accountForm]="accountsFormArray"></app-account>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="checkForStep('category')">
+            <div *ngSwitchCase="2">
+              <app-categories 
+                [categoryForm]="categoriesFormArray"></app-categories>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="checkForStep('family')">
+            <div *ngSwitchCase="3">
+              <app-invite-family
+                [familyInviteForm]="familyInvitesFormArray"></app-invite-family>
+            </div>
+          </ng-container>
         </ion-col>
       </ion-row>
     </ion-grid>
 
     <ion-footer class="ion-no-border" slot="fixed">
       <div class="ion-padding button-group">
-        <ion-button *ngIf="registrationStatus?.userInvited" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="submit()">Submit</ion-button>
-        <ion-button *ngIf="!registrationStatus?.userInvited" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="nextStep()">Next</ion-button>
+        <ion-button *ngIf="currentPage == requiredSections?.length - 1" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="submit()">Submit</ion-button>
+        <ion-button *ngIf="currentPage < requiredSections?.length - 1" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="nextStep()">Next</ion-button>
       </div>
     </ion-footer>
   </ion-content>
