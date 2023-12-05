@@ -15,10 +15,10 @@ export class OnboardingService {
     private http: HttpClient
   ) { }
 
-  onboardingSubmission(body, partial: boolean): Observable<{success: string, message: string, data: any}> {
+  onboardingSubmission(body, onboardingSteps: string[]): Observable<{success: string, message: string, data: any}> {
     const url = this.helperService.getResourceUrl(OnboardingConstant.ONBOARDING_URL);
     const data: OnboardingModel = {
-      ...body, partial 
+      ...body, requiredSections: onboardingSteps 
     }
     return this.http.post(url, data) as Observable<{success: string, message: string, data: any}>;
   }

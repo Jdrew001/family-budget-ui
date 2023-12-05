@@ -59,23 +59,6 @@ export class SigninPage implements OnInit {
           // we want to call check onboarding status
           return this.coreService.checkOnboardingStatus();
         })
-        // switchMap(() => {
-        //   this.authService.isAuthenticated$.next(true);
-        //   this.authenticated = true;
-        //   this.navController.navigateRoot('/tabs/summary', { replaceUrl:true });
-        //   this.signInFormService.signInForm.reset();
-        //   return this.coreService.checkFamilyStatus()
-        // }),
-        // switchMap((familyStatus) => {
-        //   if (familyStatus?.data?.dialogConfig) {
-        //     this.alertControllerService.alertBoxSubject$.next({config: familyStatus?.data?.dialogConfig, show: true});
-        //   }  
-
-        //   return this.userService.fetchUserInformation();
-        // }),
-        // switchMap((userInformation) => {
-        //   return from(this.userService.storeUserInformation(userInformation))
-        // }),
       )
       .subscribe((onboardingResult) => {
         this.coreService.onboardingRequiredSections = onboardingResult?.data?.requiredSections;

@@ -5,6 +5,7 @@ import { ManageTransactionPage } from '../manage-transaction/manage-transaction.
 import * as _ from 'lodash';
 import { AlertControllerService } from '../shared/services/alert-controller.service';
 import { UserService } from '../core/services/user/user.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-tabs',
@@ -24,9 +25,17 @@ export class TabsPage implements OnInit {
 
   ngOnInit() {
     this.coreService.getMasterRefData();
-    this.coreService.initializeUserInfo().subscribe(([userInfo, familyStatus]) => {
+    this.initialize();
+  }
+
+  initialize() {
+    this.coreService.checkFamilyStatus().pipe(
+      switchMap((familyStatus) => {
+        this.handleFamilyStatusResult(familyStatus);
+        return this.userService.fetchUserInformation();
+      })
+    ).subscribe((userInfo) => {
       this.handleUserInfoResult(userInfo);
-      this.handleFamilyStatusResult(familyStatus);
     });
   }
 

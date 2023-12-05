@@ -3,7 +3,7 @@ export interface OnboardingModel {
     accounts: AccountModel[];
     categories: CategoryModel[];
     familyInvites: FamilyInviteModel[];
-    partial?: boolean;
+    requiredSections: 'profile' | 'account' | 'category' | 'inviteFamily' ;
 }
 
 export interface ProfileModel {

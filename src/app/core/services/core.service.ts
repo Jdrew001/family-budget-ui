@@ -41,13 +41,6 @@ export class CoreService extends BaseService {
     super();
   }
 
-  initializeUserInfo() {
-    const userInfo$ = this.userService.fetchUserInformation();
-    const checkFamStatus$ = this.checkFamilyStatus();
-
-    return zip(userInfo$, checkFamStatus$);
-  }
-
   getBudgetCategoryRefData(id: string) {
     const url = this.helperService.getResourceUrl(ManageBudgetConstant.MANAGE_BUDGET_REF_DATA);
     return this.http.get(`${url}/${id}`) as Observable<any>;

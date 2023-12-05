@@ -1,6 +1,6 @@
 <div class="auth">
   <ion-content [fullscreen]="true">
-    <ion-grid>
+    <ion-grid class="mt-5">
       <ion-row>
         <ion-col>
           <!-- radial here -->
@@ -10,7 +10,7 @@
           <p class="text-xs light-text-color">{{ getTitleDescription('description') }}</p>
         </ion-col>
       </ion-row>
-      <ion-row [formGroup]="onboardingForm" class="mt-5">
+      <ion-row [formGroup]="onboardingForm" style="margin-top: 4rem;">
         <ion-col [ngSwitch]="currentPage">
           <ng-container *ngIf="checkForStep('profile')">
             <div *ngSwitchCase="0">
@@ -44,6 +44,12 @@
       <div class="ion-padding button-group">
         <ion-button *ngIf="currentPage == requiredSections?.length - 1" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="submit()">Submit</ion-button>
         <ion-button *ngIf="currentPage < requiredSections?.length - 1" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="nextStep()">Next</ion-button>
+      </div>
+
+      <div *ngIf="currentPage > 0" class="text-center">
+        <span>
+          <span (click)="previousStep()" class="primary bold-text button">Back</span>
+        </span>
       </div>
     </ion-footer>
   </ion-content>

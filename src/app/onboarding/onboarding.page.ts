@@ -35,7 +35,8 @@ export class OnboardingPage implements OnInit {
     private onboardingService: OnboardingService,
     private onboardingFormService: OnboardingFormService,
     private coreService: CoreService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private navController: NavController
   ) { }
 
   ngOnInit() {
@@ -55,11 +56,21 @@ export class OnboardingPage implements OnInit {
   }
 
   nextStep() {
+    if (this.currentPage == 0 && this.profileForm.invalid) {
+      this.showFormError();
+      this.profileForm.markAllAsTouched();
+      return;
+    }
+
     this.currentPage++;
   }
 
   previousStep() {
+    this.currentPage--;
+  }
 
+  showFormError() {
+    this.toastService.showMessage('Please fill out all required fields', true);
   }
 
   checkForStep(name) {
@@ -73,11 +84,11 @@ export class OnboardingPage implements OnInit {
       return;
     }
 
-    // this.onboardingService.onboardingSubmission(this.onboardingForm.value, this.registrationStatus.userInvited)
-    //   .subscribe((res) => {
-    //     if (res.success) {
-    //       this.navController.navigateRoot('/tabs/summary', { replaceUrl:true });
-    //     }
-    // });
+    this.onboardingService.onboardingSubmission(this.onboardingForm.value, this.requiredSections)
+      .subscribe((res) => {
+        if (res.success) {
+          this.navController.navigateRoot('/tabs/summary', { replaceUrl:true });
+        }
+    });
   }
 }
