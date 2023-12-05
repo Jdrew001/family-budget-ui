@@ -12,26 +12,26 @@
       </ion-row>
       <ion-row [formGroup]="onboardingForm" style="margin-top: 4rem;">
         <ion-col [ngSwitch]="currentPage">
-          <ng-container *ngIf="checkForStep('profile')">
-            <div *ngSwitchCase="0">
+          <ng-container>
+            <div *ngSwitchCase="OnboardingStep.Profile">
               <app-profile 
                 [profileForm]="profileForm"></app-profile>
             </div>
           </ng-container>
-          <ng-container *ngIf="checkForStep('account')">
-            <div *ngSwitchCase="1">
+          <ng-container>
+            <div *ngSwitchCase="OnboardingStep.Account">
               <app-account
                 [accountForm]="accountsFormArray"></app-account>
             </div>
           </ng-container>
-          <ng-container *ngIf="checkForStep('category')">
-            <div *ngSwitchCase="2">
+          <ng-container>
+            <div *ngSwitchCase="OnboardingStep.Category">
               <app-categories 
                 [categoryForm]="categoriesFormArray"></app-categories>
             </div>
           </ng-container>
-          <ng-container *ngIf="checkForStep('family')">
-            <div *ngSwitchCase="3">
+          <ng-container>
+            <div *ngSwitchCase="OnboardingStep.InviteFamily">
               <app-invite-family
                 [familyInviteForm]="familyInvitesFormArray"></app-invite-family>
             </div>
@@ -42,13 +42,13 @@
 
     <ion-footer class="ion-no-border" slot="fixed">
       <div class="ion-padding button-group">
-        <ion-button *ngIf="currentPage == requiredSections?.length - 1" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="submit()">Submit</ion-button>
-        <ion-button *ngIf="currentPage < requiredSections?.length - 1" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="nextStep()">Next</ion-button>
+        <ion-button *ngIf="sectionIndex == requiredSections?.length - 1" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="submit()">Submit</ion-button>
+        <ion-button *ngIf="sectionIndex < requiredSections?.length - 1" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="nextStep()">Next</ion-button>
       </div>
 
-      <div *ngIf="currentPage > 0" class="text-center">
+      <div class="text-center">
         <span>
-          <span (click)="previousStep()" class="primary bold-text button">Back</span>
+          <span *ngIf="sectionIndex > 0" (click)="previousStep()" class="primary bold-text button">Back</span>
         </span>
       </div>
     </ion-footer>

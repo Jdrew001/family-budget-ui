@@ -7,6 +7,8 @@ import { CoreService } from '../core/services/core.service';
 import { RegistrationStatus } from '../core/models/registration-status.model';
 import { ToastService } from '../core/services/toast.service';
 import { NavController } from '@ionic/angular';
+import { ArrayUtils } from '../shared/utils/array.utils';
+import { OnBoardingStep } from './model/onboarding.model';
 
 @Component({
   selector: 'app-onboarding',
@@ -28,8 +30,11 @@ export class OnboardingPage implements OnInit {
   get categoriesFormArray() { return this.onboardingForm.get('categories') as FormArray; }
   get familyInvitesFormArray() { return this.onboardingForm.get('familyInvites') as FormArray; }
   get requiredSections() { return this.coreService.onboardingRequiredSections; }
+  get sectionIndex() { return ArrayUtils.getArrayPosition(this.requiredSections, this.currentPage); }
 
-  currentPage = 0;
+  currentPage = this.requiredSections[0];
+
+  public OnboardingStep = OnBoardingStep;//
 
   constructor(
     private onboardingService: OnboardingService,
@@ -45,7 +50,7 @@ export class OnboardingPage implements OnInit {
   }
 
   getTitleDescription(type: 'title' | 'description') {
-    const data = OnboardingConstant.ONBOARDING_PAGE_DATA[this.currentPage];
+    const data = OnboardingConstant.ONBOARDING_PAGE_DATA.find(item => item.key == this.currentPage)
     if (!data) return '';
 
     return data[type];
@@ -56,17 +61,18 @@ export class OnboardingPage implements OnInit {
   }
 
   nextStep() {
-    if (this.currentPage == 0 && this.profileForm.invalid) {
+    if (this.currentPage == OnBoardingStep.Profile && this.profileForm.invalid) {
       this.showFormError();
       this.profileForm.markAllAsTouched();
       return;
     }
 
-    this.currentPage++;
+    this.currentPage = ArrayUtils.getNextElement(this.requiredSections, this.sectionIndex);
+    console.log('current page', this.currentPage);
   }
 
   previousStep() {
-    this.currentPage--;
+    this.currentPage = ArrayUtils.getPreviousElement(this.requiredSections, this.sectionIndex);
   }
 
   showFormError() {
@@ -74,7 +80,7 @@ export class OnboardingPage implements OnInit {
   }
 
   checkForStep(name) {
-    return this.coreService.onboardingRequiredSections.includes(name);
+    return this.requiredSections.includes(name);
   }
 
   submit() {

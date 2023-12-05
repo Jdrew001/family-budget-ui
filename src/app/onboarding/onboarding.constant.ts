@@ -1,23 +1,25 @@
+import { OnBoardingStep } from "./model/onboarding.model";
+
 export class OnboardingConstant {
     public static readonly ONBOARDING_URL = 'user/handleOnboarding';
     public static readonly ONBOARDING_PAGE_DATA = [
         {
-            page: 0,
+            key: OnBoardingStep.Profile,
             title: 'Profile Information',
             description: 'Please fill in the information below to complete your profile.'
         },
         {
-            page: 1,
+            key: OnBoardingStep.Account,
             title: 'Create Accounts',
             description: 'Please create your accounts below.'
         },
         {
-            page: 2,
+            key: OnBoardingStep.Category,
             title: 'Choose your Categories',
             description: 'Please choose your categories below.'
         },
         {
-            page: 3,
+            key: OnBoardingStep.InviteFamily,
             title: 'Invite Family',
             description: 'Ask family to join you on the app.'
         }

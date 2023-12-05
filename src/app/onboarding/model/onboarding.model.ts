@@ -31,3 +31,10 @@ export interface FamilyInviteModel {
     email: string;
 }
 
+export enum OnBoardingStep {
+    Profile = 'profile',
+    Account = 'account',
+    Category = 'category',
+    InviteFamily = 'inviteFamily'
+}
+
