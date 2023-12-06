@@ -34,7 +34,7 @@ export class OnboardingPage implements OnInit {
 
   currentPage = this.requiredSections[0];
 
-  public OnboardingStep = OnBoardingStep;//
+  public OnboardingStep = OnBoardingStep;
 
   constructor(
     private onboardingService: OnboardingService,
@@ -61,14 +61,13 @@ export class OnboardingPage implements OnInit {
   }
 
   nextStep() {
-    if (this.currentPage == OnBoardingStep.Profile && this.profileForm.invalid) {
-      this.showFormError();
-      this.profileForm.markAllAsTouched();
-      return;
-    }
+    // if (this.currentPage == OnBoardingStep.Profile && this.profileForm.invalid) {
+    //   this.showFormError();
+    //   this.profileForm.markAllAsTouched();
+    //   return;
+    // }
 
     this.currentPage = ArrayUtils.getNextElement(this.requiredSections, this.sectionIndex);
-    console.log('current page', this.currentPage);
   }
 
   previousStep() {

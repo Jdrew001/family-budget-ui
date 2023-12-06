@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FamilyUserModel } from '../models/settings.model';
 import { IonModal, ModalController } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FamilyUserModel } from 'src/app/settings/models/settings.model';
 
 @Component({
   selector: 'app-add-family',

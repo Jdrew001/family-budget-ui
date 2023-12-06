@@ -2,11 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { SettingsService } from './settings.service';
 import { AuthService } from '../core/services/auth.service';
-import { AddAccountComponent } from './add-account/add-account.component';
-import { AddFamilyComponent } from './add-family/add-family.component';
-import { FamilyUserModel } from './models/settings.model';
-import { UserService } from '../core/services/user/user.service';
-import { AddCategoryComponent } from './add-category/add-category.component';
+import { AccountModel, FamilyUserModel } from './models/settings.model';
+import { AddAccountComponent } from '../shared/components/add-account/add-account.component';
+import { AddFamilyComponent } from '../shared/components/add-family/add-family.component';
+import { AddCategoryComponent } from '../shared/components/add-category/add-category.component';
 
 @Component({
   selector: 'app-settings',
@@ -63,7 +62,7 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
   }
 
   async manageAccount() {
-    this.presetAccountModal(); 
+    this.presentAccountModal(); 
   }
 
   manageCategory(category = null) {
@@ -76,7 +75,9 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
   }
 
   handleAccountClick(account) {
-    this.presetAccountModal(account);  
+    this.settingsService.getAccountById(account?.id).subscribe((result: AccountModel) => {
+      this.presentAccountModal(result);  
+    }); 
   }
 
   editFamilyUser(user: FamilyUserModel) {
@@ -108,14 +109,18 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
     modal.present();
   }
 
-  private async presetAccountModal(account = null) {
+  private async presentAccountModal(result = null) {
     const modal = await this.modalController.create({
       component: AddAccountComponent,
       componentProps: {
-        account: account
+        shouldDisable: result?.shouldDisable,
+        account: result?.data
       }
     });
 
     modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+    this.settingsService.handleAccountModalDismiss(data, role);
   }
 }

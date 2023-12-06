@@ -3,10 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { CoreService } from 'src/app/core/services/core.service';
 import { IconFieldComponent } from 'src/app/shared/components/icon-field/icon-field.component';
-import { CategoryType } from '../models/settings.model';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { CoreConstants } from 'src/app/core/constants/core.constants';
-import { SettingsService } from '../settings.service';
+import { CategoryType } from 'src/app/settings/models/settings.model';
+import { SettingsService } from 'src/app/settings/settings.service';
 
 @Component({
   selector: 'app-add-category-settings',

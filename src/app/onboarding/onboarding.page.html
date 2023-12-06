@@ -1,4 +1,4 @@
-<div class="auth">
+<div class="onboarding">
   <ion-content [fullscreen]="true">
     <ion-grid class="mt-5">
       <ion-row>
@@ -10,7 +10,7 @@
           <p class="text-xs light-text-color">{{ getTitleDescription('description') }}</p>
         </ion-col>
       </ion-row>
-      <ion-row [formGroup]="onboardingForm" style="margin-top: 4rem;">
+      <ion-row [formGroup]="onboardingForm" style="margin-top: 3rem;">
         <ion-col [ngSwitch]="currentPage">
           <ng-container>
             <div *ngSwitchCase="OnboardingStep.Profile">

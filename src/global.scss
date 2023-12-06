@@ -374,6 +374,11 @@ div.auth ion-content {
     height: 100vh;
 }
 
+div.onboarding ion-content {
+    --padding-top: 10%;
+    height: 100vh;
+}
+
 .primary {
     color: var(--ion-color-primary);
 }

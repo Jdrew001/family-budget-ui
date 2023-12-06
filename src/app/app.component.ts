@@ -17,11 +17,13 @@ export class AppComponent implements OnInit {
     private platForm: Platform,
     private authService: AuthService,
     private navController: NavController,
+    private coreService: CoreService
   ) {}
 
   async ngOnInit(): Promise<void> {
     this.platForm.ready().then(async (source) => {
       from(this.storage.create()).subscribe(async (result) => {
+        this.coreService.getMasterRefData();
         await this.authService.validateRefreshToken();
       })
     });

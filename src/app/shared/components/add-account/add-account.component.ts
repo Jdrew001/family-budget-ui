@@ -1,10 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IonAlert, IonModal, ModalController } from '@ionic/angular';
+import { IonAlert, ModalController, ViewDidLeave } from '@ionic/angular';
 import { IdName } from 'src/app/core/models/account.model';
 import { CoreService } from 'src/app/core/services/core.service';
-import { SettingsService } from '../settings.service';
-import { AccountModel } from '../models/settings.model';
 import { DateOverlayComponent } from 'src/app/shared/components/date-overlay/date-overlay.component';
 import { DateUtils } from 'src/app/shared/utils/date.utils';
 
@@ -13,11 +11,14 @@ import { DateUtils } from 'src/app/shared/utils/date.utils';
   templateUrl: './add-account.component.html',
   styleUrls: ['./add-account.component.scss'],
 })
-export class AddAccountComponent  implements OnInit {
+export class AddAccountComponent  implements OnInit, ViewDidLeave {
   
   @ViewChild('accountTypeAlert') accountTypeAlert: IonAlert;
   @ViewChild('frequencyAlert') frequencyAlert: IonAlert;
   @ViewChild('dateOverlay') dateOverlay: DateOverlayComponent = {} as DateOverlayComponent;
+
+  @Input() onboarding: boolean = false;
+  @Input() shouldDisable: boolean = false;
 
   _account: any;
   @Input() set account(value) {
@@ -26,10 +27,8 @@ export class AddAccountComponent  implements OnInit {
       this.presentModal(value);
     }
   }
-  @Output() dismissData$: EventEmitter<any> = new EventEmitter<any>();
 
   manageAccount: IdName = {} as IdName;
-  shouldDisable: boolean = false;
   minDate: string = DateUtils.formatYYYYMMDD(new Date());
   creatingAccount: boolean = true;
 
@@ -84,20 +83,20 @@ export class AddAccountComponent  implements OnInit {
 
   constructor(
     private coreService: CoreService,
-    private modalController: ModalController,
-    private settingsService: SettingsService
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {}
 
+  ionViewDidLeave(): void {
+      this.formGroup.reset();
+  }
+
   presentModal(data?: any) {
     this.creatingAccount = true;
-    if (!data?.id) return;
+    if (!data) return;
     this.creatingAccount = false;
-    this.settingsService.getAccountById(data?.id).subscribe((result: AccountModel) => {
-      this.shouldDisable = result.shouldDisable;
-      this.formGroup.setValue(result.data);
-    }); 
+    this.formGroup.setValue(data);
   }
 
   chooseType() {
@@ -178,21 +177,15 @@ export class AddAccountComponent  implements OnInit {
 
   confirm() {
     if (this.formGroup.invalid) return;
-    this.dismissData$.emit(this.formGroup.getRawValue());
-
-    this.settingsService.createAccount(this.formGroup.getRawValue()).subscribe((result: any) => {
-      this.closeAccountPopup();
-    });
+    this.modalController.dismiss(this.formGroup.getRawValue(), 'confirm');
   }
 
   delete() {
-    this.settingsService.markAccountInactive(this.accountId.value).subscribe(() => {
-      this.closeAccountPopup();
-    });
+    this.modalController.dismiss(this.accountId.value, 'delete');
   }
 
   closeAccountPopup() {
+    this.modalController.dismiss(null, 'cancel');
     this.formGroup.reset();
-    this.modalController.dismiss();
   }
 }

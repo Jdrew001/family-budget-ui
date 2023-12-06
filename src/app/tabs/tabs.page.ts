@@ -24,7 +24,6 @@ export class TabsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.coreService.getMasterRefData();
     this.initialize();
   }
 

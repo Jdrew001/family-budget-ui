@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,9 @@ export class OnboardingFormService {
   get categoriesFormArray() { return this.onboardingForm.get('categories') as FormArray; }
   get familyInvitesFormArray() { return this.onboardingForm.get('familyInvites') as FormArray; }
 
-  constructor() { }
+  constructor(
+    private formBuilder: FormBuilder
+  ) { }
 
   createFormGroup() {
     this.onboardingForm = new FormGroup({
@@ -51,12 +53,26 @@ export class OnboardingFormService {
     });
   }
 
+  createAccountFormGroup(data) {
+    const keys = Object.keys(data);
+    const formGroup = new FormGroup({});
+    keys.forEach((key) => {
+      formGroup.addControl(key, new FormControl(key == 'id' ? this.accountsFormArray.length.toString() :data[key]));
+    });
+    this.accountsFormArray.push(formGroup);
+  }
+
+  deleteAccountFormGroup(id: string) {
+    const index = this.accountsFormArray.controls.findIndex((account) => account.get('id').value == id);
+    this.accountsFormArray.removeAt(index);
+  }
+
   private createAccountsFormArray() {
-    return new FormArray([]);
+    return new FormArray([], Validators.required);
   }
 
   private createCategoriesFormArray() {
-    return new FormArray([]);
+    return new FormArray([], Validators.required);
   }
 
   private createFamilyInvitesFormArray() {

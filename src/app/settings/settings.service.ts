@@ -8,6 +8,7 @@ import { SettingsConstant } from './settings.constant';
 import { AccountModel, CategoriesModel, CreateCategoryDto } from './models/settings.model';
 import { HelperService } from '../core/services/helper.service';
 import { Observable } from 'rxjs';
+import { AddAccountComponent } from '../shared/components/add-account/add-account.component';
 
 @Injectable({
   providedIn: 'root'
@@ -98,6 +99,20 @@ export class SettingsService {
       return this.http.get(leaveFamilyUrl) as Observable<any>;
     } else {
       return this.http.post(removeUserUrl, { familyId, email }) as Observable<any>;
+    }
+  }
+
+  handleAccountModalDismiss(data: any, role: string) {
+    if (role == 'confirm') {
+      this.createAccount(data).subscribe((result: any) => {
+        this.fetchAccount();
+      });
+    }
+
+    if (role == 'delete') {
+      this.markAccountInactive(data).subscribe(() => {
+        this.fetchAccount();
+      });
     }
   }
 

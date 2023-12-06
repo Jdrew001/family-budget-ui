@@ -2,8 +2,33 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <h5 class="strong">Accounts</h5>
+        <p class="mt-0">Accounts</p>
       </ion-col>
+      <ion-col class="ion-align-self-end">
+        <ion-button (click)="addAccount()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+          Add
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let form of accountForm?.value">
+      <app-card
+        [id]="form"
+        margin="10px 5px 5px 5px" 
+        padding="5px"
+        (onClick)="handleAccountAction($event)">
+        <ion-grid>
+          <ion-row class="ion-justify-content-start">
+            <ion-col class="ion-align-items-center">
+              <p class="strong text-sm pb-0 mb-0">Checking</p>
+            </ion-col>
+            <ion-col class="ion-align-self-center mr-3" size="2">
+              <!-- <ion-icon style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+item?.icon+'.svg'" color="primary"></ion-icon> -->
+            </ion-col>
+          </ion-row>
+          <ion-row>
+          </ion-row>
+        </ion-grid>
+      </app-card>
     </ion-row>
   </ion-grid>
 </div>
