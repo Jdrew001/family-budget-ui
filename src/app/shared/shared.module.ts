@@ -10,6 +10,7 @@ import { DateOverlayComponent } from './components/date-overlay/date-overlay.com
 import { AlertBoxComponent } from './components/alert-box/alert-box.component';
 import { AlertControllerService } from './services/alert-controller.service';
 import { IconFieldComponent } from './components/icon-field/icon-field.component';
+import { CategoryTypePipe } from './pipes/category-type.pipe';
 
 
 
@@ -21,7 +22,8 @@ import { IconFieldComponent } from './components/icon-field/icon-field.component
     ReportGridComponent,
     DateOverlayComponent,
     AlertBoxComponent,
-    IconFieldComponent
+    IconFieldComponent,
+    CategoryTypePipe
   ],
   providers: [
     SharedService,
@@ -38,7 +40,8 @@ import { IconFieldComponent } from './components/icon-field/icon-field.component
     ReportGridComponent,
     DateOverlayComponent,
     AlertBoxComponent,
-    IconFieldComponent
+    IconFieldComponent,
+    CategoryTypePipe
   ]
 })
 export class SharedModule { }

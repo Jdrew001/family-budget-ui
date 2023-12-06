@@ -30,7 +30,7 @@ export class AddCategoryComponent  implements OnInit {
   formGroup: FormGroup = new FormGroup({
     id: new FormControl(''),
     categoryName: new FormControl('', Validators.required),
-    categoryType: new FormControl(-1, Validators.required),
+    categoryType: new FormControl(null, Validators.required),
     icon: new FormControl('', Validators.required)
   })
 
@@ -42,9 +42,7 @@ export class AddCategoryComponent  implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private coreService: CoreService,
-    private toastService: ToastService,
-    private settingsService: SettingsService
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {}
@@ -71,17 +69,11 @@ export class AddCategoryComponent  implements OnInit {
 
   confirmCategory() {
     if (this.formGroup.invalid) {
-      this.toastService.showMessage(CoreConstants.FORM_ERROR_MSG);
+      this.toastService.showMessage(CoreConstants.FORM_ERROR_MSG, true);
       return;
     }
 
-    this.settingsService.createCategory(this.formGroup.value).subscribe((result) => {
-      if (result && result.success) {
-        this.closeCategoryPopup();
-      }
-
-      this.toastService.showMessage(result.message, true);
-    });
+    this.modalController.dismiss(this.formGroup.value, 'confirm');
   }
 
 }

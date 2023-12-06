@@ -107,6 +107,8 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
     });
 
     modal.present();
+    const { data, role } = await modal.onWillDismiss();
+    this.settingsService.handleCategoryModalDismiss(data, role);
   }
 
   private async presentAccountModal(result = null) {

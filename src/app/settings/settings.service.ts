@@ -9,6 +9,7 @@ import { AccountModel, CategoriesModel, CreateCategoryDto } from './models/setti
 import { HelperService } from '../core/services/helper.service';
 import { Observable } from 'rxjs';
 import { AddAccountComponent } from '../shared/components/add-account/add-account.component';
+import { ToastService } from '../core/services/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,8 @@ export class SettingsService {
   constructor(
     private http: HttpClient,
     private userService: UserService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private toastService: ToastService
   ) {
   }
 
@@ -113,6 +115,22 @@ export class SettingsService {
       this.markAccountInactive(data).subscribe(() => {
         this.fetchAccount();
       });
+    }
+  }
+
+  handleCategoryModalDismiss(data: any, role: string) {
+    if (role == 'confirm') {
+      this.createCategory(data).subscribe((result) => {
+        if (result && result.success) {
+          this.fetchCategories();
+        }
+  
+        this.toastService.showMessage(result.message, true);
+      });
+    }
+
+    if(role == 'delete') {
+      //TODO: this.deleteCategory(data);
     }
   }
 

@@ -67,6 +67,27 @@ export class OnboardingFormService {
     this.accountsFormArray.removeAt(index);
   }
 
+  createCategoryFormGroup(data) {
+    const keys = Object.keys(data);
+    const formGroup = new FormGroup({});
+
+    if (data?.id) {
+      const index = this.categoriesFormArray.controls.findIndex((category) => category.get('id').value == data.id);
+      this.categoriesFormArray.at(index).patchValue(data);
+      return
+    }
+
+    keys.forEach((key) => {
+      formGroup.addControl(key, new FormControl(key == 'id' ? this.categoriesFormArray.length.toString() :data[key]));
+    });
+    this.categoriesFormArray.push(formGroup);
+  }
+
+  deleteCategoryFormGroup(id: string) {
+    const index = this.categoriesFormArray.controls.findIndex((category) => category.get('id').value == id);
+    this.categoriesFormArray.removeAt(index);
+  }
+
   private createAccountsFormArray() {
     return new FormArray([], Validators.required);
   }
