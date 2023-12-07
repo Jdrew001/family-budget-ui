@@ -9,6 +9,7 @@ import { ToastService } from '../core/services/toast.service';
 import { NavController } from '@ionic/angular';
 import { ArrayUtils } from '../shared/utils/array.utils';
 import { OnBoardingStep } from './model/onboarding.model';
+import { UserService } from '../core/services/user/user.service';
 
 @Component({
   selector: 'app-onboarding',
@@ -31,6 +32,7 @@ export class OnboardingPage implements OnInit {
   get familyInvitesFormArray() { return this.onboardingForm.get('familyInvites') as FormArray; }
   get requiredSections() { return this.coreService.onboardingRequiredSections; }
   get sectionIndex() { return ArrayUtils.getArrayPosition(this.requiredSections, this.currentPage); }
+  get userEmail() { return this.onboardingService.email; }
 
   currentPage = this.requiredSections[0];
 
@@ -40,6 +42,7 @@ export class OnboardingPage implements OnInit {
     private onboardingService: OnboardingService,
     private onboardingFormService: OnboardingFormService,
     private coreService: CoreService,
+    private userService: UserService,
     private toastService: ToastService,
     private navController: NavController
   ) { }
@@ -47,6 +50,7 @@ export class OnboardingPage implements OnInit {
   ngOnInit() {
     this.checkOnboardingSteps();
     this.onboardingFormService.createFormGroup();
+    this.userService.fetchUserEmail().subscribe((res) => this.onboardingService.email = res?.data);
   }
 
   getTitleDescription(type: 'title' | 'description') {
@@ -61,11 +65,29 @@ export class OnboardingPage implements OnInit {
   }
 
   nextStep() {
-    // if (this.currentPage == OnBoardingStep.Profile && this.profileForm.invalid) {
-    //   this.showFormError();
-    //   this.profileForm.markAllAsTouched();
-    //   return;
-    // }
+    if (this.currentPage == OnBoardingStep.Profile && this.profileForm.invalid) {
+      this.showFormError();
+      this.profileForm.markAllAsTouched();
+      return;
+    }
+
+    if (this.currentPage == OnBoardingStep.Account && this.accountsFormArray.invalid) {
+      this.showFormError();
+      this.accountsFormArray.markAllAsTouched();
+      return;
+    }
+
+    if (this.currentPage == OnBoardingStep.Category && this.categoriesFormArray.invalid) {
+      this.showFormError();
+      this.categoriesFormArray.markAllAsTouched();
+      return;
+    }
+
+    if (this.currentPage == OnBoardingStep.InviteFamily && this.familyInvitesFormArray.invalid) {
+      this.showFormError();
+      this.familyInvitesFormArray.markAllAsTouched();
+      return;
+    }
 
     this.currentPage = ArrayUtils.getNextElement(this.requiredSections, this.sectionIndex);
   }

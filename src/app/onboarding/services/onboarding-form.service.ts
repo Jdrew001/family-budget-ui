@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastService } from 'src/app/core/services/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class OnboardingFormService {
   get familyInvitesFormArray() { return this.onboardingForm.get('familyInvites') as FormArray; }
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastService: ToastService
   ) { }
 
   createFormGroup() {
@@ -86,6 +88,23 @@ export class OnboardingFormService {
   deleteCategoryFormGroup(id: string) {
     const index = this.categoriesFormArray.controls.findIndex((category) => category.get('id').value == id);
     this.categoriesFormArray.removeAt(index);
+  }
+
+  createFamilyInviteFormGroup(data: string) {
+    const formGroup = new FormGroup({});
+    const isDuplicate = this.familyInvitesFormArray.controls.some((invite) => invite.get('email').value == data);
+    if (isDuplicate) {
+      this.toastService.showMessage('Duplicate email address', true);
+      return;
+    }
+
+    formGroup.addControl('email', new FormControl(data));
+    this.familyInvitesFormArray.push(formGroup);
+  }
+
+  deleteFamilyInviteFormGroup(id: string) {
+    const index = this.familyInvitesFormArray.controls.findIndex((invite) => invite.get('email').value == id);
+    this.familyInvitesFormArray.removeAt(index);
   }
 
   private createAccountsFormArray() {

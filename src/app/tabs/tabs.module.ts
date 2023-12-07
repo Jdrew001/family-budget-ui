@@ -56,10 +56,7 @@ SwiperCore.use([Pagination]);
     CategoryOverlayComponent,
     AddCategoryComponent,
     ManageCategoryPage,
-    SettingsPage,
-    AddAccountComponent,
-    AddFamilyComponent,
-    AddCategoryComponentSettings
+    SettingsPage
   ],
   providers: [
     ManageTransactionService,

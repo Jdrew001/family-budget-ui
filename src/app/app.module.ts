@@ -28,7 +28,7 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     ProfileComponent, 
     AccountComponent,
     CategoriesComponent,
-    InviteFamilyComponent
+    InviteFamilyComponent,
   ],
   imports: [
     IonicModule.forRoot(),

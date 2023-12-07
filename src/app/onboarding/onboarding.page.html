@@ -33,25 +33,24 @@
           <ng-container>
             <div *ngSwitchCase="OnboardingStep.InviteFamily">
               <app-invite-family
-                [familyInviteForm]="familyInvitesFormArray"></app-invite-family>
+                [familyInviteForm]="familyInvitesFormArray"
+                [userEmail]="userEmail"></app-invite-family>
             </div>
           </ng-container>
         </ion-col>
       </ion-row>
     </ion-grid>
-
-    <ion-footer class="ion-no-border" slot="fixed">
-      <div class="ion-padding button-group">
-        <ion-button *ngIf="sectionIndex == requiredSections?.length - 1" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="submit()">Submit</ion-button>
-        <ion-button *ngIf="sectionIndex < requiredSections?.length - 1" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="nextStep()">Next</ion-button>
-      </div>
-
-      <div class="text-center">
-        <span>
-          <span *ngIf="sectionIndex > 0" (click)="previousStep()" class="primary bold-text button">Back</span>
-        </span>
-      </div>
-    </ion-footer>
   </ion-content>
-  
+  <ion-footer class="ion-no-border mt-5">
+    <div class="ion-padding button-group">
+      <ion-button *ngIf="sectionIndex == requiredSections?.length - 1" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="submit()">Submit</ion-button>
+      <ion-button *ngIf="sectionIndex < requiredSections?.length - 1" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="nextStep()">Next</ion-button>
+    </div>
+
+    <div class="text-center">
+      <span>
+        <span *ngIf="sectionIndex > 0" (click)="previousStep()" class="primary bold-text button">Back</span>
+      </span>
+    </div>
+  </ion-footer>
 </div>

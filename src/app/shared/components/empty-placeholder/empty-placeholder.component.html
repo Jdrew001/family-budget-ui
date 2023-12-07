@@ -1,0 +1,14 @@
+<ion-grid class="mt-7 mb-7" *ngIf="display">
+  <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+    <ion-row>
+        <ion-col>
+            <img alt="image" [src]="'assets/images/' + icon + '.png'"  width="125px" height="125px" />
+        </ion-col>
+    </ion-row>  
+  </div>
+  <ion-row>
+    <ion-col>
+        <p class="text-center light-text-color text-sm strong">{{ message }}</p>
+    </ion-col>
+  </ion-row>
+</ion-grid>

@@ -7,15 +7,12 @@ import { AuthService } from './services/auth.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorService } from './interceptors/http-interceptor.service';
 import { UserService } from './services/user/user.service';
-import { CurrencyMaskDirective } from './directives/currency-mask.directive';
 import { HelperService } from './services/helper.service';
 
 
 
 @NgModule({
-  declarations: [
-    CurrencyMaskDirective
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     HttpClientModule
@@ -30,9 +27,6 @@ import { HelperService } from './services/helper.service';
       useClass: HttpInterceptorService,
       multi: true
     }
-  ],
-  exports: [
-    CurrencyMaskDirective
   ]
 })
 export class CoreModule {

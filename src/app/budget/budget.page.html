@@ -98,13 +98,12 @@
               <p class="text-xs light-text-color ion-float-right strong">
                 <span *ngIf="item?.type == transactionType.Expense">Spent: </span><span *ngIf="item?.type == transactionType.Income">Earned: </span>{{ item?.spentAmount | currency:'USD':'symbol':'1.2-2' }}</p>
             </ion-col>
-            <!-- <ion-col class="ion-align-self-center" size="1">
-              <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
-            </ion-col> -->
           </ion-row>
         </ion-grid>
     </app-card>
   </div>
-
-  
+  <app-empty-placeholder
+        [icon]="'emptyList'"
+        [message]="'No categories added yet'"
+        [display]="categoriesForBudget?.length == 0"></app-empty-placeholder>
 </ion-content>

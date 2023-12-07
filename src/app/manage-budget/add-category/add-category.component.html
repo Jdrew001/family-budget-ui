@@ -87,15 +87,14 @@
                 </app-card> 
               </ion-col>
             </ion-row>
-
-            <div class="button-group mt-5">
-              <ion-button [disabled]="formGroup?.invalid" (click)="onConfirm()" class="shadow" type="submit" expand="block" shape="round" size="large" >Confirm</ion-button>
-            </div>
-
           </ion-grid>
         </ion-row>
-        
       </ion-grid>
     </ion-content>
+    <ion-footer class="ion-no-border mt-5">
+      <div class="button-group mt-5">
+        <ion-button [disabled]="formGroup?.invalid" (click)="onConfirm()" class="shadow" type="submit" expand="block" shape="round" size="large" >Confirm</ion-button>
+      </div>
+    </ion-footer>
   </ng-template>
 </ion-modal>

@@ -111,7 +111,7 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
     this.accountTypeAlert.present();
   }
 
-  chooseFrequency() {
+  chooseFrequency() {console.log('testing', this.frequencies);
     this.frequencyAlert.inputs = this.frequencies.map(o => {
       return {
         type: 'radio',

@@ -84,7 +84,7 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
     this.AddFamilyComponent.presentModal(user);
   }
 
-  onFamilyConfirm(email: string) {
+  onFamilyConfirm(email: any) {
     this.settingsService.inviteUser(this.userInformation.family.id, email).subscribe(result => {
       this.AddFamilyComponent.dismissModal();
       this.settingsService.resetFamilyMembers();

@@ -22,9 +22,7 @@ export class AddFamilyComponent  implements OnInit {
 
   get email() { return this.formGroup.get('email'); }
 
-  constructor(
-    private modalController: ModalController
-  ) { }
+  constructor() { }
 
   ngOnInit() {}
 

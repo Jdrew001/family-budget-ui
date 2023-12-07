@@ -176,6 +176,10 @@
           </ion-row>
         </ion-grid>
       </app-card>
+      <app-empty-placeholder
+        [icon]="'emptyList'"
+        [message]="'No transactions added yet'"
+        [display]="transactionSummary?.length == 0"></app-empty-placeholder>
     </div>
   </div>
 </ion-content>

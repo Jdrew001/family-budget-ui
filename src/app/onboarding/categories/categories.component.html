@@ -1,7 +1,7 @@
 <div>
   <ion-grid>
     <ion-row>
-      <ion-col>
+      <ion-col class="p-0">
         <app-card 
           [active]="selectedCategoryType == 0"
           margin="10px 5px 5px 5px" 
@@ -14,7 +14,7 @@
           </ion-list>
         </app-card>
       </ion-col>
-      <ion-col>
+      <ion-col class="p-0">
         <app-card
           [active]="selectedCategoryType == 1"
           margin="10px 5px 5px 5px" 
@@ -41,7 +41,7 @@
     <ion-row *ngFor="let item of categoryForm?.value">
       <app-card
         [id]="item"
-        margin="10px 5px 5px 5px" 
+        margin="5px 5px 5px 5px" 
         padding="5px"
         (onClick)="handleCategoryAction(item)">
         <ion-grid>
@@ -60,4 +60,8 @@
       </app-card>
     </ion-row>
   </ion-grid>
+  <app-empty-placeholder
+    [icon]="'emptyList'"
+    [message]="'No categories added yet.'"
+    [display]="categoryForm?.value?.length == 0"></app-empty-placeholder>
 </div>

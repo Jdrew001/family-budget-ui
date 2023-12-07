@@ -180,6 +180,14 @@ ion-content {
     margin-bottom: 1.75rem !important;
 }
 
+.mb-6 {
+    margin-bottom: 3rem !important;
+}
+
+.mb-7 {
+    margin-bottom: 4rem !important;
+}
+
 .mt-0 {
     margin-top: 0rem !important;
 }
@@ -202,6 +210,14 @@ ion-content {
 
 .mt-5 {
     margin-top: 1.75rem !important;
+}
+
+.mt-6 {
+    margin-top: 3rem !important;
+}
+
+.mt-7 {
+    margin-top: 4rem !important;
 }
 
 .ml-1 {
@@ -376,7 +392,7 @@ div.auth ion-content {
 
 div.onboarding ion-content {
     --padding-top: 10%;
-    height: 100vh;
+    height: 80vh;
 }
 
 .primary {

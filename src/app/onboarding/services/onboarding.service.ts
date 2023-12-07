@@ -10,6 +10,8 @@ import { OnboardingModel } from '../model/onboarding.model';
 })
 export class OnboardingService {
 
+  email: string;
+
   constructor(
     private helperService: HelperService,
     private http: HttpClient

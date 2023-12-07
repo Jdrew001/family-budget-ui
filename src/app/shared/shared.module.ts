@@ -11,6 +11,12 @@ import { AlertBoxComponent } from './components/alert-box/alert-box.component';
 import { AlertControllerService } from './services/alert-controller.service';
 import { IconFieldComponent } from './components/icon-field/icon-field.component';
 import { CategoryTypePipe } from './pipes/category-type.pipe';
+import { AddAccountComponent } from './components/add-account/add-account.component';
+import { AddFamilyComponent } from './components/add-family/add-family.component';
+import { AddCategoryComponent as AddCategoryComponentSettings } from '../shared/components/add-category/add-category.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EmptyPlaceholderComponent } from './components/empty-placeholder/empty-placeholder.component';
+import { CurrencyMaskDirective } from './directives/currency-mask.directive';
 
 
 
@@ -23,7 +29,12 @@ import { CategoryTypePipe } from './pipes/category-type.pipe';
     DateOverlayComponent,
     AlertBoxComponent,
     IconFieldComponent,
-    CategoryTypePipe
+    CategoryTypePipe,
+    AddAccountComponent,
+    AddFamilyComponent,
+    AddCategoryComponentSettings,
+    EmptyPlaceholderComponent,
+    CurrencyMaskDirective
   ],
   providers: [
     SharedService,
@@ -31,7 +42,9 @@ import { CategoryTypePipe } from './pipes/category-type.pipe';
   ],
   imports: [
     CommonModule,
-    IonicModule
+    IonicModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     CardComponent,
@@ -41,7 +54,12 @@ import { CategoryTypePipe } from './pipes/category-type.pipe';
     DateOverlayComponent,
     AlertBoxComponent,
     IconFieldComponent,
-    CategoryTypePipe
+    CategoryTypePipe,
+    AddAccountComponent,
+    AddFamilyComponent,
+    AddCategoryComponentSettings,
+    EmptyPlaceholderComponent,
+    CurrencyMaskDirective
   ]
 })
 export class SharedModule { }

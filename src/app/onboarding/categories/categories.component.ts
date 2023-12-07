@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormArray } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ViewDidEnter } from '@ionic/angular';
 import { AddCategoryComponent } from 'src/app/shared/components/add-category/add-category.component';
 import { OnboardingFormService } from '../services/onboarding-form.service';
 
@@ -9,7 +9,9 @@ import { OnboardingFormService } from '../services/onboarding-form.service';
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss'],
 })
-export class CategoriesComponent  implements OnInit {
+export class CategoriesComponent  implements OnInit, ViewDidEnter {
+
+  @ViewChild('scrollContainer') scrollContainer: any = {} as any;
 
   @Input() categoryForm: FormArray;
 
@@ -19,6 +21,9 @@ export class CategoriesComponent  implements OnInit {
     private modalController: ModalController,
     private onboardingFormService: OnboardingFormService
   ) { }
+  ionViewDidEnter(): void {
+    (this.scrollContainer as any)['el'].ontouchmove = (e) => {e.stopPropagation(); console.log('hello')};
+  }
 
   ngOnInit() {}
 

@@ -20,6 +20,11 @@ export class UserService {
   ) {
   }
 
+  fetchUserEmail() {
+    const url = this.helperService.getResourceUrl(UserConstants.GET_USER_EMAIL);
+    return this.http.get(url) as Observable<any>;
+  }
+
   fetchUserInformation() {
     const url = this.helperService.getResourceUrl(UserConstants.GET_USERINFO);
     return this.http.get<UserModel>(url);
