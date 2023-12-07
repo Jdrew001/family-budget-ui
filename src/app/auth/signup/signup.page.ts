@@ -30,15 +30,14 @@ export class SignupPage implements OnInit {
     private toastService: ToastService,
     private signupService: SignupService,
     private coreService: CoreService,
-    private tokenService: TokenService,
-    private userService: UserService,
-    private alertControllerService: AlertControllerService
+    private tokenService: TokenService
   ) { }
 
   ngOnInit() {
   }
 
   signInPage() {
+    this.signUpForm.reset();
     this.navController.navigateRoot('/signin', { replaceUrl:true });
   }
 
@@ -63,6 +62,7 @@ export class SignupPage implements OnInit {
           return this.coreService.checkOnboardingStatus();
         })
       ).subscribe((onboardingResult) => {
+        this.signUpForm.reset();
         this.coreService.onboardingRequiredSections = onboardingResult?.data?.requiredSections;
         this.navController.navigateRoot('/onboarding', { replaceUrl:true })
       });

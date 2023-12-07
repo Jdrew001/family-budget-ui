@@ -61,6 +61,7 @@ export class SigninPage implements OnInit {
         })
       )
       .subscribe((onboardingResult) => {
+        this.signInForm.reset();
         this.coreService.onboardingRequiredSections = onboardingResult?.data?.requiredSections;
         if (onboardingResult?.data?.requiredSections?.length > 0) {
           this.navController.navigateRoot('/onboarding', { replaceUrl:true });
@@ -75,7 +76,8 @@ export class SigninPage implements OnInit {
     
   }
 
-  registerPage() {console.log('registerPage')
+  registerPage() {
+    this.signInForm.reset();
     this.navController.navigateRoot('/signup', { replaceUrl:true });
   }
 
