@@ -14,13 +14,13 @@
       </ion-grid>
     </div>
 
-    <div *ngIf="accountBalanceSummary.length != 0" class="pb-2">
-      <swiper-container 
-        slides-per-view="2" 
-        speed="500" 
-        pagination="true"
-        css-mode="true">
-        <swiper-slide *ngFor="let item of accountBalanceSummary">
+    <div *ngIf="accountBalanceSummary.length > 0">
+      <swiper
+        [allowTouchMove]="true"
+        direction="horizontal"
+        [slidesPerView]="2"
+        [pagination]="true">
+        <ng-template *ngFor="let item of accountBalanceSummary" swiperSlide>
           <app-card
             [id]="item?.id!"
             margin="10px 5px 5px 5px" 
@@ -41,8 +41,17 @@
               </ion-row>
             </ion-grid>
           </app-card>
+        </ng-template>
+      </swiper>
+      <!-- <swiper-container 
+        slides-per-view="2" 
+        speed="500" 
+        pagination="true"
+        css-mode="true">
+        <swiper-slide *ngFor="let item of accountBalanceSummary">
+          
         </swiper-slide>
-      </swiper-container>
+      </swiper-container> -->
     </div>
 
     <ng-container *ngIf="currentBudgetSummary">
@@ -50,11 +59,8 @@
         <ion-grid>
           <ion-row class="ion-justify-content-start">
             <ion-col size="8">
-              <h5 class="pb-1 mb-0"><strong>Current</strong> Budget</h5>
+              <h5 class="pt-0 pb-1 mb-0"><strong>Current</strong> Budget</h5>
               <p class="pt-0 mt-2 text-xs light-text-color">{{currentBudgetSummary?.displayDate}}</p>
-            </ion-col>
-            <ion-col>
-              <p class="hoverable" style="float: right" (click)="onSeeMore()">See More</p>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -170,6 +176,10 @@
           </ion-row>
         </ion-grid>
       </app-card>
+      <app-empty-placeholder
+        [icon]="'emptyList'"
+        [message]="'No transactions added yet'"
+        [display]="transactionSummary?.length == 0"></app-empty-placeholder>
     </div>
   </div>
 </ion-content>

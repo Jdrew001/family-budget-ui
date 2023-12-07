@@ -1,20 +1,19 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { SummaryService } from './summary.service';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController, ViewDidEnter } from '@ionic/angular';
+import { ModalController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { CoreService } from '../core/services/core.service';
 import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
 import * as _ from 'lodash';
 import { ManageBudgetPage } from '../manage-budget/manage-budget.page';
 import { CircleGuageConstant } from '../shared/constants/circle-guage.constant';
-import { CircleGaugeComponent } from '../shared/components/circle-gauge/circle-gauge.component';
 
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.page.html',
   styleUrls: ['./summary.page.scss'],
 })
-export class SummaryPage implements OnInit, ViewDidEnter {
+export class SummaryPage implements OnInit, ViewDidEnter, ViewDidLeave {
 
   @ViewChild('slider') slider: ElementRef = {} as ElementRef;
 
@@ -35,29 +34,24 @@ export class SummaryPage implements OnInit, ViewDidEnter {
     this.summaryService.getSummaryData();
   }
 
+  ionViewDidLeave(): void {
+    this.summaryService.resetSummaryData();
+  }
+
   ngOnInit() {
     this.handleNavigation();
-    
+    this.coreService.$shouldRefreshScreen.subscribe((value: boolean) => {
+      if (value) {
+        this.summaryService.resetSummaryData();
+        setTimeout(() => {
+          this.summaryService.getSummaryData();
+        }, 100)
+      }
+    })
   }
 
   handleNavigation() {
-    this.coreService.$showManageTransaction.subscribe(async (value: any) => {
-      const val = value?.data;
-      if (value.show) {
-        const modal = await this.modalController.create({
-          component: ManageTransactionPage,
-          componentProps: {
-            accounts: _.cloneDeep(this.accountBalanceSummary)
-          }
-        });
-
-        modal.present();
-        const { data } = await modal.onWillDismiss();
-        if (data && data?.refresh) {
-          this.summaryService.getSummaryData();
-        }
-      }
-   });
+    
   }
 
   handleAccountAction(id: string) {

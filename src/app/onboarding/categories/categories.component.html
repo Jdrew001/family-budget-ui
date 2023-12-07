@@ -1,0 +1,67 @@
+<div>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="p-0">
+        <app-card 
+          [active]="selectedCategoryType == 0"
+          margin="10px 5px 5px 5px" 
+          padding="5px">
+          <ion-list lines="none">
+            <ion-item>
+              <ion-icon nclass="text-lg" [src]="'assets/icon/profit.svg'" color="primary"></ion-icon>
+              <ion-label class="strong text-xs pl-3 pb-0" color="primary">Income <br> Categories</ion-label>
+            </ion-item>
+          </ion-list>
+        </app-card>
+      </ion-col>
+      <ion-col class="p-0">
+        <app-card
+          [active]="selectedCategoryType == 1"
+          margin="10px 5px 5px 5px" 
+          padding="5px">
+          <ion-list lines="none">
+            <ion-item>
+              <ion-icon class="text-lg" [src]="'assets/icon/expense.svg'" color="primary"></ion-icon>
+              <ion-label class="strong text-xs pl-3 pb-0" color="primary">Expense <br> Categories</ion-label>
+            </ion-item>
+          </ion-list>
+        </app-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p class="mt-5">Categories</p>
+      </ion-col>
+      <ion-col class="ion-align-self-end">
+        <ion-button (click)="addCategory()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+          Add
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let item of categoryForm?.value">
+      <app-card
+        [id]="item"
+        margin="5px 5px 5px 5px" 
+        padding="5px"
+        (onClick)="handleCategoryAction(item)">
+        <ion-grid>
+          <ion-row class="ion-justify-content-start">
+            <ion-col class="ion-align-items-center">
+              <p class="strong text-sm pb-0 mb-0">{{ item?.categoryName }}</p>
+              <p class="text-sm">{{item?.categoryType | categoryType}}</p>
+            </ion-col>
+            <ion-col class="ion-align-self-center mr-3" size="2">
+              <ion-icon style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+item?.icon+'.svg'" color="primary"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+          </ion-row>
+        </ion-grid>
+      </app-card>
+    </ion-row>
+  </ion-grid>
+  <app-empty-placeholder
+    [icon]="'emptyList'"
+    [message]="'No categories added yet.'"
+    [display]="categoryForm?.value?.length == 0"></app-empty-placeholder>
+</div>

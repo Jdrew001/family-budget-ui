@@ -4,7 +4,7 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <h5 class="text-center bold-text mb-1">Transaction Date</h5>
+            <h5 class="text-center bold-text mb-1">{{ title }}</h5>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -16,6 +16,7 @@
             <ion-datetime 
               presentation="date"
               preferWheel="true"
+              [min]="minDate"
               (ionChange)="onDateSelected($event)"></ion-datetime>
           </ion-col>
         </ion-row>

@@ -3,11 +3,12 @@ import { SigninService } from './services/signin.service';
 import { SigninFormService } from './services/signin-form.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { TokenService } from 'src/app/core/services/token.service';
-import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserService } from 'src/app/core/services/user/user.service';
-import { HelperService } from 'src/app/core/services/helper.service';
+import { EMPTY, from, switchMap } from 'rxjs';
+import { CoreService } from 'src/app/core/services/core.service';
+import { AlertControllerService } from 'src/app/shared/services/alert-controller.service';
 
 @Component({
   selector: 'app-signin',
@@ -20,6 +21,7 @@ export class SigninPage implements OnInit {
   get email() { return this.signInForm.get('email'); }
   get password() { return this.signInForm.get('password'); }
   
+  authenticated: boolean = false;
 
   errorMessage: string = '';
 
@@ -27,11 +29,11 @@ export class SigninPage implements OnInit {
     private signInService: SigninService,
     private signInFormService: SigninFormService,
     private toastService: ToastService,
-    private tokenService: TokenService,
     private navController: NavController,
     private authService: AuthService,
     private userService: UserService,
-    private helperService: HelperService
+    private coreService: CoreService,
+    private tokenService: TokenService
   ) { }
 
   ngOnInit() {
@@ -40,23 +42,43 @@ export class SigninPage implements OnInit {
   login() {
     if (!this.signInForm.invalid) {
       this.signInService.signIn(this.signInForm.value)
-      .subscribe(async result => {
-        await this.tokenService.setToken(result);
-        this.authService.isAuthenticated$.next(true);
-        this.userService.fetchUserInformation();
+      .pipe(
+        switchMap((result) => {
+          if (!result) {
+            this.navController.navigateRoot('/auth/signin', { replaceUrl:true });
+            this.authService.isAuthenticated$.next(false);
+            return EMPTY;
+          }
+          return from(this.tokenService.setToken(result));
+        }),
+        switchMap(() => {
+          // enable going to next screen
+          this.authService.isAuthenticated$.next(true);
+          this.authenticated = true;
 
-        //navigate to summary page
-        setTimeout(async() => {this.navController.navigateForward('/tabs/summary', { replaceUrl:true })}, 1000);
+          // we want to call check onboarding status
+          return this.coreService.checkOnboardingStatus();
+        })
+      )
+      .subscribe((onboardingResult) => {
+        this.signInForm.reset();
+        this.coreService.onboardingRequiredSections = onboardingResult?.data?.requiredSections;
+        if (onboardingResult?.data?.requiredSections?.length > 0) {
+          this.navController.navigateRoot('/onboarding', { replaceUrl:true });
+        } else {
+          this.navController.navigateRoot('/tabs/summary', { replaceUrl:true });
+        }
     });
     } else {
       this.signInForm.markAllAsTouched();
-      this.toastService.showMessage('Please fill in the form correctly', true);
+      this.toastService.showMessage('Please provide all the required fields!', true);
     }
     
   }
 
   registerPage() {
-    
+    this.signInForm.reset();
+    this.navController.navigateRoot('/signup', { replaceUrl:true });
   }
 
 }

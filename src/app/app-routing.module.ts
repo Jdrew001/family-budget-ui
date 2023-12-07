@@ -7,6 +7,7 @@ import { SigninPage } from './auth/signin/signin.page';
 import { SignupPage } from './auth/signup/signup.page';
 import { ManageTransactionPage } from './manage-transaction/manage-transaction.page';
 import { ManageBudgetPage } from './manage-budget/manage-budget.page';
+import { OnboardingPage } from './onboarding/onboarding.page';
 
 const isAuthenticated = (): | boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> => {
   const authService = inject(AuthService);
@@ -14,7 +15,6 @@ const isAuthenticated = (): | boolean | UrlTree | Observable<boolean | UrlTree> 
   return authService.isAuthenticated$.pipe(
       take(1),
       tap((isAuthenticated: boolean) => {
-        console.log('testing');
           if (!isAuthenticated) {
             navController.navigateRoot('/signin', { replaceUrl:true });
           }
@@ -34,6 +34,11 @@ const routes: Routes = [
     component: SignupPage
   },
   {
+    path: 'onboarding',
+    component: OnboardingPage,
+    canActivate: [canMatch]
+  },
+  {
     path: '',
     redirectTo: 'tabs',
     pathMatch: 'full'
@@ -46,14 +51,17 @@ const routes: Routes = [
   {
     path: 'manage-transaction',
     component: ManageTransactionPage,
+    canActivate: [canMatch]
   },
   {
     path: 'manage-budget',
     component: ManageBudgetPage,
+    canActivate: [canMatch]
   },
   {
     path: 'manage-category',
-    component: ManageBudgetPage
+    component: ManageBudgetPage,
+    canActivate: [canMatch]
   }
 ];
 

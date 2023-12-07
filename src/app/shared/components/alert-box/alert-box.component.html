@@ -1,0 +1,29 @@
+<ion-modal 
+  id="alert-modal"
+  [backdropDismiss]="config?.canDismiss" 
+  #alertBox>
+  <ng-template>
+    <div class="wrapper text-center">
+      <div class="icon">
+        <ng-container [ngSwitch]="config?.type">
+          <ion-icon *ngSwitchCase="alertType.WARNING" class="warning" name="warning-outline"></ion-icon>
+          <ion-icon *ngSwitchCase="alertType.SUCCESS" class="success" name="checkmark-circle-outline"></ion-icon>
+          <ion-icon *ngSwitchCase="alertType.ERROR" class="error" name="alert-circle-outline"></ion-icon>
+          <ion-icon *ngSwitchCase="alertType.INFO" class="info" name="information-circle-outline"></ion-icon>
+        </ng-container>
+      </div>
+      <div class="title">
+        <h5>{{config?.title}}</h5>
+      </div>
+
+      <div class="content">
+        <p>{{config?.message}}</p>
+      </div>
+
+      <div class="footer mt-5">
+        <ion-button (click)="dismissDialog(false)" *ngIf="config?.dialogType == alertDialogType?.CONFIRM" size="medium" color="primary" fill="outline" class="text-sm">Cancel</ion-button>
+        <ion-button (click)="dismissDialog(true)" size="medium" color="primary" class="text-sm">Confirm</ion-button>
+      </div>
+    </div>
+  </ng-template>
+</ion-modal>

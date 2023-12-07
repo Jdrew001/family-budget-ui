@@ -1,12 +1,13 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable, Subject, catchError, finalize, from, lastValueFrom, switchMap, take } from 'rxjs';
+import { EMPTY, Observable, Subject, catchError, finalize, from, switchMap, take } from 'rxjs';
 import { TokenService } from '../services/token.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { TokenModel } from '../models/token.model';
 import { AuthConstants } from '../constants/auth.constants';
 import { NavController } from '@ionic/angular';
+import { ToastService } from '../services/toast.service';
 
 @Injectable()
 export class HttpInterceptorService implements HttpInterceptor {
@@ -18,12 +19,20 @@ export class HttpInterceptorService implements HttpInterceptor {
   constructor(
     private tokenService: TokenService,
     private authService: AuthService,
-    private navController: NavController
+    private navController: NavController,
+    private toastService: ToastService
   ) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.handle(req, next);
+    return this.handle(req, next).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status !== 403 && error.status !== 401) {
+          this.toastService.showMessage('Something went wrong. Please try again later.', true);
+        }
+        return EMPTY;
+      })
+    );
   }
 
   handle(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

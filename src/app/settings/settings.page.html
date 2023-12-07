@@ -4,7 +4,6 @@
 
 <ion-content [fullscreen]="true">
   <div style="margin-bottom: 10rem">
-
     <div>
       <ion-grid>
         <ion-row>
@@ -55,17 +54,16 @@
       </ion-grid>
     </div>
 
-    <div>
-      <swiper-container 
-        slides-per-view="2" 
-        speed="500" 
-        pagination="true"
-        css-mode="false">
-        <swiper-slide>
+    <div *ngIf="accounts.length > 0">
+      <swiper
+        [allowTouchMove]="true"
+        direction="horizontal"
+        [slidesPerView]="2"
+        [pagination]="true">
+        <ng-template *ngFor="let account of accounts" swiperSlide>
           <app-card
             margin="10px 5px 5px 5px" 
             padding="5px"
-            *ngFor="let account of accounts"
             (click)="handleAccountClick(account)">
             <ion-grid>
               <ion-row class="ion-justify-content-start">
@@ -73,16 +71,16 @@
                   <ion-icon [src]="'assets/icon/'+account?.icon+'.svg'" color="primary" class="text-lg"></ion-icon>
                 </ion-col>
                 <ion-col>
-                  <p class="text-sm strong description">{{ account.name }}</p>
-              <p class="pt-0 mt-2 text-xs light-text-color">{{ account?.type }}</p>
+                  <p class="text-sm strong description ellipse" style="max-width: 5rem">{{ account.name }}</p>
+                  <p class="pt-0 mt-2 text-xs light-text-color">{{ account?.type }}</p>
                 </ion-col>
               </ion-row>
               <ion-row>
               </ion-row>
             </ion-grid>
           </app-card>
-        </swiper-slide>
-      </swiper-container>
+        </ng-template>
+      </swiper>
     </div>
 
     <div>
@@ -92,7 +90,7 @@
             <h5 class=""><strong>Family</strong></h5>
           </ion-col>
           <ion-col class="ion-align-self-end">
-            <ion-button size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+            <ion-button (click)="manageFamily()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
               Add
             </ion-button>
           </ion-col>
@@ -100,17 +98,17 @@
       </ion-grid>
     </div>
 
-    <div *ngIf="userInformation?.family?.users != 0">
-      <swiper-container 
-        slides-per-view="2" 
-        speed="500" 
-        pagination="true"
-        css-mode="false">
-        <swiper-slide>
+    <div *ngIf="familyMembers?.length > 0">
+      <swiper
+        [allowTouchMove]="true"
+        direction="horizontal"
+        [slidesPerView]="2"
+        [pagination]="true">
+        <ng-template *ngFor="let user of familyMembers" swiperSlide>
           <app-card
             margin="10px 5px 5px 5px" 
             padding="5px"
-            *ngFor="let user of userInformation?.family?.users">
+            (click)="editFamilyUser(user)">
             <ion-grid>
               <ion-row class="ion-justify-content-start">
                 <ion-col class="ion-align-self-center mr-1" size="3">
@@ -119,16 +117,14 @@
                   </ion-avatar>
                 </ion-col>
                 <ion-col>
-                  <p class="text-sm strong description">{{ user?.firstname }} {{ user?.lastname }}</p>
-                  <p class="pt-0 mt-2 text-xs light-text-color">{{ user?.email }}</p>
+                  <p class="text-sm strong description ellipse" style="max-width: 5rem">{{ user?.label }}</p>
+                  <p class="pt-0 mt-2 text-xs light-text-color ellipse" style="max-width: 5rem">{{ user?.email }}</p>
                 </ion-col>
-              </ion-row>
-              <ion-row>
               </ion-row>
             </ion-grid>
           </app-card>
-        </swiper-slide>
-      </swiper-container>
+        </ng-template>
+      </swiper>
     </div>
 
     <div>
@@ -138,7 +134,7 @@
             <h5 class=""><strong>Categories</strong></h5>
           </ion-col>
           <ion-col class="ion-align-self-end">
-            <ion-button size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+            <ion-button (click)="manageCategory()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
               Add
             </ion-button>
           </ion-col>
@@ -146,17 +142,17 @@
       </ion-grid>
     </div>
 
-    <div *ngIf="categories.length != 0">
-      <swiper-container 
-        slides-per-view="2" 
-        speed="500" 
-        pagination="true"
-        css-mode="false">
-        <swiper-slide
-        *ngFor="let item of categories">
+    <div class="pb-5" *ngIf="categories.length != 0">
+      <swiper
+        [allowTouchMove]="true"
+        direction="horizontal"
+        [slidesPerView]="2"
+        [pagination]="true">
+        <ng-template *ngFor="let item of categories" swiperSlide>
           <app-card
             margin="10px 5px 5px 5px" 
-            padding="5px">
+            padding="5px"
+            (click)="manageCategory(item)">
             <ion-grid>
               <ion-row class="ion-justify-content-start">
                 <ion-col class="ion-align-self-center mr-3" size="2">
@@ -170,8 +166,8 @@
               </ion-row>
             </ion-grid>
           </app-card>
-        </swiper-slide>
-      </swiper-container>
+        </ng-template>
+      </swiper>
     </div>
 
     <div class="button-group mb-3 mt-5">
@@ -201,10 +197,9 @@
         size="large"
         (click)="logout()">Logout</ion-button>
     </div>
-
   </div>
 
-  <app-add-account #addAccount
-    (dismissData$)="handleNewAccount($event)">
-  </app-add-account>
+  <app-add-family #addFam
+    (onConfirm)="onFamilyConfirm($event)"
+    (onRemove)="onFamilyRemove($event)"></app-add-family>
 </ion-content>

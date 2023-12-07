@@ -1,0 +1,40 @@
+<div>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <p class="mt-5">Family Members</p>
+      </ion-col>
+      <ion-col class="ion-align-self-end">
+        <ion-button (click)="addFamily()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+          Add
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let item of familyInviteForm?.value">
+      <app-card
+        [id]="item"
+        margin="10px 5px 5px 5px" 
+        padding="5px"
+        (onClick)="handleFamilyAction(item?.email)">
+        <ion-grid>
+          <ion-row class="ion-justify-content-start ion-align-items-center">
+            <ion-col>
+              <p class="bold-text text-sm pb-0 mb-0">{{item?.email}}</p>
+            </ion-col>
+            <ion-col size="2">
+              <ion-icon style="vertical-align: middle;" class="text-lg" name="mail-unread-outline" color="primary"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </app-card>
+    </ion-row>
+  </ion-grid>
+  <app-empty-placeholder
+    [icon]="'emptyInvite'"
+    [message]="'No invites added yet.'"
+    [display]="familyInviteForm?.value?.length == 0"></app-empty-placeholder>
+</div>
+
+<app-add-family #addFam
+    (onConfirm)="onFamilyConfirm($event)"
+    (onRemove)="onFamilyRemove($event)"></app-add-family>

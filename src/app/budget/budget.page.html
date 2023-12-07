@@ -18,56 +18,56 @@
         </ion-row>
       </ion-grid>
     </div>
-    <swiper-container #swiper
-    slides-per-view="1" 
-    speed="500" 
-    pagination="true"
-    css-mode="true"
-    (slidechange)="swiperSlideChanged($event)">
-    <swiper-slide *ngFor="let item of budgetSummary">
-      <div>
-        <app-card 
-          margin="10px 5px 5px 5px" 
-          padding="5px">
-        <ion-grid>
-          <ion-row>
-            <ion-col class="pb-1">
-              <p class="pt-0 mt-0 pb-0 mb-0 text-xs light-text-color">
-                {{ item?.displayDate }}
-              </p>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col class="pt-0">
-              <p class="text-xs strong">Left to Spend for next {{ item?.leftSpendingDays }} days</p>
-            </ion-col>
-            <ion-col class="pt-0">
-              <p class="text-xs strong">{{ item?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'  }}</p>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col class="pt-0 pb-0">
-              <ion-progress-bar [value]="item?.percentageSpent"></ion-progress-bar>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col class="pt-3 pb-0">
-              <p class="text-xs strong light-text-color">$0</p>
-            </ion-col>
-            <ion-col class="pt-3 pb-0">
-              <p class="ion-float-right light-text-color text-xs strong">{{ item?.totalBudget | currency:'USD':'symbol':'1.2-2' }}</p>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col class="pt-1 pb-0">
-              <p class="text-xs strong">Total Spent: {{ item?.totalSpent | currency:'USD':'symbol':'1.2-2' }}</p>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </app-card>
-      </div>
-    </swiper-slide>
-    </swiper-container>
+    <swiper
+        [allowTouchMove]="true"
+        direction="horizontal"
+        [slidesPerView]="1"
+        [pagination]="true"
+        (slidechange)="swiperSlideChanged($event)">
+      <ng-template *ngFor="let item of budgetSummary" swiperSlide>
+        <div>
+          <app-card 
+            margin="10px 5px 5px 5px" 
+            padding="5px">
+            <ion-grid>
+              <ion-row>
+                <ion-col class="pb-1">
+                  <p class="pt-0 mt-0 pb-0 mb-0 text-xs light-text-color">
+                    {{ item?.displayDate }}
+                  </p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="pt-0">
+                  <p class="text-xs strong">Left to Spend for next {{ item?.leftSpendingDays }} days</p>
+                </ion-col>
+                <ion-col class="pt-0">
+                  <p class="text-xs strong">{{ item?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'  }}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="pt-0 pb-0">
+                  <ion-progress-bar [value]="item?.percentageSpent"></ion-progress-bar>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="pt-3 pb-0">
+                  <p class="text-xs strong light-text-color">$0</p>
+                </ion-col>
+                <ion-col class="pt-3 pb-0">
+                  <p class="ion-float-right light-text-color text-xs strong">{{ item?.totalBudget | currency:'USD':'symbol':'1.2-2' }}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="pt-1 pb-0">
+                  <p class="text-xs strong">Total Spent: {{ item?.totalSpent | currency:'USD':'symbol':'1.2-2' }}</p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </app-card>
+        </div>
+      </ng-template>
+    </swiper>
   </div>
   
 
@@ -98,13 +98,12 @@
               <p class="text-xs light-text-color ion-float-right strong">
                 <span *ngIf="item?.type == transactionType.Expense">Spent: </span><span *ngIf="item?.type == transactionType.Income">Earned: </span>{{ item?.spentAmount | currency:'USD':'symbol':'1.2-2' }}</p>
             </ion-col>
-            <!-- <ion-col class="ion-align-self-center" size="1">
-              <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
-            </ion-col> -->
           </ion-row>
         </ion-grid>
     </app-card>
   </div>
-
-  
+  <app-empty-placeholder
+        [icon]="'emptyList'"
+        [message]="'No categories added yet'"
+        [display]="categoriesForBudget?.length == 0"></app-empty-placeholder>
 </ion-content>

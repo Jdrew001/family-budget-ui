@@ -1,6 +1,6 @@
 <ion-header [translucent]="true" class="mb-5">
   <ion-toolbar style="--border-style: none !important;">
-    <h5 class="text-center strong">Create Transaction</h5>
+    <h5 class="text-left strong">Create Transaction</h5>
     <ion-buttons (click)="closeTransaction()" class="mr-5" slot="end">
       <ion-icon class="text-md pt-3 strong" name="close-outline"></ion-icon>
     </ion-buttons>
@@ -11,12 +11,12 @@
   <div class="input-group mb-2">
     <div class="group mb-0">
       <ion-label position="stacked">Account</ion-label>
-      <swiper-container 
-        slides-per-view="2" 
-        speed="500" 
-        pagination="true"
-        css-mode="true">
-        <swiper-slide *ngFor="let item of accounts">
+      <swiper
+        [allowTouchMove]="true"
+        direction="horizontal"
+        [slidesPerView]="2"
+        [pagination]="true">
+        <ng-template *ngFor="let item of accounts" swiperSlide>
           <app-card
             [id]="item?.id!"
             [active]="item?.active!"
@@ -27,19 +27,18 @@
               <ion-row class="ion-justify-content-start">
                 <ion-col>
                   <p class="strong text-sm pb-0 mb-0">{{item?.name}}</p>
+                  <p class="pt-0 m-0">{{item?.amount | currency:'USD':'symbol':'1.2-2'}}</p>
+                </ion-col>
+                <ion-col class="ion-align-self-center mr-3" size="2">
+                  <ion-icon style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+item?.icon+'.svg'" color="primary"></ion-icon>
                 </ion-col>
               </ion-row>
               <ion-row>
-                <ion-col class="pt-0 m-0" size="10">
-                  <p class="pt-0 m-0">${{item?.amount}}</p>
-                </ion-col>
-                <ion-col size="2">
-                </ion-col>
               </ion-row>
             </ion-grid>
           </app-card>
-        </swiper-slide>
-      </swiper-container>
+        </ng-template>
+      </swiper>
     </div>
   </div>
 
@@ -96,6 +95,7 @@
   </app-category-overlay>
 
   <app-date-overlay #dateOverlay
+    [title]="'Transaction Date'"
     (onConfirm)="onSelectDate($event)"></app-date-overlay>
 
 </ion-content>

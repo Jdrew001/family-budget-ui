@@ -15,7 +15,6 @@ import { SummaryPage } from '../summary/summary.page';
 import { SharedModule } from '../shared/shared.module';
 import { SummaryService } from '../summary/summary.service';
 import { CategoryOverlayComponent } from '../manage-transaction/category-overlay/category-overlay.component';
-import { DateOverlayComponent } from '../manage-transaction/date-overlay/date-overlay.component';
 import { AddCategoryComponent } from '../manage-budget/add-category/add-category.component';
 import { ManageBudgetPage } from '../manage-budget/manage-budget.page';
 import { ManageBudgetService } from '../manage-budget/services/manage-budget.service';
@@ -25,7 +24,15 @@ import { BudgetPage } from '../budget/budget.page';
 import { BudgetService } from '../budget/budget.service';
 import { ManageCategoryPage } from '../manage-category/manage-category.page';
 import { SettingsPage } from '../settings/settings.page';
-import { AddAccountComponent } from '../settings/add-account/add-account.component';
+import { SwiperModule } from "swiper/angular";
+import { AddCategoryComponent as AddCategoryComponentSettings } from '../shared/components/add-category/add-category.component';
+
+import SwiperCore, { Pagination} from 'swiper';
+import { OnboardingService } from '../onboarding/services/onboarding.service';
+import { OnboardingFormService } from '../onboarding/services/onboarding-form.service';
+import { AddAccountComponent } from '../shared/components/add-account/add-account.component';
+import { AddFamilyComponent } from '../shared/components/add-family/add-family.component';
+SwiperCore.use([Pagination]);
 
 @NgModule({
   imports: [
@@ -37,6 +44,7 @@ import { AddAccountComponent } from '../settings/add-account/add-account.compone
     CoreModule,
     HttpClientModule,
     SharedModule,
+    SwiperModule
   ],
   declarations: [
     TabsPage,
@@ -46,18 +54,18 @@ import { AddAccountComponent } from '../settings/add-account/add-account.compone
     TransactionPage,
     BudgetPage,
     CategoryOverlayComponent,
-    DateOverlayComponent,
     AddCategoryComponent,
     ManageCategoryPage,
-    SettingsPage,
-    AddAccountComponent
+    SettingsPage
   ],
   providers: [
     ManageTransactionService,
     ManageBudgetService,
     SummaryService,
     TransactionService,
-    BudgetService
+    BudgetService,
+    OnboardingService,
+    OnboardingFormService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

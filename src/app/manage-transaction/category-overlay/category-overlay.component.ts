@@ -7,7 +7,7 @@ import { TransactionType } from 'src/app/core/models/transaction-type.model';
   templateUrl: './category-overlay.component.html',
   styleUrls: ['./category-overlay.component.scss'],
 })
-export class CategoryOverlayComponent  implements OnInit, ViewDidEnter, ViewWillLeave {
+export class CategoryOverlayComponent  implements OnInit, ViewWillLeave {
 
   @ViewChild('modal') modalElement: IonModal = {} as IonModal;
   @ViewChild('scrollContainer') scrollContainer: IonGrid = {} as IonGrid;
@@ -26,10 +26,8 @@ export class CategoryOverlayComponent  implements OnInit, ViewDidEnter, ViewWill
 
   ngOnInit() {}
 
-  ionViewDidEnter(): void {
-    this.modalElement.ionModalDidPresent.subscribe(async () => {
-      (this.scrollContainer as any)['el'].ontouchmove = (e) => e.stopPropagation();
-    });
+  modalDidPresent(e) {
+    (this.scrollContainer as any)['el'].ontouchmove = (e) => {e.stopPropagation(); console.log('hello')};
   }
 
   ionViewWillLeave() {

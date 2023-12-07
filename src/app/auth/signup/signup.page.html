@@ -1,13 +1,53 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>signup</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="auth">
+  <ion-content [fullscreen]="true" [formGroup]="signUpForm">
+    <div class="image-container">
+      <img width="30%" src="../../../assets/images/logo-blue.png" alt="image" />
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">signup</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+    <div class="heading-container">
+      <h1 class="bold-text title">Hello</h1>
+      <p class="light-text subtitle">Create an account to continue</p>
+    </div>
+
+    <div class="input-group">
+      <div class="group">
+        <ion-label position="stacked">Email</ion-label>
+          <ion-input type="email" formControlName="email">
+            <ion-icon *ngIf="(email.dirty || email.touched) && !email.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
+            <ion-icon *ngIf="(email.dirty || email.touched) && email.errors" class="incorrect" name="close-circle" item-right></ion-icon>
+          </ion-input>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="group">
+        <ion-label position="stacked">Password</ion-label>
+          <ion-input type="password" formControlName="password">
+            <ion-icon *ngIf="(password.dirty || password.touched) && !password.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
+            <ion-icon *ngIf="(password.dirty || password.touched) && password.errors" class="incorrect" name="close-circle" item-right></ion-icon>
+          </ion-input>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="group">
+        <ion-label position="stacked">Confirm Password</ion-label>
+          <ion-input type="password" formControlName="confirmPassword">
+            <ion-icon *ngIf="(confirmPassword.dirty || confirmPassword.touched) && !confirmPassword.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
+            <ion-icon *ngIf="(confirmPassword.dirty || confirmPassword.touched) && confirmPassword.errors" class="incorrect" name="close-circle" item-right></ion-icon>
+          </ion-input>
+          <p class="mt-0 pt-0 showRed" *ngIf="passwordsMisMatch">Passwords to not match</p>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <ion-button class="shadow" type="submit" expand="block" shape="round" size="large" (click)="register()">Register</ion-button>
+      <br><br>
+      <div class="text-center">
+        <span>
+          <span class="light-text">Already have an Account?</span> <span (click)="signInPage()" class="primary bold-text button">&nbsp;&nbsp;Sign in</span>
+        </span>
+      </div>
+    </div>
+  </ion-content>
+</div>

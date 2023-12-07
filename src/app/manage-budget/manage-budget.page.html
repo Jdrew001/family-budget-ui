@@ -135,6 +135,10 @@
         </ion-row>
       </ion-grid>
     </app-card>
+    <app-empty-placeholder
+        [icon]="'emptyList'"
+        [message]="'No categories added yet'"
+        [display]="manageBudgetCategories?.length == 0"></app-empty-placeholder>
   </div>
 
   <app-add-category

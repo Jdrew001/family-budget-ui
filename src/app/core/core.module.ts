@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreService } from './services/core.service';
 import { ToastService } from './services/toast.service';
@@ -7,22 +7,17 @@ import { AuthService } from './services/auth.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpInterceptorService } from './interceptors/http-interceptor.service';
 import { UserService } from './services/user/user.service';
-import { CurrencyMaskDirective } from './directives/currency-mask.directive';
 import { HelperService } from './services/helper.service';
 
 
 
 @NgModule({
-  declarations: [
-    CurrencyMaskDirective
-  ],
+  declarations: [],
   imports: [
     CommonModule,
-    IonicStorageModule.forRoot(),
     HttpClientModule
   ],
   providers: [
-    CoreService,
     ToastService,
     AuthService,
     UserService,
@@ -32,9 +27,15 @@ import { HelperService } from './services/helper.service';
       useClass: HttpInterceptorService,
       multi: true
     }
-  ],
-  exports: [
-    CurrencyMaskDirective
   ]
 })
-export class CoreModule { }
+export class CoreModule {
+  static forRoot(): ModuleWithProviders<CoreModule> {
+    return {
+      ngModule: CoreModule,
+      providers: [
+        CoreService
+      ],
+    };
+  }
+}

@@ -1,0 +1,48 @@
+ion-modal#alert-modal {
+  --width: fit-content;
+  --min-width: 250px;
+  --height: fit-content;
+  --border-radius: 6px;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+}
+
+.icon {
+  opacity: 0.6;
+  font-size: 3rem;
+  margin: 2rem 0 1rem;
+
+  .warning {
+    color: var(--ion-color-warning);
+  }
+
+  .success {
+    color: var(--ion-color-success);
+  }
+
+  .error {
+    color: var(--ion-color-danger-shade);
+  }
+
+  .info {
+    color: var(--ion-color-primary-tint);
+  
+  }
+}
+
+.title h5 {
+  margin: unset !important;
+}
+
+ion-modal#alert-modal .wrapper {
+  margin: 0.2rem 2rem 2rem;
+}
+
+.content {
+  margin-top: 1rem;
+  font-size: 0.75rem !important;
+  
+  p {
+    opacity: 0.5;
+  }
+}

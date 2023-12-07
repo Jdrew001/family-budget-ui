@@ -1,0 +1,31 @@
+<div [formGroup]="profileForm">
+  <div class="input-group">
+    <div class="group">
+      <ion-label position="stacked">First Name</ion-label>
+      <ion-input formControlName="firstname">
+        <ion-icon *ngIf="(firstname.dirty || firstname.touched) && !firstname.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
+        <ion-icon *ngIf="(firstname.dirty || firstname.touched) && firstname.errors" class="incorrect" name="close-circle" item-right></ion-icon>
+      </ion-input>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <div class="group">
+      <ion-label position="stacked">Last Name</ion-label>
+      <ion-input formControlName="lastname">
+        <ion-icon *ngIf="(lastname.dirty || lastname.touched) && !lastname.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
+        <ion-icon *ngIf="(lastname.dirty || lastname.touched) && lastname.errors" class="incorrect" name="close-circle" item-right></ion-icon>
+      </ion-input>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <div class="group">
+      <ion-label position="stacked">Phone Number</ion-label>
+      <ion-input formControlName="phone">
+        <ion-icon *ngIf="(phone.dirty || phone.touched) && !phone.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
+        <ion-icon *ngIf="(phone.dirty || phone.touched) && phone.errors" class="incorrect" name="close-circle" item-right></ion-icon>
+      </ion-input>
+    </div>
+  </div>
+</div>

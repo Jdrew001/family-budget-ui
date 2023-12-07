@@ -3,15 +3,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div style="margin-bottom: 3rem;">
+  <div style="margin-bottom: 10rem;">
     <div class="mb-4">
-      <swiper-container 
-        slides-per-view="2" 
-        speed="500" 
-        pagination="true"
-        css-mode="true">
-
-        <swiper-slide *ngFor="let item of accountBalanceSummary">
+      <swiper
+        [allowTouchMove]="true"
+        direction="horizontal"
+        [slidesPerView]="2"
+        [pagination]="true">
+        <ng-template *ngFor="let item of accountBalanceSummary" swiperSlide>
           <app-card
             id="1"
             margin="10px 5px 5px 5px" 
@@ -33,9 +32,8 @@
               </ion-row>
             </ion-grid>
           </app-card>
-        </swiper-slide>
-
-      </swiper-container>
+        </ng-template>
+      </swiper>
     </div>
 
     <div class="pt-3" *ngFor="let group of groupedTransactions">
@@ -51,11 +49,11 @@
               <ion-col size="2">
                 <app-circle-gauge [config]="transaction?.circleGuage"></app-circle-gauge>
               </ion-col>
-              <ion-col size="8">
+              <ion-col size="7">
                 <p class="text-sm strong description">{{ transaction?.description }}</p>
                 <p class="pt-0 mt-2 text-xs light-text-color">{{ transaction?.date }}</p>
               </ion-col> 
-              <ion-col class="ion-align-self-center" size="2">
+              <ion-col class="ion-align-self-center" size="3">
                 <p class="text-sm strong ion-float-right" [ngClass]="{'showRed': transaction?.showRed}">{{ transaction?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
               </ion-col>
             </ion-row>
@@ -63,10 +61,12 @@
         </app-card>
       </div>
     </div>
+    <app-empty-placeholder
+        [icon]="'emptyList'"
+        [message]="'No transactions added yet'"
+        [display]="groupedTransactions?.length == 0"></app-empty-placeholder>
     <ion-infinite-scroll threshold="1%" (ionInfinite)="onIonInfinite($event)">
       <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
-
-    
   </div>
 </ion-content>

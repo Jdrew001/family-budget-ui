@@ -1,0 +1,41 @@
+<ion-modal #modal 
+  trigger="open-modal" 
+  [initialBreakpoint]="0.50" 
+  [breakpoints]="[0, 0.50]" 
+  [handle]="false"
+  (ionModalDidDismiss)="modalDidDismiss()">
+  <ng-template>
+    <ion-toolbar>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h5 *ngIf="!familyUser" class="text-center bold-text mb-1">Invite Family</h5>
+            <h5 *ngIf="familyUser" class="text-center bold-text mb-1">Manage Family Member</h5>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+    <ion-content #ionContent [scrollY]="true" [formGroup]="formGroup" style="--offset-bottom: 0vh;">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div class="input-group mt-4 mb-1">
+              <div class="group mb-0">
+                <ion-label position="stacked">Email</ion-label>
+                  <ion-input [readonly]="familyUser" formControlName="email" placeholder="Provide Email">
+                    <ion-icon *ngIf="(email.dirty || email.touched) && !email.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
+                    <ion-icon *ngIf="(email.dirty || email.touched) && email.errors" class="incorrect" name="close-circle" item-right></ion-icon>
+                  </ion-input>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <div class="button-group mt-5">
+        <ion-button *ngIf="!familyUser" (click)="onConfirmInvite()" class="shadow" type="submit" expand="block" shape="round" size="large" >Confirm</ion-button>
+        <ion-button [disabled]="familyUser?.isOwner" *ngIf="familyUser" (click)="onRemoveUser()" color="danger" class="shadow" type="submit" expand="block" shape="round" size="large" >Remove</ion-button>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

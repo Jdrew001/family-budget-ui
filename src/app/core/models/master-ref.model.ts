@@ -1,5 +1,6 @@
 export interface MasterRefdata {
     accountTypes: Array<IdLabel>;
+    frequencies: Array<IdLabel>;
 }
 
 export interface IdLabel {

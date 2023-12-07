@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { AuthService } from './core/services/auth.service';
+import { CoreService } from './core/services/core.service';
+import { AlertControllerService } from './shared/services/alert-controller.service';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +15,17 @@ export class AppComponent implements OnInit {
   constructor(
     private storage: Storage,
     private platForm: Platform,
-    private authService: AuthService
+    private authService: AuthService,
+    private navController: NavController,
+    private coreService: CoreService
   ) {}
-
+//
   async ngOnInit(): Promise<void> {
     this.platForm.ready().then(async (source) => {
-      await this.storage.create();//
-      await this.authService.validateRefreshToken();
+      from(this.storage.create()).subscribe(async (result) => {
+        this.coreService.getMasterRefData();
+        await this.authService.validateRefreshToken();//
+      })
     });
   }
 }

@@ -1,4 +1,9 @@
-<ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.90" [breakpoints]="[0, 0.90]" [handle]="false">
+<ion-modal #modal 
+  trigger="open-modal" 
+  [initialBreakpoint]="0.90" 
+  [breakpoints]="[0, 0.90]" 
+  [handle]="false"
+  (ionModalDidPresent)="modalDidPresent($event)">
   <ng-template>
     <ion-toolbar>
       <ion-grid>
@@ -46,15 +51,14 @@
         </ion-row>
       </ion-grid>
     </ion-toolbar>
-    <ion-content #ionContent [scrollY]="true" style="--offset-bottom: -15vh;">
+    <ion-content #ionContent [scrollY]="true">
       <ion-grid>
         <ion-row #scrollContainer style="overflow-y: scroll; padding-bottom: 2rem">
-          
           <ion-grid>
-
             <ion-row *ngFor="let item of categoryList">
-              <ion-col size="12">
-                <app-card (click)="selectCategory(item?.id)" padding="5px" margin="3px 5px 3px 5px">
+              <ion-col size="12" class="p-0">
+                <app-card (click)="selectCategory(item?.id)" 
+                  padding="5px 0px" margin="3px 5px 3px 5px">
                   <ion-list lines="none">
                     <ion-item>
                       <ion-label>{{ item?.name }}</ion-label>
@@ -64,14 +68,11 @@
                 </app-card> 
               </ion-col>
             </ion-row>
-
             <div class="button-group mt-5">
               <ion-button (click)="onConfirmCategories()" class="shadow" type="submit" expand="block" shape="round" size="large" >Confirm</ion-button>
             </div>
-
           </ion-grid>
         </ion-row>
-        
       </ion-grid>
     </ion-content>
   </ng-template>

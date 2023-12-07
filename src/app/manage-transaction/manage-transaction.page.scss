@@ -5,3 +5,15 @@ ion-modal  ion-content  {
 ion-modal ion-toolbar {
     box-shadow: 0px 15px 10px rgb(0 0 0 / 3%);
 }
+
+:host ::ng-deep .swiper {
+    padding-bottom: 1rem !important;
+}
+
+::ng-deep .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: #24388E !important;
+}
+
+::ng-deep .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: 0px !important;
+}

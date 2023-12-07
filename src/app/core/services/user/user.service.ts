@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserConstants } from './user.constant';
 import { Storage } from '@ionic/storage-angular';
 import { UserAccountModel, UserModel } from '../../models/user.model';
-import { Observable } from 'rxjs';
+import { Observable, Subject, map } from 'rxjs';
 import { SummaryAccountBalance } from '../../models/account.model';
 import { HelperService } from '../helper.service';
 
@@ -20,12 +20,14 @@ export class UserService {
   ) {
   }
 
+  fetchUserEmail() {
+    const url = this.helperService.getResourceUrl(UserConstants.GET_USER_EMAIL);
+    return this.http.get(url) as Observable<any>;
+  }
+
   fetchUserInformation() {
     const url = this.helperService.getResourceUrl(UserConstants.GET_USERINFO);
-    this.http.get<UserModel>(url).subscribe(async (response: UserModel) => {
-      this.storeUserInformation(response);
-      console.log('userInformation', await this.storage.get('userInformation'));
-    });
+    return this.http.get<UserModel>(url);
   }
 
   fetchAccountsForUser() {
@@ -38,7 +40,7 @@ export class UserService {
     return this.http.get(url) as Observable<SummaryAccountBalance[]>;
   }
 
-  private async storeUserInformation(userInformation: UserModel) {
+  async storeUserInformation(userInformation: UserModel) {
     await this.storage.set('userInformation', null);
     await this.storage.set('userInformation', userInformation);
   }

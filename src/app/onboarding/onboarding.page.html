@@ -1,0 +1,56 @@
+<div class="onboarding">
+  <ion-content [fullscreen]="true">
+    <ion-grid class="mt-5">
+      <ion-row>
+        <ion-col>
+          <!-- radial here -->
+        </ion-col>
+        <ion-col>
+          <h5 class="text-md strong">{{ getTitleDescription('title') }}</h5>
+          <p class="text-xs light-text-color">{{ getTitleDescription('description') }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row [formGroup]="onboardingForm" style="margin-top: 3rem;">
+        <ion-col [ngSwitch]="currentPage">
+          <ng-container>
+            <div *ngSwitchCase="OnboardingStep.Profile">
+              <app-profile 
+                [profileForm]="profileForm"></app-profile>
+            </div>
+          </ng-container>
+          <ng-container>
+            <div *ngSwitchCase="OnboardingStep.Account">
+              <app-account
+                [accountForm]="accountsFormArray"></app-account>
+            </div>
+          </ng-container>
+          <ng-container>
+            <div *ngSwitchCase="OnboardingStep.Category">
+              <app-categories 
+                [categoryForm]="categoriesFormArray"></app-categories>
+            </div>
+          </ng-container>
+          <ng-container>
+            <div *ngSwitchCase="OnboardingStep.InviteFamily">
+              <app-invite-family
+                [familyInviteForm]="familyInvitesFormArray"
+                [userEmail]="userEmail"></app-invite-family>
+            </div>
+          </ng-container>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+  <ion-footer class="ion-no-border mt-5">
+    <div class="ion-padding button-group">
+      <ion-button *ngIf="sectionIndex == requiredSections?.length - 1" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="submit()">Submit</ion-button>
+      <ion-button *ngIf="sectionIndex < requiredSections?.length - 1" class="shadow" type="submit" expand="block" shape="round" size="large" (click)="nextStep()">Next</ion-button>
+    </div>
+
+    <div class="text-center">
+      <span>
+        <span *ngIf="sectionIndex > 0" (click)="previousStep()" class="primary bold-text button">Back</span>
+      </span>
+    </div>
+  </ion-footer>
+</div>

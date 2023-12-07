@@ -79,4 +79,10 @@ export class SummaryService {
     const url = this.helperService.getResourceUrl(SummaryConstant.TRANSACTIONS);
     return this.http.get(`${url}/${this.accountId}`);
   }
+
+  public resetSummaryData() {
+    this.currentBudgetSummary = {} as CurrentBudgetSummary;
+    this.accountBalanceSummary = [];
+    this.transactionSummary = [];
+  }
 }
