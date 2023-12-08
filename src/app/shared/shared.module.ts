@@ -17,6 +17,7 @@ import { AddCategoryComponent as AddCategoryComponentSettings } from '../shared/
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmptyPlaceholderComponent } from './components/empty-placeholder/empty-placeholder.component';
 import { CurrencyMaskDirective } from './directives/currency-mask.directive';
+import { PhoneMaskDirective } from './directives/phone-mask.directive';
 
 
 
@@ -34,7 +35,8 @@ import { CurrencyMaskDirective } from './directives/currency-mask.directive';
     AddFamilyComponent,
     AddCategoryComponentSettings,
     EmptyPlaceholderComponent,
-    CurrencyMaskDirective
+    CurrencyMaskDirective,
+    PhoneMaskDirective
   ],
   providers: [
     SharedService,
@@ -59,7 +61,8 @@ import { CurrencyMaskDirective } from './directives/currency-mask.directive';
     AddFamilyComponent,
     AddCategoryComponentSettings,
     EmptyPlaceholderComponent,
-    CurrencyMaskDirective
+    CurrencyMaskDirective,
+    PhoneMaskDirective
   ]
 })
 export class SharedModule { }
