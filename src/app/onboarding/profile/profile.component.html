@@ -22,7 +22,7 @@
   <div class="input-group">
     <div class="group">
       <ion-label position="stacked">Phone Number</ion-label>
-      <ion-input formControlName="phone">
+      <ion-input phoneMask formControlName="phone" inputmode="numeric" max="14">
         <ion-icon *ngIf="(phone.dirty || phone.touched) && !phone.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
         <ion-icon *ngIf="(phone.dirty || phone.touched) && phone.errors" class="incorrect" name="close-circle" item-right></ion-icon>
       </ion-input>
