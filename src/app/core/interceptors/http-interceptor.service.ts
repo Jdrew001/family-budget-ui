@@ -28,7 +28,7 @@ export class HttpInterceptorService implements HttpInterceptor {
     return this.handle(req, next).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status !== 403 && error.status !== 401) {
-          this.toastService.showMessage(error.message, true);
+          this.toastService.showMessage('Something went wrong. Please try again later.', true);
         }
         return EMPTY;
       })
