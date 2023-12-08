@@ -23,8 +23,7 @@ export class AppComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.platForm.ready().then(async (source) => {
       from(this.storage.create()).subscribe(async (result) => {
-        this.coreService.getMasterRefData();
-        await this.authService.validateRefreshToken();//
+        await this.authService.validateRefreshToken();
       })
     });
   }

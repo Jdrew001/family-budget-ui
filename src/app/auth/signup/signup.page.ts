@@ -59,6 +59,7 @@ export class SignupPage implements OnInit {
         }),
         switchMap(() => {
           this.authService.isAuthenticated$.next(true);
+          this.coreService.getMasterRefData();
           return this.coreService.checkOnboardingStatus();
         })
       ).subscribe((onboardingResult) => {

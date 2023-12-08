@@ -55,6 +55,7 @@ export class SigninPage implements OnInit {
           // enable going to next screen
           this.authService.isAuthenticated$.next(true);
           this.authenticated = true;
+          this.coreService.getMasterRefData();
 
           // we want to call check onboarding status
           return this.coreService.checkOnboardingStatus();
