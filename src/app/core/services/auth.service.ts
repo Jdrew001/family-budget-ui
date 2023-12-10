@@ -68,6 +68,7 @@ export class AuthService {
       }),
       switchMap(() => {
         this.isAuthenticated$.next(true);
+        this.coreService.getMasterRefData();
         return this.coreService.checkOnboardingStatus();
       }),
       // switchMap((result: {success: string, message: string, data: any}) => {
