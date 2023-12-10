@@ -30,9 +30,9 @@ export class OnboardingFormService {
 
   createProfileFormGroup() {
     return new FormGroup({
-      firstname: new FormControl('', Validators.required),
-      lastname: new FormControl('', Validators.required),
-      phone: new FormControl('', Validators.required)
+      firstname: new FormControl(''),
+      lastname: new FormControl(''),
+      phone: new FormControl('')
     });
   }
 
@@ -40,16 +40,22 @@ export class OnboardingFormService {
     requiredSections.forEach((section) => {
       switch(section) {
         case 'profile':
-          this.profileForm.setValidators(Validators.required);
+          this.profileForm.get('firstname').setValidators(Validators.required);
+          this.profileForm.get('lastname').setValidators(Validators.required);
+          this.profileForm.get('phone').setValidators(Validators.required);
+          this.profileForm.updateValueAndValidity();
           break;
         case 'accounts':
           this.accountsFormArray.setValidators(Validators.required);
+          this.accountsFormArray.updateValueAndValidity();
           break;
         case 'categories':
           this.categoriesFormArray.setValidators(Validators.required);
+          this.categoriesFormArray.updateValueAndValidity();
           break;
         case 'familyInvites':
           this.familyInvitesFormArray.setValidators(Validators.required);
+          this.familyInvitesFormArray.updateValueAndValidity();
           break;
       }
     });
@@ -108,11 +114,11 @@ export class OnboardingFormService {
   }
 
   private createAccountsFormArray() {
-    return new FormArray([], Validators.required);
+    return new FormArray([]);
   }
 
   private createCategoriesFormArray() {
-    return new FormArray([], Validators.required);
+    return new FormArray([]);
   }
 
   private createFamilyInvitesFormArray() {

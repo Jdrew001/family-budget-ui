@@ -2,7 +2,7 @@
   <app-navigation-bar [title]="'Budget'"></app-navigation-bar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content appViewportHeight [fullscreen]="true" [scrollY]="true">
   <div>
     <div>
       <ion-grid>
@@ -80,7 +80,7 @@
       </ion-row>
     </ion-grid>
   </div>
-  <div>
+  <div style="margin-bottom: 10rem">
     <app-card *ngFor="let item of categoriesForBudget"
       margin="10px 5px 5px 5px" 
       padding="5px">
