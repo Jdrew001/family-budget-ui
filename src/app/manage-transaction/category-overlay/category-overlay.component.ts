@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IonGrid, IonModal, IonSearchbar, ViewDidEnter, ViewWillLeave } from '@ionic/angular';
+import { CoreConstants } from 'src/app/core/constants/core.constants';
 import { TransactionType } from 'src/app/core/models/transaction-type.model';
 
 @Component({
@@ -37,18 +38,18 @@ export class CategoryOverlayComponent  implements OnInit, ViewWillLeave {
     this.searchBar.value = '';
   }
 
-  onSearch(event: any) {
-    const value = event?.detail?.value;
-    if (value && value == '') {
-      this.categoryList = this.categoryRefData;
-      return;
-    }
+  // onSearch(event: any) {
+  //   const value = event?.detail?.value;
+  //   if (value && value == '') {
+  //     this.categoryList = this.categoryRefData;
+  //     return;
+  //   }
 
-    this.selectedCategoryType = null;
-    this.categoryList = this.categoryRefData.filter((category: any) => {
-      return category.name.toLowerCase().includes(value.toLowerCase());
-    });
-  }
+  //   this.selectedCategoryType = null;
+  //   this.categoryList = this.categoryRefData.filter((category: any) => {
+  //     return category.name.toLowerCase().includes(value.toLowerCase());
+  //   });
+  // }
 
   presentModal() {
     this.categoryList = this.categoryRefData;
@@ -56,15 +57,13 @@ export class CategoryOverlayComponent  implements OnInit, ViewWillLeave {
   }
 
   selectCategory(id: string) {
-    this.searchBar.value = '';
+    this.selectedCategory = null;
     this.categoryList = this.categoryRefData;
     this.selectedCategoryType = null;
     this.beforeSearchCategoryList = [];
-    if (this.selectedCategory == id) {
-      this.selectedCategory = '';
-      return;
-    }
     this.selectedCategory = id;
+
+    setTimeout(() => {this.onConfirmCategories();}, CoreConstants.ANIMATION_DURATION)
   }
 
   categoryTypeSelected(type: TransactionType) {
