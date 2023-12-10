@@ -1,4 +1,4 @@
-<ion-header [translucent]="true" class="mb-1">
+<ion-header [translucent]="true">
   <ion-toolbar style="--border-style: none !important;">
     <ion-grid>
       <ion-row>
@@ -21,8 +21,8 @@
         <ion-col size="9">
           <div class="input-group mt-4 mb-1">
             <div class="group mb-0">
-              <ion-label position="stacked">Category Name</ion-label>
-                <ion-input formControlName="categoryName" placeholder="Provide Name">
+              <ion-label position="stacked">Name</ion-label>
+                <ion-input formControlName="categoryName" placeholder="(Ex: Grocery)" autocapitalize="words">
                   <ion-icon *ngIf="(categoryName.dirty || categoryName.touched) && !categoryName.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
                   <ion-icon *ngIf="(categoryName.dirty || categoryName.touched) && categoryName.errors" class="incorrect" name="close-circle" item-right></ion-icon>
                 </ion-input>
@@ -46,7 +46,7 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>
+        <ion-col class="p-0">
           <app-card 
             (click)="categoryTypeSelected(0)" 
             [active]="categoryType == 0"
@@ -60,7 +60,7 @@
             </ion-list>
           </app-card>
         </ion-col>
-        <ion-col>
+        <ion-col class="p-0">
           <app-card
             (click)="categoryTypeSelected(1)" 
             [active]="categoryType == 1"

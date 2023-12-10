@@ -123,6 +123,7 @@ export class SettingsService {
       this.createCategory(data).subscribe((result) => {
         if (result && result.success) {
           this.fetchCategories();
+          return;
         }
   
         this.toastService.showMessage(result.message, true);

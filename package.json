@@ -10,7 +10,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "start:ios": "ionic cap run ios -l" 
+    "start:ios": "ionic cap run ios -l",
+    "start:android": "export JAVA_HOME=$(/usr/libexec/java_home -v 20.0.2) & ionic cap run android -l --external"
   },
   "private": true,
   "dependencies": {

@@ -41,19 +41,12 @@
               </ion-list>
             </app-card>
           </ion-col>
-          <ion-col size="12">
-            <ion-searchbar
-            #searchBar
-            placeholder="Search" 
-            (ionInput)="onSearch($event)"
-            (click)="modal.setCurrentBreakpoint(0.75)"></ion-searchbar>
-          </ion-col>
         </ion-row>
       </ion-grid>
     </ion-toolbar>
     <ion-content #ionContent [scrollY]="true">
       <ion-grid>
-        <ion-row #scrollContainer style="overflow-y: scroll; padding-bottom: 2rem">
+        <ion-row appViewportHeight [subtractHeightPercentage]="30" #scrollContainer style="overflow-y: scroll; padding-bottom: 5rem">
           <ion-grid>
             <ion-row *ngFor="let item of categoryList">
               <ion-col size="12" class="p-0">
@@ -68,9 +61,6 @@
                 </app-card> 
               </ion-col>
             </ion-row>
-            <div class="button-group mt-5">
-              <ion-button (click)="onConfirmCategories()" class="shadow" type="submit" expand="block" shape="round" size="large" >Confirm</ion-button>
-            </div>
           </ion-grid>
         </ion-row>
       </ion-grid>

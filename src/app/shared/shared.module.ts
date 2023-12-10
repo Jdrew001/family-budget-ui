@@ -18,6 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmptyPlaceholderComponent } from './components/empty-placeholder/empty-placeholder.component';
 import { CurrencyMaskDirective } from './directives/currency-mask.directive';
 import { PhoneMaskDirective } from './directives/phone-mask.directive';
+import { ViewportHeightDirective } from './directives/viewport-height.directive';
+import { OverscrollDirective } from './directives/overscroll.directive';
 
 
 
@@ -36,7 +38,9 @@ import { PhoneMaskDirective } from './directives/phone-mask.directive';
     AddCategoryComponentSettings,
     EmptyPlaceholderComponent,
     CurrencyMaskDirective,
-    PhoneMaskDirective
+    PhoneMaskDirective,
+    ViewportHeightDirective,
+    OverscrollDirective
   ],
   providers: [
     SharedService,
@@ -62,7 +66,9 @@ import { PhoneMaskDirective } from './directives/phone-mask.directive';
     AddCategoryComponentSettings,
     EmptyPlaceholderComponent,
     CurrencyMaskDirective,
-    PhoneMaskDirective
+    PhoneMaskDirective,
+    ViewportHeightDirective,
+    OverscrollDirective
   ]
 })
 export class SharedModule { }

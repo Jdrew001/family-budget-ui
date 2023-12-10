@@ -21,7 +21,7 @@ export class ManageBudgetPage implements OnInit {
   get manageBudgetSummary() { return this.manageBudgetService.manageBudgetSummary; }
   get manageBudgetCategories() { return this.manageBudgetService.manageBudgetCategories; }
 
-  budgetCategoryRefData: Array<{id: string, name: string, type: TransactionType}> = [];
+  budgetCategoryRefData: Array<{id: string, name: string, type: TransactionType, icon: string}> = [];
 
   constructor(
     private modalController: ModalController,

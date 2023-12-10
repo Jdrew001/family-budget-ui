@@ -5,4 +5,5 @@ export class CoreConstants {
     public static CHECK_ONBOARD_STATUS = 'user/checkOnboardStatus';
 
     public static readonly FORM_ERROR_MSG = 'Please fill in all required fields';
+    public static readonly ANIMATION_DURATION = 200;
 }

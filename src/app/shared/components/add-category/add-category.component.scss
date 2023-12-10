@@ -6,8 +6,10 @@
     z-index: 9999;
 }
 .input-lookalike ion-icon {
-    position: unset !important;
+    position: relative !important;
     margin-top: 5px;
+    top: 0rem !important;
+    right: 0.2rem;
 }
 
 .group {

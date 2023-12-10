@@ -1,4 +1,4 @@
-<ion-header [translucent]="true" class="mb-1">
+<ion-header [translucent]="true">
   <ion-toolbar style="--border-style: none !important;">
     <ion-grid>
       <ion-row>
@@ -23,7 +23,7 @@
           <div class="input-group mt-4 mb-1">
             <div class="group mb-0">
               <ion-label position="stacked">Account Name</ion-label>
-                <ion-input formControlName="name" placeholder="Provide Name">
+                <ion-input formControlName="name" placeholder="Provide Name" autocapitalize="words">
                   <ion-icon *ngIf="(name.dirty || name.touched) && !name.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
                   <ion-icon *ngIf="(name.dirty || name.touched) && name.errors" class="incorrect" name="close-circle" item-right></ion-icon>
                 </ion-input>
@@ -45,7 +45,7 @@
           </div>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <!-- <ion-row>
         <ion-col>
           <div class="input-group mt-3 mb-1">
             <div class="group mb-0">
@@ -54,7 +54,7 @@
             </div>
           </div>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <ion-row>
         <ion-col>
           <div class="input-group mt-3 mb-1">

@@ -2,7 +2,7 @@
   <app-navigation-bar [title]="'Summary'"></app-navigation-bar>
 </ion-header>
 
-<ion-content [fullscreen]="true" style="--offset-bottom: -15vh;">
+<ion-content [fullscreen]="true" style="--offset-bottom: -15vh;" [scrollY]="true">
   <div style="margin-bottom: 10rem">
     <div>
       <ion-grid>
@@ -69,11 +69,11 @@
       <div *ngIf="currentBudgetSummary?.showBudgetError" class="alert-container">
         <ion-grid>
           <ion-row>
-            <ion-col>
+            <ion-col class="p-0">
               <ion-list lines="none">
                 <ion-item>
                   <ion-icon name="alert-circle-outline" color="primary"></ion-icon>
-                  <p class="text-xs pl-3 m-0">You don't have categories set for the current budget.</p>
+                  <p class="text-xs m-0">You don't have categories set for the current budget.</p>
                   <ion-button (click)="manageUnsetBudget()" size="small" color="primary" fill="outline" class="text-xs">Manage</ion-button>
                 </ion-item>
               </ion-list>

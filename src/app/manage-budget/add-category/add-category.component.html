@@ -1,7 +1,7 @@
 <ion-modal #modal 
   trigger="open-modal" 
-  [initialBreakpoint]="0.90" 
-  [breakpoints]="[0, 0.90]"
+  [initialBreakpoint]="0.70" 
+  [breakpoints]="[0, 0.70]"
   [handle]="false"
   (ionModalDidPresent)="modalDidPresent($event)"
   (willDismiss)="modalWillDismiss($event)">
@@ -13,28 +13,8 @@
             <h5 class="text-center bold-text mb-1">Add Category</h5>
           </ion-col>
         </ion-row>
-        <ion-row>
-          <ion-col>
-            <div class="input-group mt-5 mb-1">
-              <div class="group mb-0">
-                <ion-label position="stacked">Amount</ion-label>
-                  <ion-input currencyMask placeholder="Select Amount" formControlName="amount">
-                  </ion-input>
-              </div>
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-toolbar>
-    <ion-content #ionContent [scrollY]="true">
-      <ion-grid #scrollContainer style="overflow-y: scroll; padding-bottom: 2rem">
-        <ion-row>
-          <ion-col>
-            <ion-label position="stacked">Category Type</ion-label>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
+        <ion-row *ngIf="screen == 0">
+          <ion-col class="p-0">
             <app-card 
               (click)="categoryTypeSelected(0)" 
               [active]="selectedCategoryType == 0"
@@ -48,7 +28,7 @@
               </ion-list>
             </app-card>
           </ion-col>
-          <ion-col>
+          <ion-col class="p-0">
             <app-card
               (click)="categoryTypeSelected(1)" 
               [active]="selectedCategoryType == 1"
@@ -62,16 +42,44 @@
               </ion-list>
             </app-card>
           </ion-col>
+        </ion-row> 
+      </ion-grid>
+    </ion-toolbar>
+    <ion-content #ionContent [scrollY]="true">
+      <ion-grid appViewportHeight [subtractHeightPercentage]="50" #scrollContainer style="overflow-y: scroll; padding-bottom: 2rem">
+        <ion-row *ngIf="screen == 1">
+          <ion-col size="12" class="pb-3 m-0">
+            <app-card
+              padding="5px 0px" margin="3px 5px 3px 5px">
+              <ion-list lines="none">
+                <ion-item>
+                  <ion-icon class="text-lg mr-5" [src]="'assets/icon/'+getCategoryItem()?.icon+'.svg'" color="primary"></ion-icon>
+                  <ion-label>{{ getCategoryItem()?.name }}</ion-label>
+                  <!-- <ion-icon *ngIf="item?.id == this.selectedCategory" name="checkmark-circle-outline" color="primary"></ion-icon> -->
+                </ion-item>
+              </ion-list>
+            </app-card> 
+          </ion-col>
         </ion-row>
-        <ion-row style="overflow-y: scroll; padding-bottom: 2rem">
-          
+        <ion-row *ngIf="screen == 1">
+          <ion-col>
+            <div class="input-group mt-2 mb-1">
+              <div class="group mb-0">
+                <ion-label position="stacked">Amount</ion-label>
+                  <ion-input currencyMask placeholder="Select Amount" formControlName="amount">
+                  </ion-input>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row *ngIf="screen == 0" style="overflow-y: scroll; padding-bottom: 2rem">
           <ion-grid class="p-0">
-
-            <ion-row>
+            <!-- <ion-row>
               <ion-col>
                 <ion-label position="stacked">Category</ion-label>
               </ion-col>
-            </ion-row>
+            </ion-row> -->
 
             <ion-row *ngFor="let item of refDataClone">
               <ion-col size="12" class="p-0 m-0">
@@ -80,6 +88,7 @@
                   (click)="selectCategory(item?.id)">
                   <ion-list lines="none">
                     <ion-item>
+                      <ion-icon class="text-lg mr-5" [src]="'assets/icon/'+item?.icon+'.svg'" color="primary"></ion-icon>
                       <ion-label>{{ item?.name }}</ion-label>
                       <ion-icon *ngIf="item?.id == this.selectedCategory" name="checkmark-circle-outline" color="primary"></ion-icon>
                     </ion-item>
@@ -90,11 +99,12 @@
           </ion-grid>
         </ion-row>
       </ion-grid>
+
+      <ion-footer *ngIf="screen == 1" class="ion-no-border mt-5">
+        <div class="button-group mt-5">
+          <ion-button [disabled]="formGroup?.invalid" (click)="onConfirm()" class="shadow" type="submit" expand="block" shape="round" size="large" >Confirm</ion-button>
+        </div>
+      </ion-footer>
     </ion-content>
-    <ion-footer class="ion-no-border mt-5">
-      <div class="button-group mt-5">
-        <ion-button [disabled]="formGroup?.invalid" (click)="onConfirm()" class="shadow" type="submit" expand="block" shape="round" size="large" >Confirm</ion-button>
-      </div>
-    </ion-footer>
   </ng-template>
 </ion-modal>

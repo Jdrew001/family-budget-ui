@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IonGrid, IonModal } from '@ionic/angular';
+import { CoreConstants } from 'src/app/core/constants/core.constants';
 
 @Component({
   selector: 'app-icon-field',
@@ -108,6 +109,8 @@ export class IconFieldComponent  implements OnInit {
 
   iconSelected(icon: string) {
     this.icon = icon;
+
+    setTimeout(() => {this.onConfirmIcon()}, CoreConstants.ANIMATION_DURATION);
   }
 
 }

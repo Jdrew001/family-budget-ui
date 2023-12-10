@@ -26,13 +26,13 @@ export class OnboardingPage implements OnInit {
   };
 
   get onboardingForm() { return this.onboardingFormService.onboardingForm; }
-  get profileForm() { return this.onboardingForm.get('profile') as FormGroup; }
-  get accountsFormArray() { return this.onboardingForm.get('accounts') as FormArray; }
-  get categoriesFormArray() { return this.onboardingForm.get('categories') as FormArray; }
-  get familyInvitesFormArray() { return this.onboardingForm.get('familyInvites') as FormArray; }
+  get profileForm() { return this.onboardingForm?.get('profile') as FormGroup; }
+  get accountsFormArray() { return this.onboardingForm?.get('accounts') as FormArray; }
+  get categoriesFormArray() { return this.onboardingForm?.get('categories') as FormArray; }
+  get familyInvitesFormArray() { return this.onboardingForm?.get('familyInvites') as FormArray; }
   get requiredSections() { return this.coreService.onboardingRequiredSections; }
   get sectionIndex() { return ArrayUtils.getArrayPosition(this.requiredSections, this.currentPage); }
-  get userEmail() { return this.onboardingService.email; }
+  get userEmail() { return this.onboardingService?.email; }
 
   currentPage = this.requiredSections[0];
 
@@ -48,9 +48,9 @@ export class OnboardingPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.checkOnboardingSteps();
     this.onboardingFormService.createFormGroup();
     this.userService.fetchUserEmail().subscribe((res) => this.onboardingService.email = res?.data);
+    this.checkOnboardingSteps();
   }
 
   getTitleDescription(type: 'title' | 'description') {
@@ -61,7 +61,7 @@ export class OnboardingPage implements OnInit {
   }
 
   checkOnboardingSteps() {
-    console.log('onboarding steps', this.coreService.onboardingRequiredSections);
+    this.onboardingFormService.setRequiredFields(this.coreService.onboardingRequiredSections);
   }
 
   nextStep() {
