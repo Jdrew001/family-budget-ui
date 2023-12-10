@@ -375,6 +375,10 @@ div.heading-container {
     margin-bottom: 2rem;
 }
 
+body {
+    --background: var(--ion-color-light);
+}
+
 ion-content {
     --background: var(--ion-color-light);
 }
@@ -575,4 +579,5 @@ swiper-container {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+  
 

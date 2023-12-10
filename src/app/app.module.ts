@@ -31,7 +31,9 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     InviteFamilyComponent,
   ],
   imports: [
-    IonicModule.forRoot(),
+    IonicModule.forRoot({
+      mode: 'ios'
+    }),
     CoreModule,
     BrowserModule,
     FormsModule,

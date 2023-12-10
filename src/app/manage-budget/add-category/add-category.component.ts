@@ -17,6 +17,8 @@ export class AddCategoryComponent  implements OnInit {
   @Input() set budgetCategoryRefData(value) { this._budgetCategoryRefData = value; }
   get budgetCategoryRefData() { return this._budgetCategoryRefData; }
 
+  screen = 0;
+
   selectedCategoryType = null;
   selectedCategory: string;
   refDataClone: Array<{id: string, name: string, type: TransactionType}> = [];
@@ -62,14 +64,15 @@ export class AddCategoryComponent  implements OnInit {
   }
 
   selectCategory(id: string) {
-    if (this.selectedCategory == id) {
-      this.selectedCategory = null;
-      this.formGroup.get('id').setValue(null);
-      return;
-    }
+    // if (this.selectedCategory == id) {
+    //   this.selectedCategory = null;
+    //   this.formGroup.get('id').setValue(null);
+    //   return;
+    // }
 
     this.selectedCategory = id;
     this.formGroup.get('id').setValue(this.selectedCategory);
+    this.screen = 1;
   }
 
   onConfirm() {
@@ -82,6 +85,10 @@ export class AddCategoryComponent  implements OnInit {
 
   dismissModal() {
     this.modalElement.dismiss();
+  }
+
+  getCategoryItem() {
+    return this.budgetCategoryRefData.find(category => category.id == this.selectedCategory);
   }
 
 }
