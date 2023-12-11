@@ -1,0 +1,7 @@
+version 0.0.2-snapshot-1 build 3
+
+Author: Drew Atkison
+--------------------------------
+
+What is in the release
+Minor UX updates and bug fixes.

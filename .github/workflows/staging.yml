@@ -77,3 +77,4 @@ jobs:
           groups: DEVELOPMENT
           file: project/apk/app-debug.apk
           debug: true #this will show the verbose log
+          releaseNotesFile: release-notes.txt
