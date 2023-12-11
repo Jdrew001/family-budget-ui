@@ -57,10 +57,11 @@ export class AuthService {
   async validateRefreshToken() {
     this.refreshToken()
     .pipe(
-      switchMap((result) => {
+      switchMap(async (result) => {
         if (!result) {
           this.navController.navigateRoot('/auth/signin', { replaceUrl:true });
           this.isAuthenticated$.next(false);
+          await SplashScreen.hide();
           return EMPTY;
         }
 
@@ -70,38 +71,10 @@ export class AuthService {
         this.isAuthenticated$.next(true);
         this.coreService.getMasterRefData();
         return this.coreService.checkOnboardingStatus();
-      }),
-      // switchMap((result: {success: string, message: string, data: any}) => {
-      //   if (!result.success) {
-      //     return EMPTY;
-      //   }
-
-      //   if (!result?.data) return EMPTY;
-
-      //   const userInvited = result.data?.userInvited;
-      //   const userOnboarded = result.data?.onboarded;
-      //   if (userInvited || userOnboarded) {
-      //     return this.coreService.checkFamilyStatus();
-      //   }
-
-      //   //TODO: if the user has not been invited, we  want to redirect to onboarding page
-      //   console.warn('TODO: redirect to onboarding page')
-      //   return EMPTY;
-      // }),
-      // switchMap((familyStatus) => {
-      //   if (familyStatus?.data?.dialogConfig) {
-      //     this.alertControllerService.alertBoxSubject$.next({config: familyStatus?.data?.dialogConfig, show: true});
-      //   } 
-      //   return this.userService.fetchUserInformation();
-      // }),
-      // switchMap((userInformation) => {
-      //   return zip(
-      //     from(this.userService.storeUserInformation(userInformation)),
-      //     from(SplashScreen.hide())
-      //   )
-      // })
-    ).subscribe((onboardingResult) => {
+      })
+    ).subscribe(async (onboardingResult) => {
       this.coreService.onboardingRequiredSections = onboardingResult?.data?.requiredSections;
+        await SplashScreen.hide();//
         if (onboardingResult?.data?.requiredSections?.length > 0) {
           this.navController.navigateRoot('/onboarding', { replaceUrl:true });
         } else {
