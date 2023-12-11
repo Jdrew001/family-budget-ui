@@ -77,7 +77,7 @@ jobs:
           groups: DEVELOPMENT
           file: project/apk/app-debug.apk
           debug: true #this will show the verbose log
-          releaseNotes: releaseNotes: |
+          releaseNotes: |
             version 0.0.2-snapshot-1 build 3
 
             Author: Drew Atkison
