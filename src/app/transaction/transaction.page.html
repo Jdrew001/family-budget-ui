@@ -4,7 +4,7 @@
 
 <ion-content [fullscreen]="true">
   <div style="margin-bottom: 10rem;">
-    <div class="mb-4">
+    <div class="mt-4 mb-4">
       <swiper
         [allowTouchMove]="true"
         direction="horizontal"
@@ -13,21 +13,19 @@
         <ng-template *ngFor="let item of accountBalanceSummary" swiperSlide>
           <app-card
             id="1"
-            margin="10px 5px 5px 5px" 
+            margin="2px 5px 5px 5px" 
             padding="5px"
             [active]="item?.active!"
             (onClick)="handleAccountAction($event)">
             <ion-grid>
               <ion-row class="ion-justify-content-start">
-                <ion-col>
-                  <p class="strong text-sm pb-0 mb-0">{{ item?.name }}</p>
+                <ion-col class="ion-align-self-center" size="2">
+                  <ion-icon style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+item?.icon+'.svg'" color="primary"></ion-icon>
                 </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="pt-0 m-0" size="10">
+                <ion-col></ion-col>
+                <ion-col size="8">
+                  <p class="ellipse strong text-sm pb-0 mb-0">{{ item?.name }}</p>
                   <p class="pt-0 m-0">{{ item?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
-                </ion-col>
-                <ion-col size="2">
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -36,13 +34,13 @@
       </swiper>
     </div>
 
-    <div class="pt-3" *ngFor="let group of groupedTransactions">
+    <div *ngFor="let group of groupedTransactions">
       <div>
-        <p class="light-text-color text-xs">{{ group?.groupName }}</p>
+        <p class="light-text-color text-xs pb-2">{{ group?.groupName }}</p>
       </div>
       <div *ngFor="let transaction of group?.transactions">
         <app-card
-          margin="10px 5px 5px 5px" 
+          margin="5px 5px 5px 5px" 
           padding="5px">
           <ion-grid>
             <ion-row class="ion-justify-content-start">

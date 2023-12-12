@@ -4,11 +4,11 @@
 
 <ion-content [fullscreen]="true" style="--offset-bottom: -15vh;" [scrollY]="true">
   <div style="margin-bottom: 10rem">
-    <div>
+    <div class="mt-2">
       <ion-grid>
         <ion-row>
           <ion-col>
-            <h5 class=""><strong>Account</strong> Balances</h5>
+            <h5 class="m-0"><strong>Account</strong> Balances</h5>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -23,18 +23,19 @@
         <ng-template *ngFor="let item of accountBalanceSummary" swiperSlide>
           <app-card
             [id]="item?.id!"
-            margin="10px 5px 5px 5px" 
+            margin="2px 5px 5px 5px" 
             padding="5px"
             [active]="item?.active!"
             (onClick)="handleAccountAction($event)">
             <ion-grid>
               <ion-row class="ion-justify-content-start">
-                <ion-col>
-                  <p class="strong text-sm pb-0 mb-0">{{item?.name}}</p>
-                  <p class="pt-0 m-0">{{item?.amount | currency:'USD':'symbol':'1.2-2'}}</p>
-                </ion-col>
-                <ion-col class="ion-align-self-center mr-3" size="2">
+                <ion-col class="ion-align-self-center" size="2">
                   <ion-icon style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+item?.icon+'.svg'" color="primary"></ion-icon>
+                </ion-col>
+                <ion-col></ion-col>
+                <ion-col size="8">
+                  <p class="ellipse strong text-sm pb-0 mb-0">{{item?.name}}</p>
+                  <p class="pt-0 m-0">{{item?.amount | currency:'USD':'symbol':'1.2-2'}}</p>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -43,23 +44,14 @@
           </app-card>
         </ng-template>
       </swiper>
-      <!-- <swiper-container 
-        slides-per-view="2" 
-        speed="500" 
-        pagination="true"
-        css-mode="true">
-        <swiper-slide *ngFor="let item of accountBalanceSummary">
-          
-        </swiper-slide>
-      </swiper-container> -->
     </div>
 
     <ng-container *ngIf="currentBudgetSummary">
-      <div>
+      <div class="mt-3">
         <ion-grid>
           <ion-row class="ion-justify-content-start">
             <ion-col size="8">
-              <h5 class="pt-0 pb-1 mb-0"><strong>Current</strong> Budget</h5>
+              <h5 class="pt-0 pb-1 mb-0 mt-0"><strong>Current</strong> Budget</h5>
               <p class="pt-0 mt-2 text-xs light-text-color">{{currentBudgetSummary?.displayDate}}</p>
             </ion-col>
           </ion-row>
@@ -85,7 +77,7 @@
       <!-- What's left -->
       <div>
         <app-card
-          margin="0px 5px 0px 5px" 
+          margin="2px 5px 0px 5px" 
           padding="5px">
           <ion-grid>
             <ion-row class="ion-justify-content-start">
@@ -110,7 +102,7 @@
           <ion-row>
             <ion-col class="p-0 m-0">
               <app-card
-                margin="10px 5px 5px 5px" 
+                margin="5px 5px 5px 5px" 
                 padding="5px">
                 <ion-grid>
                   <ion-row class="ion-justify-content-start">
@@ -127,7 +119,7 @@
             </ion-col>
             <ion-col class="p-0 m-0">
               <app-card
-                margin="10px 5px 5px 5px" 
+                margin="5px 5px 5px 5px" 
                 padding="5px">
                 <ion-grid>
                   <ion-row class="ion-justify-content-start">
@@ -147,11 +139,11 @@
       </div>
     </ng-container>
 
-    <div>
+    <div class="mt-3">
       <ion-grid>
         <ion-row>
           <ion-col>
-            <h5 class=""><strong>Recent</strong> Transactions</h5>
+            <h5 class="m-0"><strong>Recent</strong> Transactions</h5>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -159,7 +151,7 @@
 
     <div>
       <app-card *ngFor="let transaction of transactionSummary"
-        margin="10px 5px 5px 5px" 
+        margin="2px 5px 5px 5px" 
         padding="5px">
         <ion-grid>
           <ion-row class="ion-justify-content-start">
