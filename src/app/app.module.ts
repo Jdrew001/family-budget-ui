@@ -32,7 +32,7 @@ import { IonicStorageModule } from '@ionic/storage-angular';
   ],
   imports: [
     IonicModule.forRoot({
-      mode: 'ios'
+      mode: 'ios'//
     }),
     CoreModule,
     BrowserModule,
