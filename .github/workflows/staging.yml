@@ -85,3 +85,72 @@ jobs:
 
             What is in the release
             Minor UX updates and bug fixes.
+
+  #Build IOS
+  build-ios:
+    name: Build IOS
+    runs-on: macos-12
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - name: Install Ionic
+        run: npm install -g @ionic/cli
+
+      - name: Install app dependencies
+        run: npm install --force
+
+      - name: sync ios
+        run: ionic cap sync ios -c=staging
+
+      - uses: sparkfabrik/ios-build-action@v2.3.2
+        with: 
+          upload-to-testflight: false
+          project-path: ios/App/App.xcodeproj
+          workspace-path: ios/App/App.xcworkspace
+          build-pods: true
+          pods-path: "ios/App/Podfile"
+          configuration: Release
+          export-method: "ad-hoc"
+          team-id: ${{ secrets.TEAM_ID }}
+          team-name: ${{ secrets.TEAM_NAME }}
+          apple-key-id: ${{ secrets.KEY_ID }}
+          apple-key-issuer-id: ${{ secrets.ISSUER_ID }}
+          apple-key-content: ${{ secrets.APPLE_KEY_CONTENT }}
+          match-git-url: ${{ secrets.MATCH_GIT_URL }}
+          match-git-basic-authorization: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          match-password: ${{ secrets.MATCH_PASSWORD }}
+          match-build-type: "adhoc"
+          fastlane-env: stage
+          ios-app-id: ${{ secrets.IOS_APP_ID }}
+
+      - name: Upload Development IPA
+        uses: actions/upload-artifact@v1
+        with:
+          name: ios-staging
+          path: output.ipa
+
+  deploy-ios:
+    name: Deploy IOS App - Firebase
+    needs: [build-ios]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with: 
+          name: ios-staging
+          path: project/ios
+
+      - name: upload IOS to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.IOS_GOOGLE_ID}}
+          serviceCredentialsFileContent: ${{secrets.CREDENTIAL_FILE_CONTENT}}
+          groups: DEVELOPMENT
+          file: project/ios/output.ipa
+          debug: true #this will show the verbose log
