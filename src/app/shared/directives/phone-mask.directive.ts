@@ -27,21 +27,26 @@ export class PhoneMaskDirective {
     const areaCode = value.slice(0, 3);
     const exchange = value.slice(3, 6);
     const subscriber = value.slice(6, 10);
-
+  
     let formattedValue = '';
-
+  
     if (areaCode.length > 0) {
-      formattedValue = `(${areaCode})`;
+      formattedValue = `(${areaCode}`;
     }
-
+  
     if (exchange.length > 0) {
-      formattedValue += ` ${exchange}`;
+      formattedValue += `) ${exchange}`;
     }
-
+  
     if (subscriber.length > 0) {
       formattedValue += `-${subscriber}`;
     }
-
+  
+    // If the last character is '(', remove it
+    if (formattedValue[formattedValue.length - 1] === '(') {
+      formattedValue = formattedValue.slice(0, -1);
+    }
+  
     return formattedValue;
   }
 }
