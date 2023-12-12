@@ -8,7 +8,7 @@ swiper-container {
 }
 
 :host ::ng-deep .swiper {
-    padding-bottom: 1rem !important;
+    overflow: visible !important;
 }
 
 ::ng-deep .swiper-pagination-bullet.swiper-pagination-bullet-active {
@@ -16,5 +16,5 @@ swiper-container {
 }
 
 ::ng-deep .swiper-pagination-bullets.swiper-pagination-horizontal {
-    bottom: 0px !important;
+    bottom: -15px !important;
 }

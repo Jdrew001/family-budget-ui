@@ -4,11 +4,11 @@
 
 <ion-content [fullscreen]="true" [scrollY]="true">
   <div style="margin-bottom: 10rem">
-    <div>
+    <div class="mt-3">
       <ion-grid>
         <ion-row>
           <ion-col>
-            <h5 class=""><strong>Profile</strong></h5>
+            <h5 class="m-0"><strong>Profile</strong></h5>
           </ion-col>
           <ion-col class="ion-align-self-end">
             <ion-button size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
@@ -21,7 +21,7 @@
 
     <div class="mb-4">
       <app-card
-        margin="10px 5px 5px 5px" 
+        margin="2px 5px 5px 5px" 
         padding="5px">
         <ion-grid>
           <ion-row class="ion-justify-content-start">
@@ -39,11 +39,11 @@
       </app-card>
     </div>
 
-    <div>
+    <div class="mt-3">
       <ion-grid>
         <ion-row>
           <ion-col>
-            <h5 class=""><strong>Accounts</strong></h5>
+            <h5 class="m-0"><strong>Accounts</strong></h5>
           </ion-col>
           <ion-col class="ion-align-self-end">
             <ion-button (click)="manageAccount()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
@@ -62,7 +62,7 @@
         [pagination]="true">
         <ng-template *ngFor="let account of accounts" swiperSlide>
           <app-card
-            margin="10px 5px 5px 5px" 
+            margin="2px 5px 5px 5px" 
             padding="5px"
             (click)="handleAccountClick(account)">
             <ion-grid>

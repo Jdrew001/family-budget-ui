@@ -4,13 +4,17 @@
 
 <ion-content appViewportHeight [fullscreen]="true" [scrollY]="true">
   <div>
-    <div>
+    <div class="mt-2">
       <ion-grid>
         <ion-row>
           <ion-col>
-            <h5 class=""><strong>{{ currentBudget?.accountName }}</strong> Budget</h5>
+            <h5 class="m-0">
+              <span class="ellipse"><strong>{{ currentBudget?.accountName }}</strong></span></h5>
+              <p class="pt-0 mt-0 pb-0 mb-0 text-sm light-text-color">
+                Current Budget
+              </p>
           </ion-col>
-          <ion-col class="ion-align-self-end">
+          <ion-col class="ion-align-self-start">
             <ion-button (click)="editBudget()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
               Edit
             </ion-button>
@@ -27,7 +31,7 @@
       <ng-template *ngFor="let item of budgetSummary" swiperSlide>
         <div>
           <app-card 
-            margin="10px 5px 5px 5px" 
+            margin="2px 5px 5px 5px" 
             padding="5px">
             <ion-grid>
               <ion-row>
@@ -75,14 +79,14 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <h5 class=""><strong>Categories</strong></h5>
+          <h5><strong>Categories</strong></h5>
         </ion-col>
       </ion-row>
     </ion-grid>
   </div>
   <div style="margin-bottom: 10rem">
     <app-card *ngFor="let item of categoriesForBudget"
-      margin="10px 5px 5px 5px" 
+      margin="2px 5px 5px 5px" 
       padding="5px">
         <ion-grid>
           <ion-row class="ion-justify-content-start">
