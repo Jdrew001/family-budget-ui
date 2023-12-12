@@ -22,11 +22,11 @@ export class AppComponent implements OnInit {
 //
   async ngOnInit(): Promise<void> {
     this.platForm.ready().then(async (source) => {
-      await SplashScreen.show(
-        {
-          autoHide: false
-        }
-      );
+      // await SplashScreen.show(
+      //   {
+      //     autoHide: false
+      //   }
+      // );
       from(this.storage.create()).subscribe(async (result) => {
         await this.authService.validateRefreshToken();
       })
