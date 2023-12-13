@@ -18,7 +18,7 @@ export class CategoryOverlayComponent  implements OnInit, ViewWillLeave {
   selectedCategoryType: TransactionType | null = null;
 
   @Input() categoryRefData = [];
-  categoryList: Array<{id: string, name: string, type: TransactionType}> = [];
+  categoryList: Array<{id: string, name: string, type: TransactionType, icon: string}> = [];
   beforeSearchCategoryList: Array<{id: string, name: string, type: TransactionType}> = [];
 
   @Output() onConfirm: EventEmitter<any> = new EventEmitter<any>();
