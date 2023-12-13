@@ -158,12 +158,15 @@
             <ion-col size="2">
               <app-circle-gauge [config]="transaction?.circleGuage"></app-circle-gauge>
             </ion-col>
-            <ion-col size="7">
+            <ion-col size="6">
               <p class="text-sm strong description">{{transaction?.description}}</p>
               <p class="pt-0 mt-2 text-xs light-text-color">{{transaction?.date}}</p>
             </ion-col> 
             <ion-col class="ion-align-self-center" size="3">
               <p class="text-sm strong ion-float-right" [ngClass]="{'showRed': transaction?.showRed}">{{transaction?.amount | currency:'USD':'symbol':'1.2-2'}}</p>
+            </ion-col>
+            <ion-col class="ion-align-self-center" size="1">
+              <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
             </ion-col>
           </ion-row>
         </ion-grid>

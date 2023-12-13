@@ -2,10 +2,10 @@
     overflow: visible !important;
 }
 
-::ng-deep .swiper-pagination-bullet.swiper-pagination-bullet-active {
+:host ::ng-deep .swiper-pagination-bullet.swiper-pagination-bullet-active {
     background-color: #24388E !important;
 }
 
-::ng-deep .swiper-pagination-bullets.swiper-pagination-horizontal {
-    bottom: -15px !important;
+:host ::ng-deep .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: -20px !important;
 }
