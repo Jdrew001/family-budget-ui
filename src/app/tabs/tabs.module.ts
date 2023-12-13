@@ -25,13 +25,10 @@ import { BudgetService } from '../budget/budget.service';
 import { ManageCategoryPage } from '../manage-category/manage-category.page';
 import { SettingsPage } from '../settings/settings.page';
 import { SwiperModule } from "swiper/angular";
-import { AddCategoryComponent as AddCategoryComponentSettings } from '../shared/components/add-category/add-category.component';
-
 import SwiperCore, { Pagination} from 'swiper';
 import { OnboardingService } from '../onboarding/services/onboarding.service';
 import { OnboardingFormService } from '../onboarding/services/onboarding-form.service';
-import { AddAccountComponent } from '../shared/components/add-account/add-account.component';
-import { AddFamilyComponent } from '../shared/components/add-family/add-family.component';
+
 SwiperCore.use([Pagination]);
 
 @NgModule({

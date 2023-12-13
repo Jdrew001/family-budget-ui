@@ -426,6 +426,7 @@ ion-icon.incorrect {
 ion-input {
     --background: var(--ion-color-secondary) !important;
     margin-top: 1rem !important;
+    border-radius: 25px !important;
     --border-radius: 25px !important;
     margin-bottom: 2px !important;
     --padding-bottom: 18px !important;
@@ -440,6 +441,7 @@ ion-input {
 }
 ion-textarea {
     --background: var(--ion-color-secondary) !important;
+    border-radius: 25px !important;
     margin-top: 1rem !important;
     --border-radius: 25px !important;
     margin-bottom: 2px !important;
@@ -477,7 +479,7 @@ ion-select {
 }
 
 .input-group {
-    overflow: hidden;
+    overflow: visible;
     margin-bottom: 15px;
 }
  

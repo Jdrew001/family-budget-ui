@@ -20,7 +20,7 @@
     <ion-grid >
       <ion-row>
         <ion-col>
-          <div class="input-group mt-4 mb-1">
+          <div class="input-group m-0">
             <div class="group mb-0">
               <ion-label position="stacked">Account Name</ion-label>
                 <ion-input formControlName="name" placeholder="Provide Name" autocapitalize="words">
@@ -33,7 +33,7 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <div class="input-group mt-4 mb-1">
+          <div class="input-group mt-5">
             <div class="group mb-0">
               <ion-label *ngIf="creatingAccount" position="stacked">Beginning Balance</ion-label>
               <ion-label *ngIf="!creatingAccount" position="stacked">Current Balance</ion-label>
@@ -45,19 +45,10 @@
           </div>
         </ion-col>
       </ion-row>
-      <!-- <ion-row>
-        <ion-col>
-          <div class="input-group mt-3 mb-1">
-            <div class="group mb-0">
-              <ion-label position="stacked">Description</ion-label>
-              <ion-textarea formControlName="description" placeholder="Type something here"></ion-textarea>
-            </div>
-          </div>
-        </ion-col>
-      </ion-row> -->
+
       <ion-row>
         <ion-col>
-          <div class="input-group mt-3 mb-1">
+          <div class="input-group mt-3">
             <div class="group mb-0">
               <ion-label position="stacked">Account Type</ion-label>
               <div (click)="chooseType()" class="input-lookalike">
@@ -68,18 +59,20 @@
           </div> 
         </ion-col>
       </ion-row>
+
       <ion-row>
         <ion-col>
-          <div class="input-group mt-4 mb-1">
+          <div class="input-group mt-3">
             <div class="group mb-1">
               <ion-toggle [disabled]="disableCreateBudget()" formControlName="createBudget" justify="space-between" [checked]="false">Does this account have a budget?</ion-toggle>
             </div>
           </div> 
         </ion-col>
       </ion-row>
+
       <ion-row *ngIf="createBudget">
         <ion-col>
-          <div class="input-group mt-3 mb-1">
+          <div class="input-group mt-3">
             <div class="group mb-0">
               <ion-label position="stacked">Frequency</ion-label>
               <div (click)="chooseFrequency()" class="input-lookalike">
@@ -93,7 +86,7 @@
   
       <ion-row *ngIf="createBudget">
         <ion-col>
-          <div class="input-group mt-3 mb-1">
+          <div class="input-group mt-3">
             <div class="group mb-0">
               <ion-label position="stacked">Start Date</ion-label>
               <div *ngIf="creatingAccount" (click)="chooseDate()" class="input-lookalike">
