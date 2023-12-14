@@ -10,6 +10,7 @@ import { HandleErrorHelper } from 'src/app/core/helpers/handle-error';
 import { ModalController, NavController } from '@ionic/angular';
 import { CoreService } from 'src/app/core/services/core.service';
 import { HelperService } from 'src/app/core/services/helper.service';
+import { ToastService } from 'src/app/core/services/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ import { HelperService } from 'src/app/core/services/helper.service';
 export class ManageTransactionService {
 
   get manageTransactionForm(): FormGroup {return this.formGroup; }
+  get transactionId(): string { return this.formGroup?.get('id')?.value; }
   private formGroup: FormGroup = new FormGroup({
     id: new FormControl(''),
     account: new FormControl('', Validators.required),
@@ -30,7 +32,8 @@ export class ManageTransactionService {
     private http: HttpClient,
     private modalController: ModalController,
     private coreService: CoreService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private toastService: ToastService
   ) {
   }
 
@@ -39,20 +42,19 @@ export class ManageTransactionService {
     return this.http.get(`${url}/${id}`) as Observable<ManageTransaction>;
   }
 
-  confirmTransaction(action: TransactionAction) {
+  confirmTransaction() {
     const url = this.helperService.getResourceUrl(ManageTransactionConstant.CONFIRM_TRANSACTION);
     const body = {
       data: this.manageTransactionForm.getRawValue(),
-      action: action
+      action: this.transactionId ? TransactionAction.Edit : TransactionAction.Add
     }
     return this.http.post(url, body).pipe(
       catchError((error) => HandleErrorHelper.handleError(error))
     ).subscribe((result: any) => {
       if (!result.success) {
-        //handle error
+        this.toastService.showMessage(result.message, true);
         return;
       }
-      //this.navController.navigateBack('/tabs/summary', { animated: true, queryParams: { refresh: true } });
       this.modalController.dismiss({refresh: true});
       this.coreService.$shouldRefreshScreen.next(true);
     });

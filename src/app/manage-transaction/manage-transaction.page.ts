@@ -39,10 +39,11 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
 
   ionViewDidEnter(): void {
     if (this.transactionId) {
-      console.log('transactionId', this.transactionId);
       this.manageTranService.getTransaction(this.transactionId)
         .subscribe((transaction: ManageTransaction) => {
+          transaction.amount = `$${parseFloat(transaction.amount).toFixed(2)}`;
           this.manageTranService.manageTransactionForm.setValue(transaction);
+          this.setSelectedCard(transaction.account, true);
       });
     }
   }
@@ -58,13 +59,11 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
     this.resetAccountActive();
     if (this.accountFormControl?.value === id) {
       this.accountFormControl.setValue(null);
-      const account = this.accounts.find(item => item.id === id) as SummaryAccountBalance;
-      account.active = false;
+      this.setSelectedCard(id, false);
       return;
     }
     this.accountFormControl?.setValue(id);
-    const account = this.accounts.find(item => item.id === id) as SummaryAccountBalance;
-    account.active = true;
+    this.setSelectedCard(id, true);
   }
 
   onConfirm() {
@@ -72,7 +71,7 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
       this.toastService.showMessage('Please fill in all required fields', true);
       return;
     }
-    this.manageTranService.confirmTransaction(0);
+    this.manageTranService.confirmTransaction();
     this.formGroup.reset();
   }
 
@@ -103,5 +102,10 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
 
   resetAccountActive() {
     this.accounts?.forEach(item => item.active = false)
+  }
+
+  setSelectedCard(id: string, active: boolean) {
+    const account = this.accounts.find(item => item.id === id) as SummaryAccountBalance;
+  account.active = active;
   }
 }
