@@ -67,7 +67,7 @@
         [icon]="'emptyList'"
         [message]="'No transactions added yet'"
         [display]="groupedTransactions?.length == 0"></app-empty-placeholder>
-    <ion-infinite-scroll threshold="1%" (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll threshold="1%" [disabled]="scrollDisabled" (ionInfinite)="onIonInfinite($event)">
       <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </div>

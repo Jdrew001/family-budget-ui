@@ -13,6 +13,8 @@ export class TransactionPage implements OnInit, ViewDidEnter, ViewDidLeave {
   get accountBalanceSummary() { return this.transactionService.accountBalanceSummary; }
   get groupedTransactions() { return this.transactionService.groupTransactions; }
 
+  scrollDisabled: boolean = false;
+
   constructor(
     private transactionService: TransactionService,
     private modalController: ModalController
@@ -22,12 +24,14 @@ export class TransactionPage implements OnInit, ViewDidEnter, ViewDidLeave {
     this.transactionService.accountBalanceSummary = [];
     this.transactionService.groupTransactions = [];
     this.fetchTransactionGroups();
+    this.scrollDisabled = false;
   }
 
   ionViewDidLeave(): void {
     this.transactionService.accountBalanceSummary = [];
     this.transactionService.groupTransactions = [];
     this.transactionService.page = 1;
+    this.scrollDisabled = true;
   }
 
   ngOnInit() {
