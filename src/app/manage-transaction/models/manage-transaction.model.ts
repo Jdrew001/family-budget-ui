@@ -5,6 +5,15 @@ export interface ManageTransRefData {
     categories: Array<{id: string, name: string, type: TransactionType}>;
 }
 
+export interface ManageTransaction {
+    id: string;
+    account: string;
+    description: string;
+    category: string;
+    amount: string;
+    date: string;
+}
+
 export enum TransactionAction {
     Add,
     Edit

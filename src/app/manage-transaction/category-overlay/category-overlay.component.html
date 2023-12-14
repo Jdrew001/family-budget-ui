@@ -54,7 +54,8 @@
                   padding="5px 0px" margin="3px 5px 3px 5px">
                   <ion-list lines="none">
                     <ion-item>
-                      <ion-label>{{ item?.name }}</ion-label>
+                      <ion-icon style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+item?.icon+'.svg'" color="primary"></ion-icon>
+                      <ion-label class="pl-3">{{ item?.name }}</ion-label>
                       <ion-icon *ngIf="item?.id == this.selectedCategory" name="checkmark-circle-outline" color="primary"></ion-icon>
                     </ion-item>
                   </ion-list>
