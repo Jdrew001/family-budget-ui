@@ -78,13 +78,11 @@ jobs:
           file: project/apk/app-debug.apk
           debug: true #this will show the verbose log
           releaseNotes: |
-            version 0.0.2-snapshot-1 build 3
-
-            Author: Drew Atkison
-            --------------------------------
-
             What is in the release
+            --------------------------------
             Minor UX updates and bug fixes.
+
+            User is now able to update transactions
 
   #Build IOS
   build-ios:
@@ -154,3 +152,9 @@ jobs:
           groups: DEVELOPMENT
           file: project/ios/output.ipa
           debug: true #this will show the verbose log
+          releaseNotes: |
+            What is in the release
+            --------------------------------
+            Minor UX updates and bug fixes.
+
+            User is now able to update transactions
