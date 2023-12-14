@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionService } from './transaction.service';
-import { InfiniteScrollCustomEvent, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, ModalController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
+import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
 
 @Component({
   selector: 'app-transaction',
@@ -13,7 +14,8 @@ export class TransactionPage implements OnInit, ViewDidEnter, ViewDidLeave {
   get groupedTransactions() { return this.transactionService.groupTransactions; }
 
   constructor(
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private modalController: ModalController
   ) { }
 
   ionViewDidEnter(): void {
@@ -33,6 +35,18 @@ export class TransactionPage implements OnInit, ViewDidEnter, ViewDidLeave {
 
   fetchTransactionGroups() {
     this.transactionService.initialize();
+  }
+
+  async handleTransactionClicked(id: string) {
+    const modal = await this.modalController.create({
+      component: ManageTransactionPage,
+      componentProps: {
+        transactionId: id,
+        accounts: this.accountBalanceSummary
+      }
+    });
+
+    modal.present();
   }
 
   handleAccountAction(id: any) {

@@ -41,7 +41,8 @@
       <div *ngFor="let transaction of group?.transactions">
         <app-card
           margin="5px 5px 5px 5px" 
-          padding="5px">
+          padding="5px"
+          (click)="handleTransactionClicked(transaction?.id)">
           <ion-grid>
             <ion-row class="ion-justify-content-start">
               <ion-col size="2">
