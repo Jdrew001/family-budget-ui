@@ -45,6 +45,7 @@ export class TabsPage implements OnInit {
       const modal = await this.modalController.create({
         component: ManageTransactionPage,
         componentProps: {
+          transactionId: '',
           accounts: _.cloneDeep(this.coreService.accountBalanceSummary)
         }
       });

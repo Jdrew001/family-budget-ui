@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController, ViewDidEnter } from '@ionic/angular';
 import { ManageTransactionService } from './services/manage-transaction.service';
-import { ManageTransRefData } from './models/manage-transaction.model';
+import { ManageTransRefData, ManageTransaction } from './models/manage-transaction.model';
 import { FormGroup } from '@angular/forms';
 import { CategoryOverlayComponent } from './category-overlay/category-overlay.component';
 import { SummaryAccountBalance } from '../core/models/account.model';
 import { DateOverlayComponent } from '../shared/components/date-overlay/date-overlay.component';
+import { ToastService } from '../core/services/toast.service';
 
 @Component({
   selector: 'app-manage-transaction',
@@ -17,7 +18,9 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
   @ViewChild('categoryOverlay') categoryOverlay: CategoryOverlayComponent = {} as CategoryOverlayComponent;
   @ViewChild('dateOverlay') dateOverlay: DateOverlayComponent = {} as DateOverlayComponent;
 
-  accounts: SummaryAccountBalance[] = [];
+  @Input('transactionId') transactionId: string = ''; 
+
+  @Input('accounts') accounts: SummaryAccountBalance[] = [];
   showAccountOverlay = false;
 
   refData: ManageTransRefData = {} as ManageTransRefData;
@@ -26,14 +29,22 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
   get accountFormControl() { return this.formGroup?.get('account'); }
   get selectedCategory() { return this.formGroup?.get('category'); }
   get selectedDate() { return this.formGroup?.get('date'); }
+  get selId() { return this.formGroup?.get('id'); }
 
   constructor(
     private modalController: ModalController,
     private manageTranService: ManageTransactionService,
+    private toastService: ToastService
   ) { }
 
   ionViewDidEnter(): void {
-    
+    if (this.transactionId) {
+      console.log('transactionId', this.transactionId);
+      this.manageTranService.getTransaction(this.transactionId)
+        .subscribe((transaction: ManageTransaction) => {
+          this.manageTranService.manageTransactionForm.setValue(transaction);
+      });
+    }
   }
 
   ngOnInit() {
@@ -58,7 +69,7 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
 
   onConfirm() {
     if (this.manageTranService.manageTransactionForm.invalid) {
-      console.log('invalid form');
+      this.toastService.showMessage('Please fill in all required fields', true);
       return;
     }
     this.manageTranService.confirmTransaction(0);

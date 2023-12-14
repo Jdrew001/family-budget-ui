@@ -1,12 +1,11 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SummaryService } from './summary.service';
-import { ActivatedRoute } from '@angular/router';
 import { ModalController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { CoreService } from '../core/services/core.service';
-import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
 import * as _ from 'lodash';
 import { ManageBudgetPage } from '../manage-budget/manage-budget.page';
 import { CircleGuageConstant } from '../shared/constants/circle-guage.constant';
+import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
 
 @Component({
   selector: 'app-summary',
@@ -76,8 +75,20 @@ export class SummaryPage implements OnInit, ViewDidEnter, ViewDidLeave {
     // handle when the modal is dissmissed
   }
 
-  onSeeMore() {
-    console.log('See more clicked');
+  async handleTransactionClick(id: string) {
+    const modal = await this.modalController.create({
+      component: ManageTransactionPage,
+      componentProps: {
+        transactionId: id,
+        accounts: this.accountBalanceSummary
+      }
+    });
+
+    modal.present();
+    // const { data } = await modal.onWillDismiss();
+    // if (data && data?.refresh) {
+    //   this.summaryService.getSummaryData();
+    // }
   }
 
 }

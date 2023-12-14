@@ -3,7 +3,7 @@ import { BaseService } from 'src/app/core/services/base.service';
 import { ManageTransactionConstant } from '../manage-transaction.constant';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TransactionAction } from '../models/manage-transaction.model';
+import { ManageTransaction, TransactionAction } from '../models/manage-transaction.model';
 import { Observable, catchError } from 'rxjs';
 import { error } from 'console';
 import { HandleErrorHelper } from 'src/app/core/helpers/handle-error';
@@ -18,6 +18,7 @@ export class ManageTransactionService {
 
   get manageTransactionForm(): FormGroup {return this.formGroup; }
   private formGroup: FormGroup = new FormGroup({
+    id: new FormControl(''),
     account: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     category: new FormControl('', Validators.required),
@@ -31,6 +32,11 @@ export class ManageTransactionService {
     private coreService: CoreService,
     private helperService: HelperService
   ) {
+  }
+
+  getTransaction(id: string) {
+    const url = this.helperService.getResourceUrl(ManageTransactionConstant.GET_TRANSACTION);
+    return this.http.get(`${url}/${id}`) as Observable<ManageTransaction>;
   }
 
   confirmTransaction(action: TransactionAction) {

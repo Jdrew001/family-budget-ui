@@ -1,6 +1,7 @@
 <ion-header [translucent]="true" class="mb-3">
   <ion-toolbar style="--border-style: none !important;">
-    <h5 class="text-left strong">Create Transaction</h5>
+    <h5 *ngIf="!selId" class="text-left strong">Create Transaction</h5>
+    <h5 *ngIf="selId" class="text-left strong">Manage Transaction</h5>
     <ion-buttons (click)="closeTransaction()" class="mr-5" slot="end">
       <ion-icon class="text-md pt-3 strong" name="close-outline"></ion-icon>
     </ion-buttons>

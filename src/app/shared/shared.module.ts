@@ -22,7 +22,6 @@ import { ViewportHeightDirective } from './directives/viewport-height.directive'
 import { OverscrollDirective } from './directives/overscroll.directive';
 
 
-
 @NgModule({
   declarations: [
     CardComponent,
