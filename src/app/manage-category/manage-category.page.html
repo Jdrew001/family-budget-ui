@@ -57,19 +57,17 @@
             </div>
           </ion-col>
         </ion-row>
-        <!-- <ion-row>
+        <ion-row>
           <ion-col>
-            <ion-label position="stacked">History</ion-label>
+            <ion-button (click)="onSubmit()" expand="block" color="primary">Confirm</ion-button>
           </ion-col>
         </ion-row>
-        <ion-row>
-          <ion-col>
-            <app-report-grid></app-report-grid>
-          </ion-col>
-        </ion-row> -->
-        <ion-row>
-          <ion-col>
-            <ion-button expand="block" color="primary">Confirm</ion-button>
+        <ion-row class="ion-justify-content-center mt-4">
+          <ion-col class="text-center">
+            <ion-button (click)="onDelete()" size="default" color="danger" fill="clear" class="text-md m-0">
+              <ion-icon slot="start" name="trash-outline"></ion-icon>
+              Delete
+            </ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>

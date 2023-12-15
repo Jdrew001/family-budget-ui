@@ -84,6 +84,10 @@ export class AddCategoryComponent  implements OnInit {
     this.onConfirm$.emit();
   }
 
+  onDelete() {
+    
+  }
+
   dismissModal() {
     this.modalElement.dismiss();
   }
