@@ -26,7 +26,7 @@ export class TransactionService {
   get accountBalanceSummary() { return this._accountBalanceSummary; }
   set accountBalanceSummary(value) { this._accountBalanceSummary = value; }
 
-  pageSize = 20;
+  pageSize = 10;
   page = 1;
 
   constructor(
