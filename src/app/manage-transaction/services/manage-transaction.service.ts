@@ -55,8 +55,22 @@ export class ManageTransactionService {
         this.toastService.showMessage(result.message, true);
         return;
       }
-      this.modalController.dismiss({refresh: true});
+
       this.coreService.$shouldRefreshScreen.next(true);
+      this.modalController.dismiss({refresh: true});
+    });
+  }
+
+  deleteTransaction(id: string) {
+    const url = this.helperService.getResourceUrl(ManageTransactionConstant.DELETE_TRANSACTION);
+    this.http.get(`${url}/${id}`).subscribe((result: any) => {
+      if (!result.success) {
+        this.toastService.showMessage(result.message, true);
+        return;
+      }
+      
+      this.coreService.$shouldRefreshScreen.next(true);
+      this.modalController.dismiss({refresh: true});
     });
   }
 

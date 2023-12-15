@@ -75,6 +75,11 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
     this.formGroup.reset();
   }
 
+  onDelete() {
+    this.manageTranService.deleteTransaction(this.selId?.value);
+    this.formGroup.reset();
+  }
+
   chooseCategory() {
     this.categoryOverlay.presentModal();
   }
