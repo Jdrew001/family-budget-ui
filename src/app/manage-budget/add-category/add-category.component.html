@@ -101,9 +101,13 @@
       </ion-grid>
 
       <ion-footer *ngIf="screen == 1" class="ion-no-border mt-5">
-        <div class="button-group mt-5">
-          <ion-button [disabled]="formGroup?.invalid" (click)="onConfirm()" class="shadow" type="submit" expand="block" shape="round" size="large" >Confirm</ion-button>
-        </div>
+        <ion-row>
+          <ion-col>
+            <div class="button-group mt-5">
+              <ion-button [disabled]="formGroup?.invalid" (click)="onConfirm()" class="shadow" type="submit" expand="block" shape="round" size="large" >Confirm</ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
       </ion-footer>
     </ion-content>
   </ng-template>

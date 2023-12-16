@@ -32,6 +32,14 @@ export class ManageCategoryPage implements OnInit {
     this.categoryForBudget = data;
   }
 
+  onSubmit() {
+    console.log('submitting', this.formGroup.value, this.categoryForBudget)
+  }
+
+  onDelete() {
+
+  }
+
   dismissModal() {
     this.modalElement.dismiss();
   }

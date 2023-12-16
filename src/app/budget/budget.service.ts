@@ -46,6 +46,12 @@ export class BudgetService {
     return this.http.get(`${url}${budgetSummary.id}`) as Observable<Array<CategoriesForBudget>>;
   }
 
+  resetBudget() {
+    this.budgetSummary = [];
+    this.categoriesForBudget = [];
+    this.currentBudget = null;
+  }
+
   private getAllBudgets(): Observable<Array<LeftSpendingManage>> {
     const url = this.helperService.getResourceUrl(BudgetConstant.GET_ALL_BUDGETS);
     return this.http.get(`${url}`) as Observable<Array<LeftSpendingManage>>;
