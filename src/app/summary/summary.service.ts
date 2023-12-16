@@ -77,8 +77,8 @@ export class SummaryService {
   }
 
   public resetSummaryData() {
-    this.currentBudgetSummary = {} as CurrentBudgetSummary;
-    this.accountBalanceSummary = [];
-    this.transactionSummary = [];
+    this.currentBudgetSummary = null;
+    this.accountBalanceSummary = null;
+    this.transactionSummary = null;
   }
 }
