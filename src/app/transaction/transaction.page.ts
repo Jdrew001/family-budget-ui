@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TransactionService } from './transaction.service';
 import { InfiniteScrollCustomEvent, ModalController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
+import { CoreService } from '../core/services/core.service';
 
 @Component({
   selector: 'app-transaction',
@@ -17,7 +18,8 @@ export class TransactionPage implements OnInit, ViewDidEnter, ViewDidLeave {
 
   constructor(
     private transactionService: TransactionService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private coreService: CoreService
   ) { }
 
   ionViewDidEnter(): void {
@@ -28,6 +30,10 @@ export class TransactionPage implements OnInit, ViewDidEnter, ViewDidLeave {
   }
 
   ionViewDidLeave(): void {
+    this.resetView();
+  }
+
+  resetView() {
     this.transactionService.accountBalanceSummary = [];
     this.transactionService.groupTransactions = [];
     this.transactionService.page = 1;
@@ -35,6 +41,12 @@ export class TransactionPage implements OnInit, ViewDidEnter, ViewDidLeave {
   }
 
   ngOnInit() {
+    this.coreService.$shouldRefreshScreen.subscribe((value: boolean) => {
+      this.resetView();
+      setTimeout(() => {
+        this.fetchTransactionGroups();
+      }, 100);
+    });
   }
 
   fetchTransactionGroups() {

@@ -25,13 +25,22 @@ export class BudgetPage implements OnInit, ViewDidEnter {
   constructor(
     private budgetService: BudgetService,
     private modalController: ModalController,
+    private coreService: CoreService
   ) { }
 
   ngOnInit(): void {
+    this.coreService.$shouldRefreshScreen.subscribe((value: boolean) => {
+      if (value) {
+        this.budgetService.resetBudget();
+        setTimeout(() => {
+          this.budgetService.initialize();
+        }, 100)
+      }
+    });
   }
 
   ionViewDidEnter(): void {
-      this.budgetService.initialize();
+    this.budgetService.initialize();
   }
 
   async editBudget() {

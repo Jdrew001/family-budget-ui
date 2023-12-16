@@ -376,6 +376,13 @@ div.heading-container {
     margin-bottom: 2rem;
 }
 
+.round-loader {
+    margin-top: 0;
+    height: 100%;
+    border-radius: 50%;
+    width: 100%;
+}
+
 body {
     --background: var(--ion-color-light);
 }

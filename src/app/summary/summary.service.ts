@@ -1,13 +1,9 @@
-import { Injectable, QueryList } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BaseService } from '../core/services/base.service';
 import { SummaryConstant } from './summary.constant';
-import { EMPTY, Observable, Subject, switchMap, zip } from 'rxjs';
+import { EMPTY, Observable, switchMap, zip } from 'rxjs';
 import { CurrentBudgetSummary, SummaryTransactions } from './model/summary.model';
 import { SummaryAccountBalance } from '../core/models/account.model';
-import { SharedService } from '../shared/services/shared/shared.service';
-import { CircleGuageConstant } from '../shared/constants/circle-guage.constant';
-import { CircleGaugeComponent } from '../shared/components/circle-gauge/circle-gauge.component';
 import { HelperService } from '../core/services/helper.service';
 
 @Injectable({
@@ -15,15 +11,15 @@ import { HelperService } from '../core/services/helper.service';
 })
 export class SummaryService {
 
-  private _currentBudgetSummary: CurrentBudgetSummary = {} as CurrentBudgetSummary;
+  private _currentBudgetSummary: CurrentBudgetSummary;
   get currentBudgetSummary() { return this._currentBudgetSummary; }
   set currentBudgetSummary(value) { this._currentBudgetSummary = value; }
 
-  private _accountBalanceSummary: SummaryAccountBalance[] = [];
+  private _accountBalanceSummary: SummaryAccountBalance[] = null;
   get accountBalanceSummary() { return this._accountBalanceSummary; }
   set accountBalanceSummary(value) { this._accountBalanceSummary = value; }
 
-  private _transactionSummary: SummaryTransactions[] = [];
+  private _transactionSummary: SummaryTransactions[] = null;
   get transactionSummary() { return this._transactionSummary; }
   set transactionSummary(value) { this._transactionSummary = value; }
 
@@ -38,7 +34,7 @@ export class SummaryService {
   }
 
   getSummaryData() {
-    this.accountBalanceSummary = [];
+    this.accountBalanceSummary;
     this.getAccountBalances().pipe(
       switchMap((accountBalances) => {
         this.accountBalanceSummary = accountBalances;

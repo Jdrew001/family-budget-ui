@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { TimeoutHelpers } from '../../utils/timeout.helpers';
 import { CircleGaugeModel } from './circle-gauge.model';
 import { SharedService } from '../../services/shared/shared.service';
+import { ViewDidLeave } from '@ionic/angular';
 
 @Component({
   selector: 'app-circle-gauge',
@@ -9,7 +10,7 @@ import { SharedService } from '../../services/shared/shared.service';
   styleUrls: ['./circle-gauge.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default
 })
-export class CircleGaugeComponent {
+export class CircleGaugeComponent implements OnChanges {
 
   @ViewChild('gauge') gaugeComponent: ElementRef = {} as ElementRef;
 
@@ -17,12 +18,7 @@ export class CircleGaugeComponent {
   get config() { return this._config; }
   @Input() set config (value: CircleGaugeModel) {
     if (value) {
-      if (!this.firstRun) {
-        return;
-      }
       this._config = value;
-      this.firstRun = false;
-      this.animate = true;
     }
   }
 
@@ -31,7 +27,20 @@ export class CircleGaugeComponent {
 
   constructor() {}
 
+  ngAfterViewInit(): void {
+    console.log('hello');
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('hello', changes)
+    if (changes['config'] && changes['config'].firstChange) {
+      // Config input has changed, update animations
+      this.updateAnimations(changes['config'].currentValue);
+    }
+  }
+
   updateAnimations(value: CircleGaugeModel) {
-    
+    this._config = value;
+    this.animate = true;
   }
 }
