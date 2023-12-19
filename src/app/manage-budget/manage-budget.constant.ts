@@ -4,4 +4,5 @@ export class ManageBudgetConstant {
     public static CREATE_BUDGET_CATEGORIES = 'category/createCategoryForBudget';
     public static MANAGE_BUDGET_REF_DATA = 'budget/categoriesForBudgetUnselected';
     public static UPDATE_BUDGET_CATEGORY = 'category/updateCategoryForBudget';
+    public static DELETE_BUDGET_CATEGORY = 'category/deleteCategoryForBudget';
 }

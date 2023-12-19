@@ -69,6 +69,15 @@ export class ManageBudgetPage implements OnInit {
         this.manageCategory.dismissModal();
       }
     });
+  }
 
+  onDelete(budgetCategoryid: string) {
+    this.manageBudgetService.deleteBudgetCategory(budgetCategoryid).subscribe(data => {
+      if (data) {
+        this.shouldRefreshScreen = true;
+        this.manageBudgetService.getAllData(this.budget);
+        this.manageCategory.dismissModal();
+      }
+    });
   }
 }

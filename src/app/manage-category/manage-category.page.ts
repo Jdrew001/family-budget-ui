@@ -15,6 +15,7 @@ export class ManageCategoryPage implements OnInit {
   @ViewChild('scrollContainer') scrollContainer: IonGrid;
 
   @Output() onSubmit$ = new EventEmitter<{id: string, amount: string}>();
+  @Output() onDelete$ = new EventEmitter<string>();
 
   private _categoryForBudget: CategoriesForBudget;
   get categoryForBudget() { return this._categoryForBudget; }
@@ -44,13 +45,13 @@ export class ManageCategoryPage implements OnInit {
     }
 
     this.onSubmit$.emit({
-      id: this.categoryForBudget.id,
+      id: this.categoryForBudget.id, // budget category id
       amount: this.formGroup.get('amount').value
     });
   }
 
   onDelete() {
-
+    this.onDelete$.emit(this.categoryForBudget.id); // budget category id
   }
 
   dismissModal() {
