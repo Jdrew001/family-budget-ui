@@ -14,7 +14,7 @@
       </ion-grid>
     </div>
 
-    <div *ngIf="accountBalanceSummary?.length > 0">
+    <div *ngIf="pageInitialized && accountBalanceSummary?.length > 0">
       <swiper
         [allowTouchMove]="true"
         direction="horizontal"
@@ -46,7 +46,7 @@
       </swiper>
     </div>
 
-    <div *ngIf="!accountBalanceSummary">
+    <div *ngIf="!pageInitialized">
       <div>
         <swiper
         [allowTouchMove]="false"
@@ -84,6 +84,7 @@
             <ion-col size="8">
               <h5 class="pt-0 pb-1 mb-0 mt-0"><strong>Current</strong> Budget</h5>
               <p class="pt-0 mt-2 text-xs light-text-color">{{currentBudgetSummary?.displayDate}}</p>
+              <ion-skeleton-text *ngIf="!pageInitialized" style="width: 30%" [animated]="true"></ion-skeleton-text>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -113,19 +114,19 @@
           <ion-grid>
             <ion-row class="ion-justify-content-start">
               <ion-col size="2">
-                <app-circle-gauge *ngIf="currentBudgetSummary" [config]="currentBudgetSummary?.circleGuage"></app-circle-gauge>
-                <ion-skeleton-text *ngIf="!currentBudgetSummary" class="round-loader" [animated]="true"></ion-skeleton-text>
+                <app-circle-gauge *ngIf="pageInitialized" [config]="currentBudgetSummary?.circleGuage"></app-circle-gauge>
+                <ion-skeleton-text *ngIf="!pageInitialized" class="round-loader" [animated]="true"></ion-skeleton-text>
               </ion-col>
               <ion-col>
-                <p *ngIf="currentBudgetSummary?.leftSpendingDays > 1" class="text-sm strong">Left to Spend for next<br> {{currentBudgetSummary?.leftSpendingDays}} days</p>
-                <p *ngIf="currentBudgetSummary?.leftSpendingDays == 1" class="text-sm strong">Left to Spend for next<br> {{currentBudgetSummary?.leftSpendingDays}} day</p>
-                <p *ngIf="currentBudgetSummary?.leftSpendingDays == 0" class="text-sm strong">Left to Spend for the <br>last day</p>
-                <ion-skeleton-text *ngIf="!currentBudgetSummary" [animated]="true" style="width: 80%"></ion-skeleton-text>
-                <ion-skeleton-text *ngIf="!currentBudgetSummary" [animated]="true" style="width: 40%"></ion-skeleton-text>
+                <p *ngIf="pageInitialized && currentBudgetSummary?.leftSpendingDays > 1" class="text-sm strong">Left to Spend for next<br> {{currentBudgetSummary?.leftSpendingDays}} days</p>
+                <p *ngIf="pageInitialized && currentBudgetSummary?.leftSpendingDays == 1" class="text-sm strong">Left to Spend for next<br> {{currentBudgetSummary?.leftSpendingDays}} day</p>
+                <p *ngIf="pageInitialized && currentBudgetSummary?.leftSpendingDays == 0" class="text-sm strong">Left to Spend for the <br>last day</p>
+                <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 80%"></ion-skeleton-text>
+                <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 40%"></ion-skeleton-text>
               </ion-col> 
               <ion-col class="ion-align-self-center" size="3">
-                <ion-skeleton-text *ngIf="!currentBudgetSummary" [animated]="true" style="width: 60%; float: right"></ion-skeleton-text>
-                <p *ngIf="currentBudgetSummary" class="text-sm strong" style="float: right;">{{currentBudgetSummary?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'}}</p>
+                <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 60%; float: right"></ion-skeleton-text>
+                <p *ngIf="pageInitialized" class="text-sm strong" style="float: right;">{{currentBudgetSummary?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'}}</p>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -142,14 +143,14 @@
                 <ion-grid>
                   <ion-row class="ion-justify-content-start">
                     <ion-col>
-                      <p *ngIf="currentBudgetSummary" class="strong text-sm pb-0 mb-0">Income</p>
-                      <p *ngIf="currentBudgetSummary" class="pt-0 m-0">{{currentBudgetSummary?.income?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
-                      <ion-skeleton-text *ngIf="!currentBudgetSummary" [animated]="true" style="width: 50%"></ion-skeleton-text>
-                      <ion-skeleton-text *ngIf="!currentBudgetSummary" [animated]="true" style="width: 75%"></ion-skeleton-text>
+                      <p *ngIf="pageInitialized" class="strong text-sm pb-0 mb-0">Income</p>
+                      <p *ngIf="pageInitialized" class="pt-0 m-0">{{currentBudgetSummary?.income?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
+                      <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 50%"></ion-skeleton-text>
+                      <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 75%"></ion-skeleton-text>
                     </ion-col>
                     <ion-col class="ion-align-self-center mr-3" size="2">
-                      <ion-icon *ngIf="currentBudgetSummary" style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+currentBudgetSummary?.income?.icon+'.svg'" color="primary"></ion-icon>
-                      <ion-skeleton-text *ngIf="!currentBudgetSummary" [animated]="true" style="width: 100%"></ion-skeleton-text>
+                      <ion-icon *ngIf="pageInitialized" style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+currentBudgetSummary?.income?.icon+'.svg'" color="primary"></ion-icon>
+                      <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 100%"></ion-skeleton-text>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
@@ -162,14 +163,14 @@
                 <ion-grid>
                   <ion-row class="ion-justify-content-start">
                     <ion-col>
-                      <p *ngIf="currentBudgetSummary" class="strong text-sm pb-0 mb-0">Expenses</p>
-                      <p *ngIf="currentBudgetSummary" class="pt-0 m-0 showRed">{{currentBudgetSummary?.expense?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
-                      <ion-skeleton-text *ngIf="!currentBudgetSummary" [animated]="true" style="width: 50%"></ion-skeleton-text>
-                      <ion-skeleton-text *ngIf="!currentBudgetSummary" [animated]="true" style="width: 75%"></ion-skeleton-text>
+                      <p *ngIf="pageInitialized" class="strong text-sm pb-0 mb-0">Expenses</p>
+                      <p *ngIf="pageInitialized" class="pt-0 m-0 showRed">{{currentBudgetSummary?.expense?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
+                      <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 50%"></ion-skeleton-text>
+                      <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 75%"></ion-skeleton-text>
                     </ion-col>
                     <ion-col class="ion-align-self-center mr-3" size="2">
-                      <ion-icon *ngIf="currentBudgetSummary" style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+currentBudgetSummary?.expense?.icon+'.svg'" color="primary"></ion-icon>
-                      <ion-skeleton-text *ngIf="!currentBudgetSummary" [animated]="true" style="width: 100%"></ion-skeleton-text>
+                      <ion-icon *ngIf="pageInitialized" style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+currentBudgetSummary?.expense?.icon+'.svg'" color="primary"></ion-icon>
+                      <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 100%"></ion-skeleton-text>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
@@ -190,7 +191,7 @@
       </ion-grid>
     </div>
 
-    <div *ngIf="transactionSummary?.length > 0">
+    <div *ngIf="pageInitialized && transactionSummary?.length > 0">
       <app-card *ngFor="let transaction of transactionSummary"
         margin="2px 5px 5px 5px" 
         padding="5px"
@@ -215,7 +216,7 @@
       </app-card>
     </div>
 
-    <div *ngIf="!transactionSummary">
+    <div *ngIf="!pageInitialized">
       <app-card *ngFor="let transaction of placeHolderTransactions"
         margin="2px 5px 5px 5px" 
         padding="5px">
@@ -239,7 +240,7 @@
       </app-card>
     </div>
 
-    <app-empty-placeholder *ngIf="transactionSummary?.length == 0"
+    <app-empty-placeholder *ngIf="pageInitialized && transactionSummary?.length == 0"
         [icon]="'emptyList'"
         [message]="'No transactions added yet'"
         [display]="transactionSummary?.length == 0"></app-empty-placeholder>

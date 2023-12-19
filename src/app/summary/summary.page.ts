@@ -21,6 +21,7 @@ export class SummaryPage implements OnInit, ViewDidEnter, ViewDidLeave {
   get currentBudgetSummary() { return this.summaryService.currentBudgetSummary; }
   get accountBalanceSummary() { return this.summaryService.accountBalanceSummary; }
   get transactionSummary() { return this.summaryService.transactionSummary; }
+  get pageInitialized() { return this.summaryService.pageInitialized; }
 
   placeHolderTransactions = [{}, {}, {}, {}];
   placeHolderAccounts = [{}, {}];

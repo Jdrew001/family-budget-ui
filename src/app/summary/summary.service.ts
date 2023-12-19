@@ -27,6 +27,10 @@ export class SummaryService {
   get accountId() { return this._accountId; }
   set accountId(value) { this._accountId = value; }
 
+  private _pageInitialized: boolean = false;
+  get pageInitialized(): boolean { return this._pageInitialized; }
+  set pageInitialized(value: boolean) { this._pageInitialized = value; }
+
   constructor(
     private readonly http: HttpClient,
     private readonly helperService: HelperService
@@ -48,6 +52,8 @@ export class SummaryService {
     ).subscribe(([currentBudgetSummary, accountTransactions]) => {
       this.currentBudgetSummary = currentBudgetSummary as CurrentBudgetSummary;
       this.transactionSummary = accountTransactions as SummaryTransactions[];
+
+      this.pageInitialized = true;
     });
   }
 
@@ -80,5 +86,6 @@ export class SummaryService {
     this.currentBudgetSummary = null;
     this.accountBalanceSummary = null;
     this.transactionSummary = null;
+    this.pageInitialized = false;
   }
 }

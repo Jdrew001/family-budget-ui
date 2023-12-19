@@ -22,12 +22,17 @@ export class TransactionService {
   get accountId(): string { return this._accountId; }
   set accountId(value: string) { this._accountId = value; }
 
-  private _accountBalanceSummary: SummaryAccountBalance[] = [];
+  private _accountBalanceSummary: SummaryAccountBalance[] = null;
   get accountBalanceSummary() { return this._accountBalanceSummary; }
   set accountBalanceSummary(value) { this._accountBalanceSummary = value; }
 
   pageSize = 10;
   page = 1;
+
+  private _pageInitialized: boolean = false;
+  get pageInitialized(): boolean { return this._pageInitialized; }
+  set pageInitialized(value: boolean) { this._pageInitialized = value; }
+
 
   constructor(
     private http: HttpClient,
@@ -69,5 +74,6 @@ export class TransactionService {
     this.pageSize = response.pageSize;
     this.page = response.page;
     this.groupTransactions = [...this.groupTransactions, ...response.transactions];
+    this.pageInitialized = true;
   }
 }

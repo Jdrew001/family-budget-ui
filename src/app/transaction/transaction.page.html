@@ -4,7 +4,7 @@
 
 <ion-content [fullscreen]="true">
   <div style="margin-bottom: 10rem;">
-    <div class="mt-4 mb-5">
+    <div *ngIf="pageInitialized" class="mt-4 mb-5">
       <swiper
         [allowTouchMove]="true"
         direction="horizontal"
@@ -34,39 +34,100 @@
       </swiper>
     </div>
 
-    <div class="mt-5" *ngFor="let group of groupedTransactions">
-      <div>
-        <p class="light-text-color text-xs pb-2">{{ group?.groupName }}</p>
-      </div>
-      <div *ngFor="let transaction of group?.transactions">
-        <app-card
-          margin="5px 5px 5px 5px" 
-          padding="5px"
-          (click)="handleTransactionClicked(transaction?.id)">
-          <ion-grid>
-            <ion-row class="ion-justify-content-start">
-              <ion-col size="2">
-                <app-circle-gauge [config]="transaction?.circleGuage"></app-circle-gauge>
-              </ion-col>
-              <ion-col size="6">
-                <p class="text-sm strong description">{{ transaction?.description }}</p>
-                <p class="pt-0 mt-2 text-xs light-text-color">{{ transaction?.date }}</p>
-              </ion-col> 
-              <ion-col class="ion-align-self-center" size="3">
-                <p class="text-sm strong ion-float-right" [ngClass]="{'showRed': transaction?.showRed}">{{ transaction?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
-              </ion-col>
-              <ion-col class="ion-align-self-center" size="1">
-                <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </app-card>
-      </div>
+    <div *ngIf="!pageInitialized" class="mt-4 mb-5">
+      <swiper
+        [allowTouchMove]="false"
+        direction="horizontal"
+        [slidesPerView]="2"
+        [pagination]="true">
+        <ng-template *ngFor="let item of placeHolderAccounts" swiperSlide>
+          <app-card
+            margin="2px 5px 5px 5px" 
+            padding="5px">
+            <ion-grid>
+              <ion-row class="ion-justify-content-start">
+                <ion-col class="ion-align-self-center" size="2">
+                  <ion-skeleton-text [animated]="true" style="width: 100%"></ion-skeleton-text>
+                </ion-col>
+                <ion-col></ion-col>
+                <ion-col size="8">
+                  <ion-skeleton-text [animated]="true" style="width: 80%"></ion-skeleton-text>
+                  <ion-skeleton-text [animated]="true" style="width: 40%"></ion-skeleton-text>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </app-card>
+        </ng-template>
+      </swiper>
     </div>
+
+    <ng-container *ngIf="pageInitialized">
+      <div class="mt-5" *ngFor="let group of groupedTransactions">
+        <div>
+          <p class="light-text-color text-xs pb-2">{{ group?.groupName }}</p>
+        </div>
+        <div *ngFor="let transaction of group?.transactions">
+          <app-card
+            margin="5px 5px 5px 5px" 
+            padding="5px"
+            (click)="handleTransactionClicked(transaction?.id)">
+            <ion-grid>
+              <ion-row class="ion-justify-content-start">
+                <ion-col size="2">
+                  <app-circle-gauge [config]="transaction?.circleGuage"></app-circle-gauge>
+                </ion-col>
+                <ion-col size="6">
+                  <p class="text-sm strong description">{{ transaction?.description }}</p>
+                  <p class="pt-0 mt-2 text-xs light-text-color">{{ transaction?.date }}</p>
+                </ion-col> 
+                <ion-col class="ion-align-self-center" size="3">
+                  <p class="text-sm strong ion-float-right" [ngClass]="{'showRed': transaction?.showRed}">{{ transaction?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
+                </ion-col>
+                <ion-col class="ion-align-self-center" size="1">
+                  <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </app-card>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="!pageInitialized">
+      <div class="mt-5" *ngFor="let group of placeHolderTransactions">
+        <div>
+          <ion-skeleton-text [animated]="true" style="width: 10%"></ion-skeleton-text>
+        </div>
+        <div *ngFor="let group of placeHolderTransactions">
+          <app-card
+            margin="5px 5px 5px 5px" 
+            padding="5px">
+            <ion-grid>
+              <ion-row class="ion-justify-content-start">
+                <ion-col size="2">
+                  <ion-skeleton-text class="round-loader" [animated]="true"></ion-skeleton-text>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-skeleton-text [animated]="true" style="width: 80%"></ion-skeleton-text>
+                  <ion-skeleton-text [animated]="true" style="width: 40%"></ion-skeleton-text>
+                </ion-col> 
+                <ion-col class="ion-align-self-center" size="3">
+                  <ion-skeleton-text [animated]="true" style="width: 60%; float: right"></ion-skeleton-text>
+                </ion-col>
+                <ion-col class="ion-align-self-center" size="1">
+                  <ion-icon name="chevron-forward-outline" color="primary"></ion-icon>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </app-card>
+        </div>
+      </div>
+    </ng-container>
+
     <app-empty-placeholder
         [icon]="'emptyList'"
         [message]="'No transactions added yet'"
-        [display]="groupedTransactions?.length == 0"></app-empty-placeholder>
+        [display]="pageInitialized && groupedTransactions?.length == 0"></app-empty-placeholder>
     <ion-infinite-scroll threshold="1%" [disabled]="scrollDisabled" (ionInfinite)="onIonInfinite($event)">
       <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
