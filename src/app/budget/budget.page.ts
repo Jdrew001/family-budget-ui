@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalController, ViewDidEnter } from '@ionic/angular';
+import { ModalController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { BudgetService } from './budget.service';
 import { CoreService } from '../core/services/core.service';
 import { TransactionType } from '../core/models/transaction-type.model';
@@ -11,17 +11,20 @@ import { ManageCategoryPage } from '../manage-category/manage-category.page';
   templateUrl: './budget.page.html',
   styleUrls: ['./budget.page.scss'],
 })
-export class BudgetPage implements OnInit, ViewDidEnter {
+export class BudgetPage implements OnInit, ViewDidEnter, ViewDidLeave {
 
   get budgetSummary() { return this.budgetService.budgetSummary; }
   get categoriesForBudget() { return this.budgetService.categoriesForBudget; }
 
   get currentBudget() { return this.budgetService.currentBudget; }
+  get pageInitialized() { return this.budgetService.pageInitialized; }
 
   budgetCategoryRefData: Array<{id: string, name: string, type: TransactionType}> = [];
 
   transactionType = TransactionType;
-  
+  placeholderBudgetSummary = [{}];
+  placeholderCategories = [{}, {}, {}, {}, {}, {}, {}, {}];
+
   constructor(
     private budgetService: BudgetService,
     private modalController: ModalController,
@@ -41,6 +44,10 @@ export class BudgetPage implements OnInit, ViewDidEnter {
 
   ionViewDidEnter(): void {
     this.budgetService.initialize();
+  }
+
+  ionViewDidLeave(): void {
+    this.budgetService.resetBudget();
   }
 
   async editBudget() {

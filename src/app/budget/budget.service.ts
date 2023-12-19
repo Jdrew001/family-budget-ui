@@ -23,6 +23,10 @@ export class BudgetService {
   get currentBudget() { return this._currentBudget; }
   set currentBudget(value) { this._currentBudget = value; }
 
+  private _pageInitialized = false;
+  get pageInitialized() { return this._pageInitialized; }
+  set pageInitialized(value) { this._pageInitialized = value; }
+
   constructor(
     private http: HttpClient,
     private helperService: HelperService
@@ -38,6 +42,7 @@ export class BudgetService {
       })
     ).subscribe(result => {
       this.categoriesForBudget = result;
+      this.pageInitialized = true;
     });
   }
 
@@ -50,6 +55,7 @@ export class BudgetService {
     this.budgetSummary = [];
     this.categoriesForBudget = [];
     this.currentBudget = null;
+    this.pageInitialized = false;
   }
 
   private getAllBudgets(): Observable<Array<LeftSpendingManage>> {

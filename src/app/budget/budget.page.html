@@ -22,56 +22,109 @@
         </ion-row>
       </ion-grid>
     </div>
-    <swiper
-        [allowTouchMove]="true"
-        direction="horizontal"
-        [slidesPerView]="1"
-        [pagination]="true"
-        (slidechange)="swiperSlideChanged($event)">
-      <ng-template *ngFor="let item of budgetSummary" swiperSlide>
-        <div>
-          <app-card 
-            margin="2px 5px 5px 5px" 
-            padding="5px">
-            <ion-grid>
-              <ion-row>
-                <ion-col class="pb-1">
-                  <p class="pt-0 mt-0 pb-0 mb-0 text-xs light-text-color">
-                    {{ item?.displayDate }}
-                  </p>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="pt-0">
-                  <p class="text-xs strong">Left to Spend for next {{ item?.leftSpendingDays }} days</p>
-                </ion-col>
-                <ion-col class="pt-0">
-                  <p class="text-xs strong ion-float-right">{{ item?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'  }}</p>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="pt-0 pb-0">
-                  <ion-progress-bar [value]="item?.percentageSpent"></ion-progress-bar>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="pt-3 pb-0">
-                  <p class="text-xs strong light-text-color">$0</p>
-                </ion-col>
-                <ion-col class="pt-3 pb-0">
-                  <p class="ion-float-right light-text-color text-xs strong">{{ item?.totalBudget | currency:'USD':'symbol':'1.2-2' }}</p>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col class="pt-1 pb-0">
-                  <p class="text-xs strong">Total Spent: {{ item?.totalSpent | currency:'USD':'symbol':'1.2-2' }}</p>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </app-card>
-        </div>
-      </ng-template>
-    </swiper>
+    <ng-container *ngIf="pageInitialized">
+      <swiper
+      [allowTouchMove]="true"
+      direction="horizontal"
+      [slidesPerView]="1"
+      [pagination]="true"
+      (slidechange)="swiperSlideChanged($event)">
+        <ng-template *ngFor="let item of budgetSummary" swiperSlide>
+          <div>
+            <app-card 
+              margin="2px 5px 5px 5px" 
+              padding="5px">
+              <ion-grid>
+                <ion-row>
+                  <ion-col class="pb-1">
+                    <p class="pt-0 mt-0 pb-0 mb-0 text-xs light-text-color">
+                      {{ item?.displayDate }}
+                    </p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="pt-0">
+                    <p class="text-xs strong">Left to Spend for {{ item?.leftSpendingDays }} days</p>
+                  </ion-col>
+                  <ion-col class="pt-0">
+                    <p class="text-xs strong ion-float-right">{{ item?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'  }}</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="pt-0 pb-0">
+                    <ion-progress-bar [value]="item?.percentageSpent"></ion-progress-bar>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="pt-2 pb-0">
+                    <p class="text-xs strong light-text-color">$0</p>
+                  </ion-col>
+                  <ion-col class="pt-2 pb-0">
+                    <p class="ion-float-right light-text-color text-xs strong">{{ item?.totalBudget | currency:'USD':'symbol':'1.2-2' }}</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="pt-1 pb-0">
+                    <p class="text-xs strong">Total Spent: {{ item?.totalSpent | currency:'USD':'symbol':'1.2-2' }}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </app-card>
+          </div>
+        </ng-template>
+      </swiper>
+    </ng-container>
+    
+    <ng-container *ngIf="!pageInitialized">
+      <swiper
+      [allowTouchMove]="false"
+      direction="horizontal"
+      [slidesPerView]="1"
+      [pagination]="true"
+      (slidechange)="swiperSlideChanged($event)">
+        <ng-template *ngFor="let item of placeholderBudgetSummary" swiperSlide>
+          <div>
+            <app-card 
+              margin="2px 5px 5px 5px" 
+              padding="5px">
+              <ion-grid>
+                <ion-row>
+                  <ion-col class="pb-1">
+                    <ion-skeleton-text style="width: 20%" [animated]="true"></ion-skeleton-text>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="pt-0">
+                    <ion-skeleton-text style="width: 85%" [animated]="true"></ion-skeleton-text>
+                  </ion-col>
+                  <ion-col class="pt-0">
+                    <ion-skeleton-text class="ion-float-right" style="width: 30%" [animated]="true"></ion-skeleton-text>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="pt-0 pb-0">
+                    <ion-skeleton-text style="width: 100%" [animated]="true"></ion-skeleton-text>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="pt-2 pb-0">
+                    <ion-skeleton-text style="width: 10%" [animated]="true"></ion-skeleton-text>
+                  </ion-col>
+                  <ion-col class="pt-2 pb-0">
+                    <ion-skeleton-text class="ion-float-right" style="width: 30%" [animated]="true"></ion-skeleton-text>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="pt-1 pb-0">
+                    <ion-skeleton-text style="width: 30%" [animated]="true"></ion-skeleton-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </app-card>
+          </div>
+        </ng-template>
+      </swiper>
+    </ng-container>
   </div>
   
 
@@ -84,7 +137,7 @@
       </ion-row>
     </ion-grid>
   </div>
-  <div style="margin-bottom: 10rem">
+  <div *ngIf="pageInitialized" style="margin-bottom: 10rem">
     <app-card *ngFor="let item of categoriesForBudget"
       margin="2px 5px 5px 5px" 
       padding="5px">
@@ -101,6 +154,31 @@
               <p class="text-sm strong ion-float-right" [ngClass]="{'showRed': item?.showRed}">{{ item?.remainingAmount | currency:'USD':'symbol':'1.2-2' }}</p><br>
               <p class="text-xs light-text-color ion-float-right strong">
                 <span *ngIf="item?.type == transactionType.Expense">Spent: </span><span *ngIf="item?.type == transactionType.Income">Earned: </span>{{ item?.spentAmount | currency:'USD':'symbol':'1.2-2' }}</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    </app-card>
+  </div>
+
+  <div *ngIf="!pageInitialized" style="margin-bottom: 10rem">
+    <app-card *ngFor="let item of placeholderCategories"
+      margin="2px 5px 5px 5px" 
+      padding="5px">
+        <ion-grid>
+          <ion-row class="ion-justify-content-start">
+            <ion-col size="2">
+              <ion-skeleton-text class="round-loader" [animated]="true"></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+              <ion-skeleton-text [animated]="true" style="width: 40%"></ion-skeleton-text>
+              <ion-skeleton-text [animated]="true" style="width: 80%"></ion-skeleton-text>
+            </ion-col> 
+            <ion-col>
+              <div class="ion-float-right" style="width: 100%; direction: rtl;">
+                <ion-skeleton-text [animated]="true" style="width: 35%"></ion-skeleton-text>
+                <ion-skeleton-text [animated]="true" style="width: 85%"></ion-skeleton-text>
+              </div>
+              
             </ion-col>
           </ion-row>
         </ion-grid>
