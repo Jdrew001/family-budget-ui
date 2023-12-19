@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from 'src/app/core/services/base.service';
 import { ManageBudgetConstant } from '../manage-budget.constant';
 import { HttpClient } from '@angular/common/http';
 import { Observable, zip } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoriesForBudget, LeftSpendingManage } from 'src/app/core/models/left-spending.model';
 import { HelperService } from 'src/app/core/services/helper.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -72,5 +72,15 @@ export class ManageBudgetService {
   getBudgetCategoryRefData(id: string) {
     const url = this.helperService.getResourceUrl(ManageBudgetConstant.MANAGE_BUDGET_REF_DATA);
     return this.http.get(`${url}/${id}`) as Observable<any>;
+  }
+
+  updateBudgetCategory(budgetId: string, value: { id: string; amount: string; }) {
+    const url = this.helperService.getResourceUrl(ManageBudgetConstant.UPDATE_BUDGET_CATEGORY);
+    return this.http.post(url, {budgetId: budgetId, category: value}) as Observable<any>;
+  }
+
+  deleteBudgetCategory(budgetCategoryId: string) {
+    const url = this.helperService.getResourceUrl(ManageBudgetConstant.DELETE_BUDGET_CATEGORY);
+    return this.http.get(`${url}/${budgetCategoryId}`) as Observable<any>;
   }
 }

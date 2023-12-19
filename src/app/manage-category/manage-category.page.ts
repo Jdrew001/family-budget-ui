@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { IonGrid, IonModal } from '@ionic/angular';
 import { CategoriesForBudget } from '../core/models/left-spending.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastService } from '../core/services/toast.service';
 
 @Component({
   selector: 'app-manage-category',
@@ -13,6 +14,9 @@ export class ManageCategoryPage implements OnInit {
   @ViewChild('modal') modalElement: IonModal;
   @ViewChild('scrollContainer') scrollContainer: IonGrid;
 
+  @Output() onSubmit$ = new EventEmitter<{id: string, amount: string}>();
+  @Output() onDelete$ = new EventEmitter<string>();
+
   private _categoryForBudget: CategoriesForBudget;
   get categoryForBudget() { return this._categoryForBudget; }
   set categoryForBudget(value) { this._categoryForBudget = value; }
@@ -21,7 +25,9 @@ export class ManageCategoryPage implements OnInit {
     amount: new FormControl('$0.00', Validators.required)
   });
 
-  constructor() { }
+  constructor(
+    private toastService: ToastService
+  ) { }
 
   ngOnInit() {
   }
@@ -33,11 +39,19 @@ export class ManageCategoryPage implements OnInit {
   }
 
   onSubmit() {
-    console.log('submitting', this.formGroup.value, this.categoryForBudget)
+    if (this.formGroup.invalid) {
+      this.toastService.showMessage('Please enter a valid amount');
+      return;
+    }
+
+    this.onSubmit$.emit({
+      id: this.categoryForBudget.id, // budget category id
+      amount: this.formGroup.get('amount').value
+    });
   }
 
   onDelete() {
-
+    this.onDelete$.emit(this.categoryForBudget.id); // budget category id
   }
 
   dismissModal() {

@@ -16,12 +16,14 @@ export class ManageBudgetPage implements OnInit {
   @ViewChild('addCategoryModal') addCategoryOverlay: AddCategoryComponent;
   @ViewChild('manageCategory') manageCategory: ManageCategoryPage;
 
-  @Input() budget: any;
+  @Input() budget: string; // budget id
 
   get manageBudgetSummary() { return this.manageBudgetService.manageBudgetSummary; }
   get manageBudgetCategories() { return this.manageBudgetService.manageBudgetCategories; }
 
   budgetCategoryRefData: Array<{id: string, name: string, type: TransactionType, icon: string}> = [];
+
+  shouldRefreshScreen: boolean = false;
 
   constructor(
     private modalController: ModalController,
@@ -30,6 +32,7 @@ export class ManageBudgetPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.shouldRefreshScreen = false;
     this.manageBudgetService.getAllData(this.budget);  
     this.coreService.getBudgetCategoryRefData(this.budget).subscribe(data => {
       this.budgetCategoryRefData = data;
@@ -37,7 +40,7 @@ export class ManageBudgetPage implements OnInit {
   }
 
   closeBudget() {
-    this.modalController.dismiss();
+    this.modalController.dismiss(this.shouldRefreshScreen);
   }
 
   addCategory() {
@@ -51,8 +54,29 @@ export class ManageBudgetPage implements OnInit {
   onAddCategory() {
     this.manageBudgetService.addCategoryToBudget(this.budget).subscribe(data => {
       if (data) {
+        this.shouldRefreshScreen = true;
         this.manageBudgetService.getAllData(this.budget);
         this.addCategoryOverlay.dismissModal();
+      }
+    });
+  }
+
+  onSubmit(value: {id: string, amount: string}) {
+    this.manageBudgetService.updateBudgetCategory(this.budget, value).subscribe(data => {
+      if (data) {
+        this.shouldRefreshScreen = true;
+        this.manageBudgetService.getAllData(this.budget);
+        this.manageCategory.dismissModal();
+      }
+    });
+  }
+
+  onDelete(budgetCategoryid: string) {
+    this.manageBudgetService.deleteBudgetCategory(budgetCategoryid).subscribe(data => {
+      if (data) {
+        this.shouldRefreshScreen = true;
+        this.manageBudgetService.getAllData(this.budget);
+        this.manageCategory.dismissModal();
       }
     });
   }

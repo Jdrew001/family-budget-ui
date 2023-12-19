@@ -378,9 +378,9 @@ div.heading-container {
 
 .round-loader {
     margin-top: 0;
-    height: 100%;
     border-radius: 50%;
-    width: 70%;
+    width: 75%;
+    aspect-ratio: 1 / 1;
 }
 
 body {
