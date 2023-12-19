@@ -146,6 +146,6 @@
     [budgetCategoryRefData]="budgetCategoryRefData"
     (onConfirm$)="onAddCategory()"></app-add-category>
 
-    <app-manage-category #manageCategory
+    <app-manage-category #manageCategory (onSubmit$)="onSubmit($event)"
     ></app-manage-category>
 </ion-content>

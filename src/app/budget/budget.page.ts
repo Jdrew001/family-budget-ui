@@ -52,6 +52,14 @@ export class BudgetPage implements OnInit, ViewDidEnter {
     });
 
     modal.present();
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.budgetService.resetBudget();
+      setTimeout(() => {
+        this.budgetService.initialize();
+      }, 100);
+    }
+    
   }
 
   swiperSlideChanged(event: any) {

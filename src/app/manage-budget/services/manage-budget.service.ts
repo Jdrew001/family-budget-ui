@@ -73,4 +73,9 @@ export class ManageBudgetService {
     const url = this.helperService.getResourceUrl(ManageBudgetConstant.MANAGE_BUDGET_REF_DATA);
     return this.http.get(`${url}/${id}`) as Observable<any>;
   }
+
+  updateBudgetCategory(budgetId: string, value: { id: string; amount: string; }) {
+    const url = this.helperService.getResourceUrl(ManageBudgetConstant.UPDATE_BUDGET_CATEGORY);
+    return this.http.post(url, {budgetId: budgetId, category: value}) as Observable<any>;
+  }
 }
