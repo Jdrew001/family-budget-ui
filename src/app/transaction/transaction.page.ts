@@ -14,7 +14,12 @@ export class TransactionPage implements OnInit, ViewDidEnter, ViewDidLeave {
   get accountBalanceSummary() { return this.transactionService.accountBalanceSummary; }
   get groupedTransactions() { return this.transactionService.groupTransactions; }
 
+  get pageInitialized() { return this.transactionService.pageInitialized; }
+
   scrollDisabled: boolean = false;
+
+  placeHolderAccounts = [{}, {}];
+  placeHolderTransactions = [{}, {}, {}, {}];
 
   constructor(
     private transactionService: TransactionService,
@@ -38,6 +43,7 @@ export class TransactionPage implements OnInit, ViewDidEnter, ViewDidLeave {
     this.transactionService.groupTransactions = [];
     this.transactionService.page = 1;
     this.scrollDisabled = true;
+    this.transactionService.pageInitialized = false;
   }
 
   ngOnInit() {

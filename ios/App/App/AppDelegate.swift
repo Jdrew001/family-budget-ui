@@ -1,5 +1,7 @@
 import UIKit
 import Capacitor
+import Shake
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -8,6 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        Shake.start(clientId: "6kngWVlEFJFYTfhaeIGWmQxxRSUBNLgAFnfu6kY5", clientSecret: "iXpHIMjUxUBTK5uvBL540N8WEFvKEMtXgj9VjQ4TZ5IiYU7L5aFtpFr")
         return true
     }
 
