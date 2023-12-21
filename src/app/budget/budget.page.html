@@ -44,7 +44,9 @@
                 </ion-row>
                 <ion-row>
                   <ion-col class="pt-0">
-                    <p class="text-xs strong">Left to Spend for {{ item?.leftSpendingDays }} days</p>
+                    <p *ngIf="item?.leftSpendingDays > 1" class="text-sm strong">Left to Spend for<br> {{item?.leftSpendingDays}} days</p>
+                    <p *ngIf="item?.leftSpendingDays == 1" class="text-sm strong">Left to Spend for<br> {{item?.leftSpendingDays}} day</p>
+                    <p *ngIf="item?.leftSpendingDays < 1" class="text-sm strong">Left to Spend for the <br>last day</p>
                   </ion-col>
                   <ion-col class="pt-0">
                     <p class="text-xs strong ion-float-right">{{ item?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'  }}</p>

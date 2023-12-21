@@ -120,7 +120,7 @@
               <ion-col>
                 <p *ngIf="pageInitialized && currentBudgetSummary?.leftSpendingDays > 1" class="text-sm strong">Left to Spend for<br> {{currentBudgetSummary?.leftSpendingDays}} days</p>
                 <p *ngIf="pageInitialized && currentBudgetSummary?.leftSpendingDays == 1" class="text-sm strong">Left to Spend for<br> {{currentBudgetSummary?.leftSpendingDays}} day</p>
-                <p *ngIf="pageInitialized && currentBudgetSummary?.leftSpendingDays == 0" class="text-sm strong">Left to Spend for the <br>last day</p>
+                <p *ngIf="pageInitialized && currentBudgetSummary?.leftSpendingDays < 1" class="text-sm strong">Left to Spend for the <br>last day</p>
                 <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 80%"></ion-skeleton-text>
                 <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 40%"></ion-skeleton-text>
               </ion-col> 
