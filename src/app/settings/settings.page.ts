@@ -28,6 +28,10 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
   get categories() { return this.settingsService.categories; }
   get familyMembers() { return this.settingsService.familyMembers; }
 
+  get pageInitialized() { return this.settingsService.pageInitialized; }
+
+  placeHolderData = [{}, {}];
+
   constructor(
     private settingsService: SettingsService,
     private authService: AuthService,
@@ -44,15 +48,14 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
 
   async ionViewDidEnter() {
       this.userInformation = await this.settingsService.fetchProfileInfo();
-      this.settingsService.getFamilyMembers();
-      this.settingsService.fetchAccount();
-      this.settingsService.fetchCategories();
+      this.settingsService.initial();
   }
 
   ionViewDidLeave(): void {
     this.settingsService.familyMembers = [];
     this.settingsService.accounts = [];
     this.settingsService.categories = [];
+    this.settingsService.pageInitialized = false;
     this.userInformation = {
       family: {
         id: null,
@@ -66,7 +69,6 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
   }
 
   manageCategory(category = null) {
-    console.log('category', category);
     this.presentCategoryModal(category);
   }
 
@@ -87,14 +89,14 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
   onFamilyConfirm(email: any) {
     this.settingsService.inviteUser(this.userInformation.family.id, email).subscribe(result => {
       this.AddFamilyComponent.dismissModal();
-      this.settingsService.resetFamilyMembers();
+      this.settingsService.initial();
     });
   }
 
   async onFamilyRemove({email, invitePending}) {
     (await this.settingsService.removeFamilyMember(this.userInformation.family.id, email, invitePending)).subscribe(result => {
       this.AddFamilyComponent.dismissModal();
-      this.settingsService.resetFamilyMembers();
+      this.settingsService.initial();
     });
   }
 

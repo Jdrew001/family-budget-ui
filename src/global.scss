@@ -383,6 +383,13 @@ div.heading-container {
     aspect-ratio: 1 / 1;
 }
 
+round-loader-lg {
+    margin-top: 0;
+    border-radius: 50%;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+}
+
 body {
     --background: var(--ion-color-light);
 }
