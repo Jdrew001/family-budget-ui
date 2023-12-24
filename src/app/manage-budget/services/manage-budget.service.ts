@@ -5,6 +5,8 @@ import { Observable, zip } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoriesForBudget, LeftSpendingManage } from 'src/app/core/models/left-spending.model';
 import { HelperService } from 'src/app/core/services/helper.service';
+import { CoreService } from 'src/app/core/services/core.service';
+import { TransactionType } from 'src/app/core/models/transaction-type.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +20,8 @@ export class ManageBudgetService {
 
   private _manageBudgetSummary: LeftSpendingManage;
   private _manageBudgetCategories: CategoriesForBudget[];
+  private _pageInitialized: boolean = false;
+  private _budgetCategoryRefData: Array<{id: string, name: string, type: TransactionType, icon: string}> = [];
 
   get manageBudgetSummary() {
     return this._manageBudgetSummary;
@@ -34,9 +38,16 @@ export class ManageBudgetService {
     this._manageBudgetCategories = value;
   }
 
+  get budgetCategoryRefData() { return this._budgetCategoryRefData; }
+  set budgetCategoryRefData(value) { this._budgetCategoryRefData = value; }
+
+  get pageInitialized() { return this._pageInitialized; }
+  set pageInitialized(value: boolean) { this._pageInitialized = value; }
+
   constructor(
     private http: HttpClient,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private coreService: CoreService
   ) {
   }
 
@@ -52,10 +63,13 @@ export class ManageBudgetService {
   getAllData(id: string) {
     const bSummary = this.getManageBudgetSummary(id);
     const bTransactions = this.getManageBudgetCategories(id);
+    const refData = this.coreService.getBudgetCategoryRefData(id);
 
-    zip(bSummary, bTransactions).subscribe(([summary, categories]) => {
+    zip(bSummary, bTransactions, refData).subscribe(([summary, categories, refData]) => {
       this.manageBudgetSummary = summary;
       this.manageBudgetCategories = categories;
+      this.budgetCategoryRefData = refData;
+      this.pageInitialized = true;
     });
   }
 
@@ -82,5 +96,12 @@ export class ManageBudgetService {
   deleteBudgetCategory(budgetCategoryId: string) {
     const url = this.helperService.getResourceUrl(ManageBudgetConstant.DELETE_BUDGET_CATEGORY);
     return this.http.get(`${url}/${budgetCategoryId}`) as Observable<any>;
+  }
+
+  resetData() {
+    this.manageBudgetSummary = null;
+    this.manageBudgetCategories = null;
+    this.pageInitialized = false;
+    this.budgetCategoryRefData = [];
   }
 }

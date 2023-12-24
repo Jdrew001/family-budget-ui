@@ -12,16 +12,12 @@ export class AddCategoryComponent  implements OnInit {
 
   @ViewChild('modal') modalElement: IonModal;
   @ViewChild('scrollContainer') scrollContainer: IonGrid;
-
-  _budgetCategoryRefData: Array<{id: string, name: string, type: TransactionType, icon: string}> = [];
-  @Input() set budgetCategoryRefData(value) { this._budgetCategoryRefData = value; }
-  get budgetCategoryRefData() { return this._budgetCategoryRefData; }
+  get budgetCategoryRefData() { return this.manageBudgetService.budgetCategoryRefData; }
 
   screen = 0;
 
   selectedCategoryType = null;
   selectedCategory: string;
-  refDataClone: Array<{id: string, name: string, type: TransactionType, icon: string}> = [];
 
   @Output() onConfirm$: EventEmitter<any> = new EventEmitter<any>();
 
@@ -41,36 +37,25 @@ export class AddCategoryComponent  implements OnInit {
   modalWillDismiss(e): void {
     this.selectedCategoryType = null;
     this.selectedCategory = null;
-    this.refDataClone = null;
     this.formGroup.get('amount').setValue('');
     this.formGroup.get('id').setValue('');
     this.screen = 0;
   }
 
   presentModal() {
-    console.log('testing', this.budgetCategoryRefData)
-    this.refDataClone = this.budgetCategoryRefData;
     this.modalElement.present();
   }
 
   categoryTypeSelected(type: TransactionType) {
-    this.refDataClone = this.budgetCategoryRefData;
     this.selectedCategory = null;
     if (this.selectedCategoryType == type) {
       this.selectedCategoryType = null;
       return;
     }
     this.selectedCategoryType = type;
-    this.refDataClone = this.budgetCategoryRefData.filter(category => category.type == type);
   }
 
   selectCategory(id: string) {
-    // if (this.selectedCategory == id) {
-    //   this.selectedCategory = null;
-    //   this.formGroup.get('id').setValue(null);
-    //   return;
-    // }
-
     this.selectedCategory = id;
     this.formGroup.get('id').setValue(this.selectedCategory);
     this.screen = 1;

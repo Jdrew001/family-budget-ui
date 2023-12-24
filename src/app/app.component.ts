@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
       // await SplashScreen.show(
       //   {
       //     autoHide: false
-      //   }
+      //   }s
       // );
       from(this.storage.create()).subscribe(async (result) => {
         await this.authService.validateRefreshToken();
