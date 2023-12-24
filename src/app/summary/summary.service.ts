@@ -44,7 +44,10 @@ export class SummaryService {
         this.accountBalanceSummary = accountBalances;
         this.accountId = accountBalances?.find(item => item.active)?.id as string;
 
-        if (!this.accountId) return EMPTY;
+        if (!this.accountId) {
+          this.pageInitialized = true;
+          return EMPTY;
+        }
         const currentBudgetSummary = this.getCurrentBudgetSummary();
         const accountTransactions = this.getAccountTransactions();
         return zip(currentBudgetSummary, accountTransactions);

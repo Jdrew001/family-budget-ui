@@ -32,7 +32,8 @@ export class OnboardingFormService {
     return new FormGroup({
       firstname: new FormControl(''),
       lastname: new FormControl(''),
-      phone: new FormControl('')
+      phone: new FormControl(''),
+      timezone: new FormControl(Intl.DateTimeFormat().resolvedOptions().timeZone),
     });
   }
 
