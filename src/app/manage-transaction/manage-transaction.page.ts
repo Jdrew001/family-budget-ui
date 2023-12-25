@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ModalController, ViewDidEnter } from '@ionic/angular';
 import { ManageTransactionService } from './services/manage-transaction.service';
 import { ManageTransRefData, ManageTransaction } from './models/manage-transaction.model';
@@ -26,10 +26,13 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
   refData: ManageTransRefData = {} as ManageTransRefData;
   formGroup: FormGroup = this.manageTranService.manageTransactionForm;
 
+  placeHolderAccounts = [{}, {}];
+
   get accountFormControl() { return this.formGroup?.get('account'); }
   get selectedCategory() { return this.formGroup?.get('category'); }
   get selectedDate() { return this.formGroup?.get('date'); }
   get selId() { return this.formGroup?.get('id'); }
+  get pageInitialized() { return this.manageTranService.pageInitialized; }
 
   constructor(
     private modalController: ModalController,
@@ -44,8 +47,11 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
           transaction.amount = `$${parseFloat(transaction.amount).toFixed(2)}`;
           this.manageTranService.manageTransactionForm.setValue(transaction);
           this.setSelectedCard(transaction.account, true);
+          setTimeout(() => {this.manageTranService.pageInitialized = true;}, 500);
       });
     }
+
+    setTimeout(() => {this.manageTranService.pageInitialized = true;}, 500);
   }
 
   ngOnInit() {
@@ -91,6 +97,7 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
   closeTransaction() {
     this.modalController.dismiss();
     this.formGroup.reset();
+    this.manageTranService.pageInitialized = false;
   }
 
   onSelectCategory(value: any) {
@@ -111,6 +118,6 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
 
   setSelectedCard(id: string, active: boolean) {
     const account = this.accounts.find(item => item.id === id) as SummaryAccountBalance;
-  account.active = active;
+    account.active = active;
   }
 }

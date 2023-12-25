@@ -17,3 +17,19 @@ ion-modal ion-toolbar {
 :host ::ng-deep .swiper-pagination-bullets.swiper-pagination-horizontal {
     bottom: -20px !important;
 }
+
+.textarea-loader {
+    width: 100%;
+    padding: 10%;
+    --border-radius: 25px !important;
+    margin-top: 1rem !important;
+    margin-bottom: 2px !important;
+}
+
+.input-loader {
+    width: 100%;
+    padding: 6%;
+    --border-radius: 25px !important;
+    margin-top: 1rem !important;
+    margin-bottom: 2px !important;
+}

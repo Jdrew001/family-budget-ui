@@ -383,7 +383,13 @@ div.heading-container {
     aspect-ratio: 1 / 1;
 }
 
-round-loader-lg {
+.textarea-loader {
+    width: 100%;
+    padding: 10%;
+    --border-radius: 25px !important;
+}
+
+.round-loader-lg {
     margin-top: 0;
     border-radius: 50%;
     width: 100%;

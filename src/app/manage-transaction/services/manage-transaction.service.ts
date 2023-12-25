@@ -28,6 +28,10 @@ export class ManageTransactionService {
     date: new FormControl('', Validators.required),
   });
 
+  private _pageInitialized = false;
+  get pageInitialized() { return this._pageInitialized; }
+  set pageInitialized(value: boolean) { this._pageInitialized = value; }
+
   constructor(
     private http: HttpClient,
     private modalController: ModalController,

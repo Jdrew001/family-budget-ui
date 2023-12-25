@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { EMPTY, Observable, Subject, catchError, finalize, from, switchMap, take } from 'rxjs';
 import { TokenService } from '../services/token.service';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
 import { TokenModel } from '../models/token.model';
 import { AuthConstants } from '../constants/auth.constants';
 import { NavController } from '@ionic/angular';
