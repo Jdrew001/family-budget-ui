@@ -1,1 +1,1 @@
-capacitor-set-version -v 0.0.2-snapshot-1 -b 6
+capacitor-set-version -v 0.0.2-snapshot-1 -b 7

@@ -79,10 +79,10 @@ jobs:
           debug: true #this will show the verbose log
           releaseNotes: |
             What is in the release
-            --------------------------------
-            Minor UX updates and bug fixes.
+            ----------------------
 
-            User is now able to update transactions
+            Animations and loading finished
+            bug fixes
 
   #Build IOS
   build-ios:
@@ -154,7 +154,7 @@ jobs:
           debug: true #this will show the verbose log
           releaseNotes: |
             What is in the release
-            --------------------------------
-            Minor UX updates and bug fixes.
-
-            User is now able to update transactions
+            ----------------------
+            
+            Animations and loading finished
+            bug fixes
