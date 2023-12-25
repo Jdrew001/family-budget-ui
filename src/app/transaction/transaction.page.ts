@@ -3,11 +3,13 @@ import { TransactionService } from './transaction.service';
 import { InfiniteScrollCustomEvent, ModalController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
 import { CoreService } from '../core/services/core.service';
+import { loadingContentAnimation } from '../shared/animations/loading-animation';
 
 @Component({
   selector: 'app-transaction',
   templateUrl: './transaction.page.html',
   styleUrls: ['./transaction.page.scss'],
+  animations: [loadingContentAnimation]
 })
 export class TransactionPage implements OnInit, ViewDidEnter, ViewDidLeave {
   

@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from '../core/services/base.service';
 import { HttpClient } from '@angular/common/http';
-import { Storage } from '@ionic/storage-angular';
 import { UserService } from '../core/services/user/user.service';
 import { IdName } from '../core/models/account.model';
 import { SettingsConstant } from './settings.constant';
 import { AccountModel, CategoriesModel, CreateCategoryDto } from './models/settings.model';
 import { HelperService } from '../core/services/helper.service';
-import { Observable } from 'rxjs';
-import { AddAccountComponent } from '../shared/components/add-account/add-account.component';
+import { Observable, debounceTime, zip } from 'rxjs';
 import { ToastService } from '../core/services/toast.service';
 
 @Injectable({
@@ -28,6 +25,10 @@ export class SettingsService {
   get familyMembers(): any[] { return this._familyMembers; }
   set familyMembers(value: any[]) { this._familyMembers = value; }
 
+  private _pageInitialized: boolean = false;
+  get pageInitialized() { return this._pageInitialized; }
+  set pageInitialized(value: boolean) { this._pageInitialized = value; }
+
   constructor(
     private http: HttpClient,
     private userService: UserService,
@@ -40,26 +41,34 @@ export class SettingsService {
     return await this.userService.getUserInformation();
   }
 
-  async fetchAccount() {
-    const url = this.helperService.getResourceUrl(SettingsConstant.FETCH_ACCOUNTS);
-    this.http.get(url).subscribe((result: any) => {
-      this.accounts = result;
+  initial() {
+    const accounts$ = this.fetchAccount();
+    const categories$ = this.fetchCategories();
+    const family$ = this.getFamilyMembers();
+    this.pageInitialized = false;
+
+    zip(accounts$, categories$, family$).pipe(debounceTime(450)).subscribe(([accounts, categories, family]) => {
+      this.accounts = accounts as IdName[];
+      this.categories = categories as CategoriesModel[];
+      this.familyMembers = family as any[];
+      this.pageInitialized = true;
     });
   }
 
-  async fetchCategories() {
+  fetchAccount() {
+    const url = this.helperService.getResourceUrl(SettingsConstant.FETCH_ACCOUNTS);
+    return this.http.get(url) as Observable<IdName[]>;
+  }
+
+  fetchCategories() {
     this.categories = [];
     const url = this.helperService.getResourceUrl(SettingsConstant.FETCH_CATEGORIES);
-    this.http.get(url).subscribe((result: any) => {
-      this.categories = result;
-    });
+    return this.http.get(url) as Observable<CategoriesModel[]>;
   }
 
-  async getFamilyMembers() {
+  getFamilyMembers() {
     const url = this.helperService.getResourceUrl(SettingsConstant.GET_FAMILY_MEMBERS);
-    this.http.get(url).subscribe((result: any) => {
-      this.familyMembers = result;
-    });
+    return this.http.get(url) as Observable<any[]>;
   }
 
   createAccount(data: any): Observable<any> {
@@ -107,13 +116,13 @@ export class SettingsService {
   handleAccountModalDismiss(data: any, role: string) {
     if (role == 'confirm') {
       this.createAccount(data).subscribe((result: any) => {
-        this.fetchAccount();
+        this.initial();
       });
     }
 
     if (role == 'delete') {
       this.markAccountInactive(data).subscribe(() => {
-        this.fetchAccount();
+        this.initial();
       });
     }
   }
@@ -122,7 +131,7 @@ export class SettingsService {
     if (role == 'confirm') {
       this.createCategory(data).subscribe((result) => {
         if (result && result.success) {
-          this.fetchCategories();
+          this.initial();
           return;
         }
   
@@ -133,10 +142,5 @@ export class SettingsService {
     if(role == 'delete') {
       //TODO: this.deleteCategory(data);
     }
-  }
-
-  resetFamilyMembers() {
-    this.familyMembers = [];
-    this.getFamilyMembers();
   }
 }

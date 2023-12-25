@@ -5,11 +5,13 @@ import { AddCategoryComponent } from './add-category/add-category.component';
 import { TransactionType } from '../core/models/transaction-type.model';
 import { CoreService } from '../core/services/core.service';
 import { ManageCategoryPage } from '../manage-category/manage-category.page';
+import { loadingContentAnimation } from '../shared/animations/loading-animation';
 
 @Component({
   selector: 'app-manage-budget',
   templateUrl: './manage-budget.page.html',
   styleUrls: ['./manage-budget.page.scss'],
+  animations: [loadingContentAnimation]
 })
 export class ManageBudgetPage implements OnInit {
 
@@ -20,26 +22,25 @@ export class ManageBudgetPage implements OnInit {
 
   get manageBudgetSummary() { return this.manageBudgetService.manageBudgetSummary; }
   get manageBudgetCategories() { return this.manageBudgetService.manageBudgetCategories; }
-
-  budgetCategoryRefData: Array<{id: string, name: string, type: TransactionType, icon: string}> = [];
+  get pageInitialized() { return this.manageBudgetService.pageInitialized; }
+  get budgetCategoryRefData() { return this.manageBudgetService.budgetCategoryRefData; }
 
   shouldRefreshScreen: boolean = false;
 
+  placeHolderCategories = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+
   constructor(
     private modalController: ModalController,
-    private manageBudgetService: ManageBudgetService,
-    private coreService: CoreService
+    private manageBudgetService: ManageBudgetService
   ) { }
 
   ngOnInit() {
     this.shouldRefreshScreen = false;
-    this.manageBudgetService.getAllData(this.budget);  
-    this.coreService.getBudgetCategoryRefData(this.budget).subscribe(data => {
-      this.budgetCategoryRefData = data;
-    });
+    this.manageBudgetService.getAllData(this.budget);
   }
 
   closeBudget() {
+    this.manageBudgetService.resetData();
     this.modalController.dismiss(this.shouldRefreshScreen);
   }
 
@@ -54,6 +55,7 @@ export class ManageBudgetPage implements OnInit {
   onAddCategory() {
     this.manageBudgetService.addCategoryToBudget(this.budget).subscribe(data => {
       if (data) {
+        this.manageBudgetService.pageInitialized = false;
         this.shouldRefreshScreen = true;
         this.manageBudgetService.getAllData(this.budget);
         this.addCategoryOverlay.dismissModal();
@@ -64,6 +66,7 @@ export class ManageBudgetPage implements OnInit {
   onSubmit(value: {id: string, amount: string}) {
     this.manageBudgetService.updateBudgetCategory(this.budget, value).subscribe(data => {
       if (data) {
+        this.manageBudgetService.pageInitialized = false;
         this.shouldRefreshScreen = true;
         this.manageBudgetService.getAllData(this.budget);
         this.manageCategory.dismissModal();
@@ -74,6 +77,7 @@ export class ManageBudgetPage implements OnInit {
   onDelete(budgetCategoryid: string) {
     this.manageBudgetService.deleteBudgetCategory(budgetCategoryid).subscribe(data => {
       if (data) {
+        this.manageBudgetService.pageInitialized = false;
         this.shouldRefreshScreen = true;
         this.manageBudgetService.getAllData(this.budget);
         this.manageCategory.dismissModal();

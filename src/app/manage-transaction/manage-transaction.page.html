@@ -12,7 +12,7 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <div class="input-group m-0">
+        <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" class="input-group m-0">
           <div class="group mb-0">
             <ion-label position="stacked">Account</ion-label>
             <swiper
@@ -46,6 +46,38 @@
             </swiper>
           </div>
         </div>
+
+        <div *ngIf="!pageInitialized" class="input-group m-0">
+          <div class="group mb-0">
+            <ion-label position="stacked">Account</ion-label>
+            <swiper
+              [allowTouchMove]="true"
+              direction="horizontal"
+              [slidesPerView]="2"
+              [pagination]="true">
+              <ng-template *ngFor="let item of placeHolderAccounts" swiperSlide>
+                <app-card
+                  margin="10px 5px 10px 5px" 
+                  padding="5px">
+                  <ion-grid>
+                    <ion-row class="ion-justify-content-start">
+                      <ion-col class="ion-align-self-center" size="2">
+                        <ion-skeleton-text [animated]="true" style="width: 100%"></ion-skeleton-text>
+                      </ion-col>
+                      <ion-col></ion-col>
+                      <ion-col size="8">
+                        <ion-skeleton-text [animated]="true" style="width: 80%"></ion-skeleton-text>
+                        <ion-skeleton-text [animated]="true" style="width: 40%"></ion-skeleton-text>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                    </ion-row>
+                  </ion-grid>
+                </app-card>
+              </ng-template>
+            </swiper>
+          </div>
+        </div>
       </ion-col>
     </ion-row>
 
@@ -54,7 +86,8 @@
         <div class="input-group mt-5">
           <div class="group mb-0">
             <ion-label position="stacked">Description</ion-label>
-            <ion-textarea formControlName="description" placeholder="Type something here"></ion-textarea>
+            <ion-textarea [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" formControlName="description" placeholder="Type something here"></ion-textarea>
+            <ion-skeleton-text *ngIf="!pageInitialized" class="textarea-loader" [animated]="true"></ion-skeleton-text>
           </div>
         </div>
       </ion-col>
@@ -65,10 +98,11 @@
         <div class="input-group mt-2">
           <div class="group mb-0">
             <ion-label position="stacked">Category</ion-label>
-            <div (click)="chooseCategory()" class="input-lookalike">
+            <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" (click)="chooseCategory()" class="input-lookalike">
               <p *ngIf="!selectedCategory?.value" class="placeholder">Select Category</p>
               <p *ngIf="selectedCategory?.value">{{ getSelCategory()?.name }}</p>
             </div>
+            <ion-skeleton-text *ngIf="!pageInitialized" class="input-loader" [animated]="true"></ion-skeleton-text>
           </div>
         </div>
       </ion-col>
@@ -79,8 +113,9 @@
         <div class="input-group mt-2">
           <div class="group mb-0">
             <ion-label position="stacked">Amount</ion-label>
-              <ion-input currencyMask placeholder="Select Amount" formControlName="amount">
-              </ion-input>
+            <ion-input [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" currencyMask placeholder="Select Amount" formControlName="amount">
+            </ion-input>
+            <ion-skeleton-text *ngIf="!pageInitialized" class="input-loader" [animated]="true"></ion-skeleton-text>
           </div>
         </div>
       </ion-col>
@@ -91,16 +126,17 @@
         <div class="input-group mt-2 mb-5">
           <div class="group mb-0">
             <ion-label position="stacked">Date</ion-label>
-            <div (click)="chooseDate()" class="input-lookalike">
+            <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" (click)="chooseDate()" class="input-lookalike">
               <p *ngIf="!selectedDate?.value" class="placeholder">Select Date</p>
               <p *ngIf="selectedDate?.value">{{ selectedDate?.value | date:'MM/dd/yyyy' }}</p>
             </div>
+            <ion-skeleton-text *ngIf="!pageInitialized" class="input-loader" [animated]="true"></ion-skeleton-text>
           </div>
         </div>
       </ion-col>
     </ion-row>
 
-    <ion-row>
+    <ion-row [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized">
       <ion-col>
         <div class="button-group mb-0 mt-5">
           <ion-button 
@@ -115,7 +151,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="!!selId?.value" class="ion-justify-content-center mt-4">
+    <ion-row [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized && !!selId?.value" class="ion-justify-content-center mt-4">
       <ion-col class="text-center">
         <ion-button (click)="onDelete()" size="default" color="danger" fill="clear" class="text-md m-0">
           <ion-icon slot="start" name="trash-outline"></ion-icon>

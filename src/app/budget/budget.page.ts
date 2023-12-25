@@ -5,11 +5,13 @@ import { CoreService } from '../core/services/core.service';
 import { TransactionType } from '../core/models/transaction-type.model';
 import { ManageBudgetPage } from '../manage-budget/manage-budget.page';
 import { ManageCategoryPage } from '../manage-category/manage-category.page';
+import { loadingContentAnimation } from '../shared/animations/loading-animation';
 
 @Component({
   selector: 'app-budget',
   templateUrl: './budget.page.html',
   styleUrls: ['./budget.page.scss'],
+  animations: [loadingContentAnimation]
 })
 export class BudgetPage implements OnInit, ViewDidEnter, ViewDidLeave {
 

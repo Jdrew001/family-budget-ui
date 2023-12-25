@@ -8,21 +8,23 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <h5 class="m-0">
+            <h5 [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" class="m-0">
               <span class="ellipse"><strong>{{ currentBudget?.accountName }}</strong></span></h5>
-              <p class="pt-0 mt-0 pb-0 mb-0 text-sm light-text-color">
+              <p *ngIf="pageInitialized" class="pt-0 mt-0 pb-0 mb-0 text-sm light-text-color">
                 Current Budget
               </p>
+              <ion-skeleton-text *ngIf="!pageInitialized" style="width: 50%" [animated]="true"></ion-skeleton-text>
+              <ion-skeleton-text *ngIf="!pageInitialized" style="width: 40%" [animated]="true"></ion-skeleton-text>
           </ion-col>
           <ion-col class="ion-align-self-start">
-            <ion-button (click)="editBudget()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+            <ion-button [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" (click)="editBudget()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
               Edit
             </ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
     </div>
-    <ng-container *ngIf="pageInitialized">
+    <ng-container [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized">
       <swiper
       [allowTouchMove]="true"
       direction="horizontal"
@@ -139,7 +141,7 @@
       </ion-row>
     </ion-grid>
   </div>
-  <div *ngIf="pageInitialized" style="margin-bottom: 10rem">
+  <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" style="margin-bottom: 10rem">
     <app-card *ngFor="let item of categoriesForBudget"
       margin="2px 5px 5px 5px" 
       padding="5px">
@@ -186,8 +188,8 @@
         </ion-grid>
     </app-card>
   </div>
-  <app-empty-placeholder
+  <app-empty-placeholder [@loadingContent]="pageInitialized && categoriesForBudget?.length == 0 ? 'enter' : 'void'"
         [icon]="'emptyList'"
         [message]="'No categories added yet'"
-        [display]="categoriesForBudget?.length == 0"></app-empty-placeholder>
+        [display]="pageInitialized && categoriesForBudget?.length == 0"></app-empty-placeholder>
 </ion-content>

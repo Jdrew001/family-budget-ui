@@ -6,11 +6,13 @@ import * as _ from 'lodash';
 import { ManageBudgetPage } from '../manage-budget/manage-budget.page';
 import { CircleGuageConstant } from '../shared/constants/circle-guage.constant';
 import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
+import { loadingContentAnimation } from '../shared/animations/loading-animation';
 
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.page.html',
   styleUrls: ['./summary.page.scss'],
+  animations: [loadingContentAnimation]
 })
 export class SummaryPage implements OnInit, ViewDidEnter, ViewDidLeave {
 
