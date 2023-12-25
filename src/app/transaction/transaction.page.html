@@ -4,7 +4,7 @@
 
 <ion-content [fullscreen]="true">
   <div style="margin-bottom: 10rem;">
-    <div *ngIf="pageInitialized" class="mt-4 mb-5">
+    <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" class="mt-4 mb-5">
       <swiper
         [allowTouchMove]="true"
         direction="horizontal"
@@ -61,7 +61,7 @@
       </swiper>
     </div>
 
-    <ng-container *ngIf="pageInitialized">
+    <ng-container [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized">
       <div class="mt-5" *ngFor="let group of groupedTransactions">
         <div>
           <p class="light-text-color text-xs pb-2">{{ group?.groupName }}</p>
@@ -124,7 +124,7 @@
       </div>
     </ng-container>
 
-    <app-empty-placeholder
+    <app-empty-placeholder [@loadingContent]="pageInitialized && groupedTransactions?.length == 0 ? 'enter' : 'void'"
         [icon]="'emptyList'"
         [message]="'No transactions added yet'"
         [display]="pageInitialized && groupedTransactions?.length == 0"></app-empty-placeholder>

@@ -11,7 +11,7 @@
             <h5 class="m-0"><strong>Profile</strong></h5>
           </ion-col>
           <ion-col class="ion-align-self-end">
-            <ion-button *ngIf="pageInitialized" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+            <ion-button [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
               Manage
             </ion-button>
           </ion-col>
@@ -20,7 +20,7 @@
     </div>
 
     <div class="mb-4">
-      <app-card *ngIf="pageInitialized"
+      <app-card [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized"
         margin="2px 5px 5px 5px" 
         padding="5px">
         <ion-grid>
@@ -63,7 +63,7 @@
             <h5 class="m-0"><strong>Accounts</strong></h5>
           </ion-col>
           <ion-col class="ion-align-self-end">
-            <ion-button *ngIf="pageInitialized" (click)="manageAccount()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+            <ion-button [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" (click)="manageAccount()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
               Add
             </ion-button>
           </ion-col>
@@ -71,7 +71,7 @@
       </ion-grid>
     </div>
 
-    <div *ngIf="pageInitialized">
+    <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized">
       <swiper
         [allowTouchMove]="true"
         direction="horizontal"
@@ -136,7 +136,7 @@
             <h5 class=""><strong>Family</strong></h5>
           </ion-col>
           <ion-col class="ion-align-self-end">
-            <ion-button *ngIf="pageInitialized" (click)="manageFamily()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+            <ion-button [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" (click)="manageFamily()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
               Add
             </ion-button>
           </ion-col>
@@ -144,7 +144,7 @@
       </ion-grid>
     </div>
 
-    <div *ngIf="pageInitialized">
+    <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized">
       <swiper
         [allowTouchMove]="true"
         direction="horizontal"
@@ -209,7 +209,7 @@
             <h5 class=""><strong>Categories</strong></h5>
           </ion-col>
           <ion-col class="ion-align-self-end">
-            <ion-button *ngIf="pageInitialized" (click)="manageCategory()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+            <ion-button [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" (click)="manageCategory()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
               Add
             </ion-button>
           </ion-col>
@@ -217,7 +217,7 @@
       </ion-grid>
     </div>
 
-    <div class="pb-5" *ngIf="pageInitialized">
+    <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" class="pb-5" *ngIf="pageInitialized">
       <swiper
         [allowTouchMove]="true"
         direction="horizontal"

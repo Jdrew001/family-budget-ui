@@ -20,6 +20,8 @@ import { InviteFamilyComponent } from './onboarding/invite-family/invite-family.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreService } from './core/services/core.service';
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';  // Make sure this import is correct
+
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     }),
     CoreModule,
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,

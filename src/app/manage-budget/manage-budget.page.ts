@@ -5,11 +5,13 @@ import { AddCategoryComponent } from './add-category/add-category.component';
 import { TransactionType } from '../core/models/transaction-type.model';
 import { CoreService } from '../core/services/core.service';
 import { ManageCategoryPage } from '../manage-category/manage-category.page';
+import { loadingContentAnimation } from '../shared/animations/loading-animation';
 
 @Component({
   selector: 'app-manage-budget',
   templateUrl: './manage-budget.page.html',
   styleUrls: ['./manage-budget.page.scss'],
+  animations: [loadingContentAnimation]
 })
 export class ManageBudgetPage implements OnInit {
 

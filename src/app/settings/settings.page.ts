@@ -6,11 +6,13 @@ import { AccountModel, FamilyUserModel } from './models/settings.model';
 import { AddAccountComponent } from '../shared/components/add-account/add-account.component';
 import { AddFamilyComponent } from '../shared/components/add-family/add-family.component';
 import { AddCategoryComponent } from '../shared/components/add-category/add-category.component';
+import { loadingContentAnimation } from '../shared/animations/loading-animation';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
+  animations: [loadingContentAnimation]
 })
 export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
 

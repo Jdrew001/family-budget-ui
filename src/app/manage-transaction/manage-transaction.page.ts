@@ -7,11 +7,13 @@ import { CategoryOverlayComponent } from './category-overlay/category-overlay.co
 import { SummaryAccountBalance } from '../core/models/account.model';
 import { DateOverlayComponent } from '../shared/components/date-overlay/date-overlay.component';
 import { ToastService } from '../core/services/toast.service';
+import { loadingContentAnimation } from '../shared/animations/loading-animation';
 
 @Component({
   selector: 'app-manage-transaction',
   templateUrl: './manage-transaction.page.html',
   styleUrls: ['./manage-transaction.page.scss'],
+  animations: [loadingContentAnimation]
 })
 export class ManageTransactionPage implements OnInit, ViewDidEnter {
 

@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from '../core/services/base.service';
 import { HttpClient } from '@angular/common/http';
-import { Storage } from '@ionic/storage-angular';
 import { UserService } from '../core/services/user/user.service';
 import { IdName } from '../core/models/account.model';
 import { SettingsConstant } from './settings.constant';
 import { AccountModel, CategoriesModel, CreateCategoryDto } from './models/settings.model';
 import { HelperService } from '../core/services/helper.service';
-import { Observable, zip } from 'rxjs';
-import { AddAccountComponent } from '../shared/components/add-account/add-account.component';
+import { Observable, debounceTime, zip } from 'rxjs';
 import { ToastService } from '../core/services/toast.service';
 
 @Injectable({
@@ -50,7 +47,7 @@ export class SettingsService {
     const family$ = this.getFamilyMembers();
     this.pageInitialized = false;
 
-    zip(accounts$, categories$, family$).subscribe(([accounts, categories, family]) => {
+    zip(accounts$, categories$, family$).pipe(debounceTime(450)).subscribe(([accounts, categories, family]) => {
       this.accounts = accounts as IdName[];
       this.categories = categories as CategoriesModel[];
       this.familyMembers = family as any[];
