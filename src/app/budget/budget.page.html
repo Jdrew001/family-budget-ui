@@ -24,7 +24,7 @@
         </ion-row>
       </ion-grid>
     </div>
-    <ng-container [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized">
+    <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized">
       <swiper
       [allowTouchMove]="true"
       direction="horizontal"
@@ -77,9 +77,9 @@
           </div>
         </ng-template>
       </swiper>
-    </ng-container>
+    </div>
     
-    <ng-container *ngIf="!pageInitialized">
+    <div *ngIf="!pageInitialized">
       <swiper
       [allowTouchMove]="false"
       direction="horizontal"
@@ -128,7 +128,7 @@
           </div>
         </ng-template>
       </swiper>
-    </ng-container>
+    </div>
   </div>
   
 
