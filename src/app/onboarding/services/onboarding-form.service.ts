@@ -87,7 +87,7 @@ export class OnboardingFormService {
     }
 
     keys.forEach((key) => {
-      formGroup.addControl(key, new FormControl(key == 'id' ? this.categoriesFormArray.length.toString() :data[key]));
+      formGroup.addControl(key, new FormControl(key == 'id' ? null :data[key]));
     });
     this.categoriesFormArray.push(formGroup);
   }

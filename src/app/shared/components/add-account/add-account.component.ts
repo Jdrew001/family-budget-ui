@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonAlert, ModalController, ViewDidLeave } from '@ionic/angular';
 import { IdName } from 'src/app/core/models/account.model';
 import { CoreService } from 'src/app/core/services/core.service';
 import { DateOverlayComponent } from 'src/app/shared/components/date-overlay/date-overlay.component';
 import { DateUtils } from 'src/app/shared/utils/date.utils';
+import { IconFieldComponent } from '../icon-field/icon-field.component';
 
 @Component({
   selector: 'app-add-account',
@@ -16,9 +17,11 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
   @ViewChild('accountTypeAlert') accountTypeAlert: IonAlert;
   @ViewChild('frequencyAlert') frequencyAlert: IonAlert;
   @ViewChild('dateOverlay') dateOverlay: DateOverlayComponent = {} as DateOverlayComponent;
+  @ViewChild('iconField') iconField: IconFieldComponent;
+
 
   @Input() onboarding: boolean = false;
-  @Input() shouldDisable: boolean = false;
+  @Input() disabledFields: Array<{name: string, message: string}> = [];
 
   _account: any;
   @Input() set account(value) {
@@ -60,6 +63,10 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
     return this.coreService.masterRefData?.accountTypes || [];
   }
 
+  get accountTypeDisabled() { return this.formGroup.get('accountType').disabled; }
+
+  get icon() { return this.formGroup.get('icon'); }
+
   formGroup = new FormGroup({
     id: new FormControl(''),
     name: new FormControl('', Validators.required),
@@ -81,9 +88,14 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
   get selFrequency() { return this.formGroup.get('frequency')?.value; }
   get selectedDate() { return this.formGroup?.get('startDate'); }
 
+  get canCreateBudget() {
+    return this.accountTypeInputs.find(o => o.id == this.accountType).label === 'Checking'; 
+  }
+
   constructor(
     private coreService: CoreService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {}
@@ -97,6 +109,18 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
     if (!data) return;
     this.creatingAccount = false;
     this.formGroup.setValue(data);
+
+    this.handleDisabledFields();
+  }
+
+  handleDisabledFields() {
+    this.disabledFields.forEach(field => {
+      this.formGroup.get(field.name)?.disable();
+    });
+  }
+
+  getDisabledMessage(name: string) {
+    return this.disabledFields.find(o => o.name === name)?.message;
   }
 
   chooseType() {
@@ -111,7 +135,7 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
     this.accountTypeAlert.present();
   }
 
-  chooseFrequency() {console.log('testing', this.frequencies);
+  chooseFrequency() {
     this.frequencyAlert.inputs = this.frequencies.map(o => {
       return {
         type: 'radio',
@@ -124,7 +148,16 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
     this.frequencyAlert.present();
   }
 
+  chooseIcon() {
+    this.iconField.presentModal();
+  }
+
+  onIconSelected(icon: string) {
+    this.icon.setValue(icon);
+  }
+
   onSelectDate(value: any) {
+    console.log('date', value);
     this.formGroup.get('startDate')?.setValue(value);
   }
 
@@ -142,15 +175,29 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
     }
 
     this.formGroup.get('accountType').setValue(data);
+
+    // if account type is checking, then enable frequency
+    if (this.canCreateBudget) {
+      this.formGroup.get('createBudget').enable();
+      this.formGroup.get('frequency').enable();
+      this.formGroup.get('startDate').enable();
+    } else {
+      this.formGroup.get('createBudget').disable();
+      this.formGroup.get('frequency').disable();
+      this.formGroup.get('startDate').disable();
+    }
+
     return true;
   }
 
   handleConfirmFrequency(data) {
-    if (!data) {
+    if (data != 0 && data == null) {
       return false;
     }
 
     this.formGroup.get('frequency').setValue(data);
+
+    console.log('selFreq', this.selFrequency)
     return true;
   }
 
@@ -167,12 +214,7 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
   }
 
   getSelFrequencyLabel(id: string) {
-    return this.frequencies.find(o => o.id == id)?.label;
-  }
-
-  disableCreateBudget() {
-    if (!this.accountId) return false;
-    return this.shouldDisable;
+    return this.frequencies.find(o => o.id === id)?.label;
   }
 
   confirm() {

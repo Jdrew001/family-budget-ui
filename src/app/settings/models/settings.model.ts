@@ -17,7 +17,7 @@ export interface AccountModel {
         frequency: any;
         startDate: string;
     },
-    shouldDisable?: boolean;
+    disabledFields?: [{name: string, message: string}];
 }
 
 export interface FamilyUserModel {

@@ -76,6 +76,11 @@ export class SettingsService {
     return this.http.post(url, [data]) as Observable<any>;
   }
 
+  updateAccount(data: any): Observable<any> {
+    const url = this.helperService.getResourceUrl(SettingsConstant.UPDATE_ACCOUNT);
+    return this.http.post(url, data) as Observable<any>;
+  }
+
   markAccountInactive(id: string): Observable<any> {
     const url = this.helperService.getResourceUrl(SettingsConstant.MARK_ACCOUNT_INACTIVE);
     return this.http.get(`${url}/${id}`) as Observable<any>;
@@ -114,8 +119,14 @@ export class SettingsService {
   }
 
   handleAccountModalDismiss(data: any, role: string) {
-    if (role == 'confirm') {
+    if (role == 'confirm' && !data?.id) {
       this.createAccount(data).subscribe((result: any) => {
+        this.initial();
+      });
+    }
+
+    if (role == 'confirm' && data?.id) {
+      this.updateAccount(data).subscribe((result: any) => {
         this.initial();
       });
     }

@@ -19,14 +19,24 @@
   <div style="margin-bottom: 10rem">
     <ion-grid >
       <ion-row>
-        <ion-col>
-          <div class="input-group m-0">
+        <ion-col size="9">
+          <div class="input-group mt-4 mb-1">
             <div class="group mb-0">
               <ion-label position="stacked">Account Name</ion-label>
                 <ion-input formControlName="name" placeholder="Provide Name" autocapitalize="words">
                   <ion-icon *ngIf="(name.dirty || name.touched) && !name.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
                   <ion-icon *ngIf="(name.dirty || name.touched) && name.errors" class="incorrect" name="close-circle" item-right></ion-icon>
                 </ion-input>
+            </div>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="input-group mt-3 mb-1">
+            <div class="group mb-0">
+              <ion-label position="stacked">Icon</ion-label>
+              <div (click)="chooseIcon()" class="input-lookalike">
+                <ion-icon *ngIf="icon?.value" style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+icon?.value+'.svg'" color="primary"></ion-icon>
+              </div>
             </div>
           </div>
         </ion-col>
@@ -37,10 +47,11 @@
             <div class="group mb-0">
               <ion-label *ngIf="creatingAccount" position="stacked">Beginning Balance</ion-label>
               <ion-label *ngIf="!creatingAccount" position="stacked">Current Balance</ion-label>
-              <ion-input currencyMask formControlName="beginningBalance" placeholder="Provide Name" [readonly]="!creatingAccount">
+              <ion-input currencyMask formControlName="beginningBalance" placeholder="Provide Name">
                 <ion-icon *ngIf="(beginningBalance.dirty || beginningBalance.touched) && !beginningBalance.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
                 <ion-icon *ngIf="(beginningBalance.dirty || beginningBalance.touched) && beginningBalance.errors" class="incorrect" name="close-circle" item-right></ion-icon>
               </ion-input>
+              <p class="mt-0 pt-0 text-xs strong light-text-color">{{ getDisabledMessage('beginningBalance') }}</p>
             </div>
           </div>
         </ion-col>
@@ -51,49 +62,50 @@
           <div class="input-group mt-3">
             <div class="group mb-0">
               <ion-label position="stacked">Account Type</ion-label>
-              <div (click)="chooseType()" class="input-lookalike">
+              <div *ngIf="!accountTypeDisabled" (click)="chooseType()" class="input-lookalike">
                 <p *ngIf="!accountType" class="placeholder">Select Type</p>
                 <p *ngIf="accountType">{{ getSelAccountTypeLabel(accountType) }}</p>
               </div>
+
+              <div *ngIf="accountTypeDisabled" class="input-lookalike">
+                <p *ngIf="accountType" class="light-text-color">{{ getSelAccountTypeLabel(accountType) }}</p>
+              </div>
+              <p class="mt-0 pt-0 text-xs strong light-text-color">{{ getDisabledMessage('accountType') }}</p>
             </div>
           </div> 
         </ion-col>
       </ion-row>
 
-      <ion-row>
+      <ion-row *ngIf="canCreateBudget">
         <ion-col>
           <div class="input-group mt-3">
             <div class="group mb-1">
-              <ion-toggle [disabled]="disableCreateBudget()" formControlName="createBudget" justify="space-between" [checked]="false">Does this account have a budget?</ion-toggle>
+              <ion-toggle formControlName="createBudget" justify="space-between" [checked]="false">Does this account have a budget?</ion-toggle>
             </div>
           </div> 
         </ion-col>
       </ion-row>
 
-      <ion-row *ngIf="createBudget">
+      <ion-row *ngIf="canCreateBudget && createBudget">
         <ion-col>
           <div class="input-group mt-3">
             <div class="group mb-0">
               <ion-label position="stacked">Frequency</ion-label>
               <div (click)="chooseFrequency()" class="input-lookalike">
-                <p *ngIf="!selFrequency" class="placeholder">Select Frequency</p>
-                <p *ngIf="selFrequency">{{ getSelFrequencyLabel(selFrequency) }}</p>
+                <p *ngIf="selFrequency == null" class="placeholder">Select Frequency</p>
+                <p *ngIf="selFrequency != null">{{ getSelFrequencyLabel(selFrequency) }}</p>
               </div>
             </div>
           </div> 
         </ion-col>
       </ion-row>
   
-      <ion-row *ngIf="createBudget">
+      <ion-row *ngIf="canCreateBudget && createBudget">
         <ion-col>
           <div class="input-group mt-3">
             <div class="group mb-0">
               <ion-label position="stacked">Start Date</ion-label>
-              <div *ngIf="creatingAccount" (click)="chooseDate()" class="input-lookalike">
-                <p *ngIf="!selectedDate?.value" class="placeholder">Select Date</p>
-                <p *ngIf="selectedDate?.value">{{ selectedDate?.value | date:'MM/dd/yyyy' }}</p>
-              </div>
-              <div *ngIf="!creatingAccount" class="input-lookalike">
+              <div (click)="chooseDate()" class="input-lookalike">
                 <p *ngIf="!selectedDate?.value" class="placeholder">Select Date</p>
                 <p *ngIf="selectedDate?.value">{{ selectedDate?.value | date:'MM/dd/yyyy' }}</p>
               </div>
@@ -139,3 +151,8 @@
 <app-date-overlay #dateOverlay
     [title]="'Start Date'"
     (onConfirm)="onSelectDate($event)"></app-date-overlay>
+
+  <app-icon-field #iconField
+    title="Category Icon"
+    [icon]="icon?.value"
+    (iconSelected$)="onIconSelected($event)"></app-icon-field>
