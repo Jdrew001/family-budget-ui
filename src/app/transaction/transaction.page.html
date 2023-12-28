@@ -61,7 +61,7 @@
       </swiper>
     </div>
 
-    <ng-container [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized">
+    <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized">
       <div class="mt-5" *ngFor="let group of groupedTransactions">
         <div>
           <p class="light-text-color text-xs pb-2">{{ group?.groupName }}</p>
@@ -91,7 +91,7 @@
           </app-card>
         </div>
       </div>
-    </ng-container>
+    </div>
 
     <ng-container *ngIf="!pageInitialized">
       <div class="mt-5" *ngFor="let group of placeHolderTransactions">

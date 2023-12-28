@@ -78,7 +78,13 @@ export class SummaryPage implements OnInit, ViewDidEnter, ViewDidLeave {
     });
 
     modal.present();
-    // handle when the modal is dissmissed
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.summaryService.resetSummaryData();
+        setTimeout(() => {
+          this.summaryService.getSummaryData();
+        }, 100);
+    }
   }
 
   async handleTransactionClick(id: string) {
