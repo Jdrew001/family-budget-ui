@@ -9,6 +9,12 @@ export interface CurrentBudgetSummary {
     circleGuage: any;
 }
 
+export interface SummaryWrapper {
+    currentBudgetSummary: CurrentBudgetSummary;
+    accountType: 'Checking' | 'Savings' | 'Debt';
+
+}
+
 export interface TypeAmount {
     amount: string;
     icon: string;

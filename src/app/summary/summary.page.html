@@ -79,18 +79,26 @@
 
     <ng-container>
       <div class="mt-5">
-        <ion-grid>
+        <ion-grid *ngIf="summaryData?.accountType == 'Checking'">
           <ion-row class="ion-justify-content-start">
             <ion-col size="8">
               <h5 class="pt-0 pb-1 mb-0 mt-0"><strong>Current</strong> Budget</h5>
-              <p class="pt-0 mt-2 text-xs light-text-color">{{currentBudgetSummary?.displayDate}}</p>
+              <p class="pt-0 mt-2 text-xs light-text-color">{{summaryData?.currentBudgetSummary?.displayDate}}</p>
               <ion-skeleton-text *ngIf="!pageInitialized" style="width: 30%" [animated]="true"></ion-skeleton-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-grid *ngIf="summaryData?.accountType == 'Savings'">
+          <ion-row class="ion-justify-content-start">
+            <ion-col size="8">
+              <h5 class="pt-0 pb-1 mb-0 mt-0"><strong>Savings</strong> Overview</h5>
             </ion-col>
           </ion-row>
         </ion-grid>
       </div>
 
-      <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="currentBudgetSummary?.showBudgetError" class="alert-container">
+      <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="summaryData?.currentBudgetSummary?.showBudgetError" class="alert-container">
         <ion-grid>
           <ion-row>
             <ion-col class="p-0">
@@ -108,25 +116,25 @@
     
       <!-- Whats left -->
       <div>
-        <app-card
+        <app-card *ngIf="!pageInitialized || summaryData?.accountType == 'Checking'"
           margin="2px 5px 0px 5px" 
           padding="5px">
           <ion-grid>
             <ion-row class="ion-justify-content-start">
               <ion-col size="2">
-                <app-circle-gauge [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" [config]="currentBudgetSummary?.circleGuage"></app-circle-gauge>
+                <app-circle-gauge [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" [config]="summaryData?.currentBudgetSummary?.circleGuage"></app-circle-gauge>
                 <ion-skeleton-text *ngIf="!pageInitialized" class="round-loader" [animated]="true"></ion-skeleton-text>
               </ion-col>
               <ion-col>
-                <p [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized && currentBudgetSummary?.leftSpendingDays > 1" class="text-sm strong">Left to Spend for<br> {{currentBudgetSummary?.leftSpendingDays}} days</p>
-                <p [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized && currentBudgetSummary?.leftSpendingDays == 1" class="text-sm strong">Left to Spend for<br> {{currentBudgetSummary?.leftSpendingDays}} day</p>
-                <p [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized && currentBudgetSummary?.leftSpendingDays < 1" class="text-sm strong">Left to Spend for the <br>last day</p>
+                <p [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized && summaryData?.currentBudgetSummary?.leftSpendingDays > 1" class="text-sm strong">Left to Spend for<br> {{summaryData?.currentBudgetSummary?.leftSpendingDays}} days</p>
+                <p [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized && summaryData?.currentBudgetSummary?.leftSpendingDays == 1" class="text-sm strong">Left to Spend for<br> {{summaryData?.currentBudgetSummary?.leftSpendingDays}} day</p>
+                <p [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized && summaryData?.currentBudgetSummary?.leftSpendingDays < 1" class="text-sm strong">Left to Spend for the <br>last day</p>
                 <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 80%"></ion-skeleton-text>
                 <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 40%"></ion-skeleton-text>
               </ion-col> 
               <ion-col class="ion-align-self-center" size="3">
                 <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 60%; float: right"></ion-skeleton-text>
-                <p [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" class="text-sm strong" style="float: right;">{{currentBudgetSummary?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'}}</p>
+                <p [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" class="text-sm strong" style="float: right;">{{summaryData?.currentBudgetSummary?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'}}</p>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -144,12 +152,12 @@
                   <ion-row class="ion-justify-content-start">
                     <ion-col>
                       <p [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" class="strong text-sm pb-0 mb-0">Income</p>
-                      <p [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" class="pt-0 m-0">{{currentBudgetSummary?.income?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
+                      <p [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" class="pt-0 m-0">{{summaryData?.currentBudgetSummary?.income?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
                       <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 50%"></ion-skeleton-text>
                       <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 75%"></ion-skeleton-text>
                     </ion-col>
                     <ion-col class="ion-align-self-center mr-3" size="2">
-                      <ion-icon [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+currentBudgetSummary?.income?.icon+'.svg'" color="primary"></ion-icon>
+                      <ion-icon [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+summaryData?.currentBudgetSummary?.income?.icon+'.svg'" color="primary"></ion-icon>
                       <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 100%"></ion-skeleton-text>
                     </ion-col>
                   </ion-row>
@@ -164,12 +172,12 @@
                   <ion-row class="ion-justify-content-start">
                     <ion-col>
                       <p [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" class="strong text-sm pb-0 mb-0">Expenses</p>
-                      <p [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" class="pt-0 m-0 showRed">{{currentBudgetSummary?.expense?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
+                      <p [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" class="pt-0 m-0 showRed">{{summaryData?.currentBudgetSummary?.expense?.amount | currency:'USD':'symbol':'1.2-2' }}</p>
                       <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 50%"></ion-skeleton-text>
                       <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 75%"></ion-skeleton-text>
                     </ion-col>
                     <ion-col class="ion-align-self-center mr-3" size="2">
-                      <ion-icon [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+currentBudgetSummary?.expense?.icon+'.svg'" color="primary"></ion-icon>
+                      <ion-icon [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+summaryData?.currentBudgetSummary?.expense?.icon+'.svg'" color="primary"></ion-icon>
                       <ion-skeleton-text *ngIf="!pageInitialized" [animated]="true" style="width: 100%"></ion-skeleton-text>
                     </ion-col>
                   </ion-row>

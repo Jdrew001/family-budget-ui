@@ -20,7 +20,7 @@ export class SummaryPage implements OnInit, ViewDidEnter, ViewDidLeave {
 
   configTest = CircleGuageConstant.CONFIG;
 
-  get currentBudgetSummary() { return this.summaryService.currentBudgetSummary; }
+  get summaryData() { return this.summaryService.summaryData; }
   get accountBalanceSummary() { return this.summaryService.accountBalanceSummary; }
   get transactionSummary() { return this.summaryService.transactionSummary; }
   get pageInitialized() { return this.summaryService.pageInitialized; }
@@ -73,7 +73,7 @@ export class SummaryPage implements OnInit, ViewDidEnter, ViewDidLeave {
     const modal = await this.modalController.create({
       component: ManageBudgetPage,
       componentProps: {
-        budget: this.currentBudgetSummary.id
+        budget: this.summaryData.currentBudgetSummary.id
       }
     });
 

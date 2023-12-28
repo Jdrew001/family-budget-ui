@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SummaryConstant } from './summary.constant';
 import { EMPTY, Observable, switchMap, zip } from 'rxjs';
-import { CurrentBudgetSummary, SummaryTransactions } from './model/summary.model';
+import { CurrentBudgetSummary, SummaryTransactions, SummaryWrapper } from './model/summary.model';
 import { SummaryAccountBalance } from '../core/models/account.model';
 import { HelperService } from '../core/services/helper.service';
 
@@ -11,9 +11,9 @@ import { HelperService } from '../core/services/helper.service';
 })
 export class SummaryService {
 
-  private _currentBudgetSummary: CurrentBudgetSummary;
-  get currentBudgetSummary() { return this._currentBudgetSummary; }
-  set currentBudgetSummary(value) { this._currentBudgetSummary = value; }
+  private _summaryData: SummaryWrapper;
+  get summaryData() { return this._summaryData; }
+  set summaryData(value) { this._summaryData = value; }
 
   private _accountBalanceSummary: SummaryAccountBalance[] = null;
   get accountBalanceSummary() { return this._accountBalanceSummary; }
@@ -53,7 +53,7 @@ export class SummaryService {
         return zip(currentBudgetSummary, accountTransactions);
       })
     ).subscribe(([currentBudgetSummary, accountTransactions]) => {
-      this.currentBudgetSummary = currentBudgetSummary as CurrentBudgetSummary;
+      this.summaryData = currentBudgetSummary as SummaryWrapper;
       this.transactionSummary = accountTransactions as SummaryTransactions[];
 
       this.pageInitialized = true;
@@ -65,7 +65,7 @@ export class SummaryService {
     const accountTransactions = this.getAccountTransactions();
     return zip(currentBudgetSummary, accountTransactions)
       .subscribe(([currentBudgetSummary, accountTransactions]) => {
-        this.currentBudgetSummary = currentBudgetSummary as CurrentBudgetSummary;
+        this.summaryData = currentBudgetSummary as SummaryWrapper;
         this.transactionSummary = accountTransactions as SummaryTransactions[];
     });;
   }
@@ -86,7 +86,7 @@ export class SummaryService {
   }
 
   public resetSummaryData() {
-    this.currentBudgetSummary = null;
+    this.summaryData = null;
     this.accountBalanceSummary = null;
     this.transactionSummary = null;
     this.pageInitialized = false;
