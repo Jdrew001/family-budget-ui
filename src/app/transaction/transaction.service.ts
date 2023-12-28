@@ -26,7 +26,7 @@ export class TransactionService {
   get accountBalanceSummary() { return this._accountBalanceSummary; }
   set accountBalanceSummary(value) { this._accountBalanceSummary = value; }
 
-  pageSize = 10;
+  pageSize = 25;
   page = 1;
 
   private _pageInitialized: boolean = false;
@@ -73,7 +73,15 @@ export class TransactionService {
   private updateTransactionData(response: TransactionGroupResponse) {
     this.pageSize = response.pageSize;
     this.page = response.page;
-    this.groupTransactions = [...this.groupTransactions, ...response.transactions];
+
+    response.transactions.forEach(item => {
+      const groupToAddTo = this.groupTransactions.find(group => group.groupName === item.groupName);
+      if (groupToAddTo) {
+        groupToAddTo.transactions = [...groupToAddTo.transactions, ...item.transactions];
+      } else {
+        this.groupTransactions.push(item);
+      }
+    });
     this.pageInitialized = true;
   }
 }
