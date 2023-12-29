@@ -23,7 +23,7 @@
           <div class="input-group mt-4 mb-1">
             <div class="group mb-0">
               <ion-label position="stacked">Account Name</ion-label>
-                <ion-input formControlName="name" placeholder="Provide Name" autocapitalize="words">
+                <ion-input formControlName="name" placeholder="Provide Name" autocapitalize="words" maxlength="30">
                   <ion-icon *ngIf="(name.dirty || name.touched) && !name.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
                   <ion-icon *ngIf="(name.dirty || name.touched) && name.errors" class="incorrect" name="close-circle" item-right></ion-icon>
                 </ion-input>
@@ -47,7 +47,7 @@
             <div class="group mb-0">
               <ion-label *ngIf="creatingAccount" position="stacked">Beginning Balance</ion-label>
               <ion-label *ngIf="!creatingAccount" position="stacked">Current Balance</ion-label>
-              <ion-input currencyMask formControlName="beginningBalance" placeholder="Provide Name">
+              <ion-input currencyMask formControlName="beginningBalance" placeholder="Provide Name" maxlength="10">
                 <ion-icon *ngIf="(beginningBalance.dirty || beginningBalance.touched) && !beginningBalance.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
                 <ion-icon *ngIf="(beginningBalance.dirty || beginningBalance.touched) && beginningBalance.errors" class="incorrect" name="close-circle" item-right></ion-icon>
               </ion-input>

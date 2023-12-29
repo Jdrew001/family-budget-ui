@@ -86,7 +86,14 @@
         <div class="input-group mt-5">
           <div class="group mb-0">
             <ion-label position="stacked">Description</ion-label>
-            <ion-textarea [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" formControlName="description" placeholder="Type something here"></ion-textarea>
+            <ion-textarea 
+              maxlength="250"
+              [@loadingContent]="pageInitialized ? 'enter' : 'void'" 
+              *ngIf="pageInitialized" 
+              formControlName="description" 
+              placeholder="Type something here"
+              [counter]="true"
+              [autoGrow]="true"></ion-textarea>
             <ion-skeleton-text *ngIf="!pageInitialized" class="textarea-loader" [animated]="true"></ion-skeleton-text>
           </div>
         </div>
@@ -113,7 +120,12 @@
         <div class="input-group mt-2">
           <div class="group mb-0">
             <ion-label position="stacked">Amount</ion-label>
-            <ion-input [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" currencyMask placeholder="Select Amount" formControlName="amount">
+            <ion-input 
+              [@loadingContent]="pageInitialized ? 'enter' : 'void'" 
+              *ngIf="pageInitialized" currencyMask 
+              placeholder="Select Amount" 
+              formControlName="amount"
+              maxlength="20">
             </ion-input>
             <ion-skeleton-text *ngIf="!pageInitialized" class="input-loader" [animated]="true"></ion-skeleton-text>
           </div>

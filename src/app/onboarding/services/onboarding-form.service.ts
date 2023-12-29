@@ -71,6 +71,11 @@ export class OnboardingFormService {
     this.accountsFormArray.push(formGroup);
   }
 
+  patchAccountFormGroup(data) {
+    const index = this.accountsFormArray.controls.findIndex((account) => account.get('id').value == data.id);
+    this.accountsFormArray.at(index).patchValue(data);
+  }
+
   deleteAccountFormGroup(id: string) {
     const index = this.accountsFormArray.controls.findIndex((account) => account.get('id').value == id);
     this.accountsFormArray.removeAt(index);

@@ -22,7 +22,7 @@
             <div class="input-group mt-4 mb-1">
               <div class="group mb-0">
                 <ion-label position="stacked">Email</ion-label>
-                  <ion-input [readonly]="familyUser" formControlName="email" placeholder="Provide Email">
+                  <ion-input [readonly]="familyUser" formControlName="email" placeholder="Provide Email" maxlength="50">
                     <ion-icon *ngIf="(email.dirty || email.touched) && !email.errors" class="correct" name="checkmark-circle" item-right></ion-icon>
                     <ion-icon *ngIf="(email.dirty || email.touched) && email.errors" class="incorrect" name="close-circle" item-right></ion-icon>
                   </ion-input>
