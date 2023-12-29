@@ -89,7 +89,7 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
   get selectedDate() { return this.formGroup?.get('startDate'); }
 
   get canCreateBudget() {
-    return this.accountTypeInputs.find(o => o.id == this.accountType).label === 'Checking'; 
+    return this.accountTypeInputs.find(o => o.id == this.accountType)?.label === 'Checking'; 
   }
 
   constructor(

@@ -67,8 +67,8 @@
                 <p *ngIf="accountType">{{ getSelAccountTypeLabel(accountType) }}</p>
               </div>
 
-              <div *ngIf="accountTypeDisabled" class="input-lookalike">
-                <p *ngIf="accountType" class="light-text-color">{{ getSelAccountTypeLabel(accountType) }}</p>
+              <div *ngIf="accountTypeDisabled" class="input-lookalike" [ngClass]="{'disabled': accountTypeDisabled }">
+                <p *ngIf="accountType">{{ getSelAccountTypeLabel(accountType) }}</p>
               </div>
               <p class="mt-0 pt-0 text-xs strong light-text-color">{{ getDisabledMessage('accountType') }}</p>
             </div>

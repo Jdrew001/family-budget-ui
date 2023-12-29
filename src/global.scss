@@ -305,6 +305,10 @@ div.input-lookalike {
     }
 }
 
+div.input-lookalike.disabled {
+    opacity: 0.3;
+}
+
 .showRed {
     color: #FF0000;
 }
