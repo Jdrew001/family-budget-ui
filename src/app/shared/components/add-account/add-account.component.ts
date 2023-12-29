@@ -89,7 +89,7 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
   get selectedDate() { return this.formGroup?.get('startDate'); }
 
   get canCreateBudget() {
-    return this.accountTypeInputs.find(o => o.id == this.accountType).label === 'Checking'; 
+    return this.accountTypeInputs.find(o => o.id == this.accountType)?.label === 'Checking'; 
   }
 
   constructor(
@@ -157,7 +157,6 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
   }
 
   onSelectDate(value: any) {
-    console.log('date', value);
     this.formGroup.get('startDate')?.setValue(value);
   }
 
@@ -196,8 +195,6 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
     }
 
     this.formGroup.get('frequency').setValue(data);
-
-    console.log('selFreq', this.selFrequency)
     return true;
   }
 
@@ -219,6 +216,7 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
 
   confirm() {
     if (this.formGroup.invalid) return;
+    console.log('confirming', this.formGroup.getRawValue());
     this.modalController.dismiss(this.formGroup.getRawValue(), 'confirm');
   }
 

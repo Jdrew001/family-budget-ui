@@ -20,6 +20,7 @@
           <ion-row class="ion-justify-content-start">
             <ion-col class="ion-align-items-center">
               <p class="strong text-sm p-0 m-0">{{ form?.name }}</p>
+              <p class="text-xs p-0 m-0 light-text-color">{{ getAccountType(form?.accountType) }}</p>
             </ion-col>
             <ion-col class="ion-align-self-center mr-3" size="2">
               <ion-icon style="vertical-align: middle;" class="text-lg" [src]="'assets/icon/'+form?.icon+'.svg'" color="primary"></ion-icon>
