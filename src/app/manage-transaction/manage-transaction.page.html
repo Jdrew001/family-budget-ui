@@ -126,8 +126,8 @@
               placeholder="Select Amount" 
               formControlName="amount"
               maxlength="20"
-              enterkeyhint="done"
-              inputmode="numeric">
+              [enterkeyhint]="'done'"
+              inputmode="decimal">
             </ion-input>
             <ion-skeleton-text *ngIf="!pageInitialized" class="input-loader" [animated]="true"></ion-skeleton-text>
           </div>

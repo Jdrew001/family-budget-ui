@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage-angular';
 import { AuthService } from './core/services/auth.service';
 import { CoreService } from './core/services/core.service';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { Keyboard } from '@capacitor/keyboard';
 import { from } from 'rxjs';
 
 @Component({
@@ -22,6 +23,7 @@ export class AppComponent implements OnInit {
 //
   async ngOnInit(): Promise<void> {
     this.platForm.ready().then(async (source) => {
+      await Keyboard.setAccessoryBarVisible({isVisible: true});
       // await SplashScreen.show(
       //   {
       //     autoHide: false
