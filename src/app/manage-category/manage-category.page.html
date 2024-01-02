@@ -51,7 +51,12 @@
             <div class="input-group mt-4 mb-5">
               <div class="group mb-0">
                 <ion-label position="stacked">Budget Amount</ion-label>
-                <ion-input formControlName="amount" currencyMask placeholder="Select Amount">
+                <ion-input 
+                  formControlName="amount" 
+                  enterkeyhint="done"
+                  inputmode="numeric"
+                  currencyMask 
+                  placeholder="Select Amount">
                 </ion-input>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionService } from './transaction.service';
-import { InfiniteScrollCustomEvent, ModalController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, ModalController, ViewDidEnter, ViewWillLeave } from '@ionic/angular';
 import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
 import { CoreService } from '../core/services/core.service';
 import { loadingContentAnimation } from '../shared/animations/loading-animation';
@@ -11,7 +11,7 @@ import { loadingContentAnimation } from '../shared/animations/loading-animation'
   styleUrls: ['./transaction.page.scss'],
   animations: [loadingContentAnimation]
 })
-export class TransactionPage implements OnInit, ViewDidEnter, ViewDidLeave {
+export class TransactionPage implements OnInit, ViewDidEnter, ViewWillLeave {
   
   get accountBalanceSummary() { return this.transactionService.accountBalanceSummary; }
   get groupedTransactions() { return this.transactionService.groupTransactions; }
@@ -36,7 +36,7 @@ export class TransactionPage implements OnInit, ViewDidEnter, ViewDidLeave {
     this.scrollDisabled = false;
   }
 
-  ionViewDidLeave(): void {
+  ionViewWillLeave(): void {
     this.resetView();
   }
 

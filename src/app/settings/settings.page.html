@@ -235,6 +235,7 @@
                 </ion-col>
                 <ion-col>
                   <p class="strong text-sm pb-0 mb-0">{{ item?.name }}</p>
+                  <p class="pt-0 mt-2 text-xs light-text-color">{{ item?.type == 0 ? 'Income': 'Expense' }}</p>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -273,7 +274,8 @@
       </swiper>
     </div>
 
-    <div class="button-group mb-3 mt-5">
+    <!--implement-->
+    <!-- <div class="button-group mb-3 mt-5">
       <ion-button 
         class="shadow" 
         type="submit" 
@@ -289,7 +291,7 @@
         expand="block" 
         shape="round" 
         size="large">Feedback</ion-button>
-    </div>
+    </div> -->
 
     <div class="button-group mb-3 mt-2">
       <ion-button 
