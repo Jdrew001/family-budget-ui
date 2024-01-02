@@ -3,7 +3,7 @@
     <ion-grid class="mt-5">
       <ion-row>
         <ion-col>
-          <!-- radial here -->
+          <app-circle-gauge #guage [config]="circleGuage"></app-circle-gauge>
         </ion-col>
         <ion-col>
           <h5 class="text-md strong">{{ getTitleDescription('title') }}</h5>

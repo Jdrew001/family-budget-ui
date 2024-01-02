@@ -7,7 +7,9 @@
     'should-animate': animate,
     'reset': !animate,
     'normal': !config?.showRed,
-    'showRed': config?.showRed
+    'showRed': config?.showRed,
+    'large': config?.size === 'large',
   }">
-  <ion-icon class="text-md" [src]="'assets/icon/'+config?.icon+'.svg'"></ion-icon>
+  <ion-icon *ngIf="!config?.size" class="text-md" [src]="'assets/icon/'+config?.icon+'.svg'"></ion-icon>
+  <p *ngIf="config?.size" class="p-0 m-0 primary">{{ config?.text }}</p>
 </div>
