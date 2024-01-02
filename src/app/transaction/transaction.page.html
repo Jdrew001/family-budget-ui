@@ -16,7 +16,7 @@
             margin="2px 5px 5px 5px" 
             padding="5px"
             [active]="item?.active!"
-            (onClick)="handleAccountAction($event)">
+            (onClick)="handleAccountAction(item?.id)">
             <ion-grid>
               <ion-row class="ion-justify-content-start">
                 <ion-col class="ion-align-self-center" size="2">

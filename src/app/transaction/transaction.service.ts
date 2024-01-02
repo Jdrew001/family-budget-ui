@@ -44,22 +44,23 @@ export class TransactionService {
     this.userService.fetchAccountBalancesForUser().pipe(
       switchMap((accountBalances) => {
         this.accountBalanceSummary = accountBalances;
+        console.log('bal', this.accountBalanceSummary);
         this.accountId = accountBalances?.find(item => item.active)?.id as string;
         return this.getTransactionsForAccount();
       })).subscribe((response: TransactionGroupResponse) => this.updateTransactionData(response));
   }
 
-  getTransactionGroups(event: InfiniteScrollCustomEvent) {
+  getTransactionGroups(event?: InfiniteScrollCustomEvent) {
     const page = this.page + 1;
     this.getTransactionsForAccount(page).subscribe((response: TransactionGroupResponse) => {
       this.updateTransactionData(response);
       setTimeout(() => {
-        event.target.complete();
+        event?.target?.complete();
       }, 500);
     });
   }
 
-  private getTransactionsForAccount(page?: number) {
+  getTransactionsForAccount(page?: number) {
     const selPage = page || this.page;
     const body: TransactionGroupRequest = {
       page: selPage <= 0 ? 1 : selPage,
@@ -70,7 +71,7 @@ export class TransactionService {
     return this.http.post(url, body) as Observable<any>;
   }
 
-  private updateTransactionData(response: TransactionGroupResponse) {
+  updateTransactionData(response: TransactionGroupResponse) {
     this.pageSize = response.pageSize;
     this.page = response.page;
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionService } from './transaction.service';
-import { InfiniteScrollCustomEvent, ModalController, ViewDidEnter, ViewWillLeave } from '@ionic/angular';
+import { ModalController, ViewDidEnter, ViewWillLeave } from '@ionic/angular';
 import { ManageTransactionPage } from '../manage-transaction/manage-transaction.page';
 import { CoreService } from '../core/services/core.service';
 import { loadingContentAnimation } from '../shared/animations/loading-animation';
@@ -73,7 +73,15 @@ export class TransactionPage implements OnInit, ViewDidEnter, ViewWillLeave {
   }
 
   handleAccountAction(id: any) {
-    
+    this.transactionService.page = 1;
+    this.transactionService.accountId = id;
+    this.accountBalanceSummary.forEach(item => item.active = false);
+    this.accountBalanceSummary.find(item => item.id === id).active = true;
+    this.transactionService.getTransactionsForAccount(1)
+      .subscribe(result => {
+        this.transactionService.groupTransactions = [];
+        this.transactionService.updateTransactionData(result);
+      });
   }
 
   onIonInfinite(event: any) {
