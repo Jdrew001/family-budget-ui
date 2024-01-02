@@ -61,7 +61,7 @@ export class ManageTransactionService {
       }
 
       this.coreService.$shouldRefreshScreen.next(true);
-      this.modalController.dismiss({refresh: true});
+      setTimeout(() => {this.modalController.dismiss({refresh: true});}, 200);
     });
   }
 
