@@ -6,7 +6,7 @@
     "capacitor": {}
   },
   "ios": {
-    "scheme": "Family Budget"
+    "scheme": "App"
   },
   "type": "angular"
 }
