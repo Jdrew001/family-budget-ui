@@ -112,6 +112,7 @@ jobs:
           project-path: ios/App/App.xcodeproj
           workspace-path: ios/App/App.xcworkspace
           build-pods: true
+          scheme: "Family Budget"
           pods-path: "ios/App/Podfile"
           configuration: Release
           export-method: "ad-hoc"
