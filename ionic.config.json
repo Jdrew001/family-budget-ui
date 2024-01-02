@@ -1,7 +1,12 @@
 {
   "name": "family-budget-ui",
+  "appId": "com.atkison.familybudget",
+  "appName": "Family Budget",
   "integrations": {
     "capacitor": {}
+  },
+  "ios": {
+    "scheme": "Family Budget"
   },
   "type": "angular"
 }
