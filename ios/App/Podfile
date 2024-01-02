@@ -19,7 +19,7 @@ def capacitor_pods
   pod 'CapgoCapacitorUpdater', :path => '../../node_modules/@capgo/capacitor-updater'
 end
 
-target 'App' do
+target 'Family Budget' do
   capacitor_pods
   pod 'Shake'
 end
