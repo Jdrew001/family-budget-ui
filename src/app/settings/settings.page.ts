@@ -119,7 +119,7 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
     const modal = await this.modalController.create({
       component: AddAccountComponent,
       componentProps: {
-        disabledFields: result?.disabledFields,
+        disabledFields: result?.disabledFields ?? [],
         account: result?.data
       }
     });
