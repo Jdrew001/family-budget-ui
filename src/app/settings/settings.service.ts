@@ -131,7 +131,7 @@ export class SettingsService {
       });
     }
 
-    if (role == 'delete') {
+    if (role == 'archive') {
       this.markAccountInactive(data).subscribe(() => {
         this.initial();
       });

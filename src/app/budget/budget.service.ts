@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from '../core/services/base.service';
 import { BudgetConstant } from './budget.constant';
 import { HttpClient } from '@angular/common/http';
-import { Observable, switchMap } from 'rxjs';
+import { EMPTY, Observable, switchMap } from 'rxjs';
 import { CategoriesForBudget, LeftSpendingManage } from '../core/models/left-spending.model';
 import { HelperService } from '../core/services/helper.service';
 
@@ -38,6 +38,12 @@ export class BudgetService {
       switchMap((currentBudget: Array<LeftSpendingManage>) => {
         this.budgetSummary = currentBudget;
         this.currentBudget = this.budgetSummary[0];
+
+        if (currentBudget.length === 0) {
+          this.pageInitialized = true;
+          return EMPTY;
+        }
+
         return this.getBudgetCategories(currentBudget[0]);
       })
     ).subscribe(result => {

@@ -113,28 +113,29 @@
           </div> 
         </ion-col>
       </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="button-group mb-3 mt-5">
+            <ion-button 
+              class="shadow" 
+              type="submit" 
+              expand="block" 
+              shape="round" 
+              size="large"
+              (click)="confirm()">Confirm</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="accountId?.value && canArchive" class="ion-justify-content-center mt-4">
+        <ion-col class="text-center">
+          <ion-button (click)="archiveAccount()" size="default" color="danger" fill="clear" class="text-md m-0">
+            <ion-icon slot="start" name="archive-outline"></ion-icon>
+            Archive
+          </ion-button>
+        </ion-col>
+      </ion-row>
     </ion-grid>
-  
-    <div class="button-group mb-3 mt-5">
-      <ion-button 
-        class="shadow" 
-        type="submit" 
-        expand="block" 
-        shape="round" 
-        size="large"
-        (click)="confirm()">Confirm</ion-button>
-    </div>
-  
-    <div class="button-group mb-3 mt-2">
-      <ion-button *ngIf="accountId?.value"
-        color="danger"
-        class="shadow" 
-        type="submit" 
-        expand="block" 
-        shape="round" 
-        size="large"
-        (click)="delete()">Archive</ion-button>
-    </div>
   </div>
 </ion-content>
 

@@ -3,193 +3,200 @@
 </ion-header>
 
 <ion-content appViewportHeight [fullscreen]="true" [scrollY]="true">
-  <div>
-    <div class="mt-2">
+  <div *ngIf="budgetSummary?.length > 0">
+    <div>
+      <div class="mt-2">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <h5 [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" class="m-0">
+                <span class="ellipse"><strong>{{ currentBudget?.accountName }}</strong></span></h5>
+                <p *ngIf="pageInitialized" class="pt-0 mt-0 pb-0 mb-0 text-sm light-text-color">
+                  Current Budget
+                </p>
+                <ion-skeleton-text *ngIf="!pageInitialized" style="width: 50%" [animated]="true"></ion-skeleton-text>
+                <ion-skeleton-text *ngIf="!pageInitialized" style="width: 40%" [animated]="true"></ion-skeleton-text>
+            </ion-col>
+            <ion-col class="ion-align-self-start">
+              <ion-button [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" (click)="editBudget()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
+                Edit
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized">
+        <swiper
+        [allowTouchMove]="true"
+        direction="horizontal"
+        [slidesPerView]="1"
+        [pagination]="true"
+        (slidechange)="swiperSlideChanged($event)">
+          <ng-template *ngFor="let item of budgetSummary" swiperSlide>
+            <div>
+              <app-card 
+                margin="2px 5px 5px 5px" 
+                padding="5px">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col class="pb-1">
+                      <p class="pt-0 mt-0 pb-0 mb-0 text-xs light-text-color">
+                        {{ item?.displayDate }}
+                      </p>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col class="pt-0">
+                      <p *ngIf="item?.leftSpendingDays > 1" class="text-sm strong">Left to Spend for<br> {{item?.leftSpendingDays}} days</p>
+                      <p *ngIf="item?.leftSpendingDays == 1" class="text-sm strong">Left to Spend for<br> {{item?.leftSpendingDays}} day</p>
+                      <p *ngIf="item?.leftSpendingDays < 1" class="text-sm strong">Left to Spend for the <br>last day</p>
+                    </ion-col>
+                    <ion-col class="pt-0">
+                      <p class="text-xs strong ion-float-right">{{ item?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'  }}</p>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col class="pt-0 pb-0">
+                      <ion-progress-bar [value]="item?.percentageSpent"></ion-progress-bar>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col class="pt-2 pb-0">
+                      <p class="text-xs strong light-text-color">$0</p>
+                    </ion-col>
+                    <ion-col class="pt-2 pb-0">
+                      <p class="ion-float-right light-text-color text-xs strong">{{ item?.totalBudget | currency:'USD':'symbol':'1.2-2' }}</p>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col class="pt-1 pb-0">
+                      <p class="text-xs strong">Total Spent: {{ item?.totalSpent | currency:'USD':'symbol':'1.2-2' }}</p>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </app-card>
+            </div>
+          </ng-template>
+        </swiper>
+      </div>
+      
+      <div *ngIf="!pageInitialized">
+        <swiper
+        [allowTouchMove]="false"
+        direction="horizontal"
+        [slidesPerView]="1"
+        [pagination]="true"
+        (slidechange)="swiperSlideChanged($event)">
+          <ng-template *ngFor="let item of placeholderBudgetSummary" swiperSlide>
+            <div>
+              <app-card 
+                margin="2px 5px 5px 5px" 
+                padding="5px">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col class="pb-1">
+                      <ion-skeleton-text style="width: 20%" [animated]="true"></ion-skeleton-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col class="pt-0">
+                      <ion-skeleton-text style="width: 85%" [animated]="true"></ion-skeleton-text>
+                    </ion-col>
+                    <ion-col class="pt-0">
+                      <ion-skeleton-text class="ion-float-right" style="width: 30%" [animated]="true"></ion-skeleton-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col class="pt-0 pb-0">
+                      <ion-skeleton-text style="width: 100%" [animated]="true"></ion-skeleton-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col class="pt-2 pb-0">
+                      <ion-skeleton-text style="width: 10%" [animated]="true"></ion-skeleton-text>
+                    </ion-col>
+                    <ion-col class="pt-2 pb-0">
+                      <ion-skeleton-text class="ion-float-right" style="width: 30%" [animated]="true"></ion-skeleton-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col class="pt-1 pb-0">
+                      <ion-skeleton-text style="width: 30%" [animated]="true"></ion-skeleton-text>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </app-card>
+            </div>
+          </ng-template>
+        </swiper>
+      </div>
+    </div>
+    
+  
+    <div>
       <ion-grid>
         <ion-row>
           <ion-col>
-            <h5 [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" class="m-0">
-              <span class="ellipse"><strong>{{ currentBudget?.accountName }}</strong></span></h5>
-              <p *ngIf="pageInitialized" class="pt-0 mt-0 pb-0 mb-0 text-sm light-text-color">
-                Current Budget
-              </p>
-              <ion-skeleton-text *ngIf="!pageInitialized" style="width: 50%" [animated]="true"></ion-skeleton-text>
-              <ion-skeleton-text *ngIf="!pageInitialized" style="width: 40%" [animated]="true"></ion-skeleton-text>
-          </ion-col>
-          <ion-col class="ion-align-self-start">
-            <ion-button [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" (click)="editBudget()" size="small" color="primary" fill="clear" class="text-sm ion-float-right m-0">
-              Edit
-            </ion-button>
+            <h5><strong>Categories</strong></h5>
           </ion-col>
         </ion-row>
       </ion-grid>
     </div>
-    <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized">
-      <swiper
-      [allowTouchMove]="true"
-      direction="horizontal"
-      [slidesPerView]="1"
-      [pagination]="true"
-      (slidechange)="swiperSlideChanged($event)">
-        <ng-template *ngFor="let item of budgetSummary" swiperSlide>
-          <div>
-            <app-card 
-              margin="2px 5px 5px 5px" 
-              padding="5px">
-              <ion-grid>
-                <ion-row>
-                  <ion-col class="pb-1">
-                    <p class="pt-0 mt-0 pb-0 mb-0 text-xs light-text-color">
-                      {{ item?.displayDate }}
-                    </p>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col class="pt-0">
-                    <p *ngIf="item?.leftSpendingDays > 1" class="text-sm strong">Left to Spend for<br> {{item?.leftSpendingDays}} days</p>
-                    <p *ngIf="item?.leftSpendingDays == 1" class="text-sm strong">Left to Spend for<br> {{item?.leftSpendingDays}} day</p>
-                    <p *ngIf="item?.leftSpendingDays < 1" class="text-sm strong">Left to Spend for the <br>last day</p>
-                  </ion-col>
-                  <ion-col class="pt-0">
-                    <p class="text-xs strong ion-float-right">{{ item?.leftSpendingAmount | currency:'USD':'symbol':'1.2-2'  }}</p>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col class="pt-0 pb-0">
-                    <ion-progress-bar [value]="item?.percentageSpent"></ion-progress-bar>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col class="pt-2 pb-0">
-                    <p class="text-xs strong light-text-color">$0</p>
-                  </ion-col>
-                  <ion-col class="pt-2 pb-0">
-                    <p class="ion-float-right light-text-color text-xs strong">{{ item?.totalBudget | currency:'USD':'symbol':'1.2-2' }}</p>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col class="pt-1 pb-0">
-                    <p class="text-xs strong">Total Spent: {{ item?.totalSpent | currency:'USD':'symbol':'1.2-2' }}</p>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </app-card>
-          </div>
-        </ng-template>
-      </swiper>
+    <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" style="margin-bottom: 10rem">
+      <app-card *ngFor="let item of categoriesForBudget"
+        margin="2px 5px 5px 5px" 
+        padding="5px">
+          <ion-grid>
+            <ion-row class="ion-justify-content-start">
+              <ion-col size="2">
+                <app-circle-gauge [config]="item?.circleGuage"></app-circle-gauge>
+              </ion-col>
+              <ion-col>
+                <p class="text-sm strong description">{{item?.name}}</p>
+                <p class="pt-0 mt-2 text-xs light-text-color strong">Budgeted: {{ item?.budgetAmount | currency:'USD':'symbol':'1.2-2' }}</p>
+              </ion-col> 
+              <ion-col>
+                <p class="text-sm strong ion-float-right" [ngClass]="{'showRed': item?.showRed}">{{ item?.remainingAmount | currency:'USD':'symbol':'1.2-2' }}</p><br>
+                <p class="text-xs light-text-color ion-float-right strong">
+                  <span *ngIf="item?.type == transactionType.Expense">Spent: </span><span *ngIf="item?.type == transactionType.Income">Earned: </span>{{ item?.spentAmount | currency:'USD':'symbol':'1.2-2' }}</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+      </app-card>
     </div>
-    
-    <div *ngIf="!pageInitialized">
-      <swiper
-      [allowTouchMove]="false"
-      direction="horizontal"
-      [slidesPerView]="1"
-      [pagination]="true"
-      (slidechange)="swiperSlideChanged($event)">
-        <ng-template *ngFor="let item of placeholderBudgetSummary" swiperSlide>
-          <div>
-            <app-card 
-              margin="2px 5px 5px 5px" 
-              padding="5px">
-              <ion-grid>
-                <ion-row>
-                  <ion-col class="pb-1">
-                    <ion-skeleton-text style="width: 20%" [animated]="true"></ion-skeleton-text>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col class="pt-0">
-                    <ion-skeleton-text style="width: 85%" [animated]="true"></ion-skeleton-text>
-                  </ion-col>
-                  <ion-col class="pt-0">
-                    <ion-skeleton-text class="ion-float-right" style="width: 30%" [animated]="true"></ion-skeleton-text>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col class="pt-0 pb-0">
-                    <ion-skeleton-text style="width: 100%" [animated]="true"></ion-skeleton-text>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col class="pt-2 pb-0">
-                    <ion-skeleton-text style="width: 10%" [animated]="true"></ion-skeleton-text>
-                  </ion-col>
-                  <ion-col class="pt-2 pb-0">
-                    <ion-skeleton-text class="ion-float-right" style="width: 30%" [animated]="true"></ion-skeleton-text>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col class="pt-1 pb-0">
-                    <ion-skeleton-text style="width: 30%" [animated]="true"></ion-skeleton-text>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </app-card>
-          </div>
-        </ng-template>
-      </swiper>
-    </div>
-  </div>
   
-
-  <div>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <h5><strong>Categories</strong></h5>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <div *ngIf="!pageInitialized" style="margin-bottom: 10rem">
+      <app-card *ngFor="let item of placeholderCategories"
+        margin="2px 5px 5px 5px" 
+        padding="5px">
+          <ion-grid>
+            <ion-row class="ion-justify-content-start">
+              <ion-col size="2">
+                <ion-skeleton-text class="round-loader" [animated]="true"></ion-skeleton-text>
+              </ion-col>
+              <ion-col>
+                <ion-skeleton-text [animated]="true" style="width: 40%"></ion-skeleton-text>
+                <ion-skeleton-text [animated]="true" style="width: 80%"></ion-skeleton-text>
+              </ion-col> 
+              <ion-col>
+                <div class="ion-float-right" style="width: 100%; direction: rtl;">
+                  <ion-skeleton-text [animated]="true" style="width: 35%"></ion-skeleton-text>
+                  <ion-skeleton-text [animated]="true" style="width: 85%"></ion-skeleton-text>
+                </div>
+                
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+      </app-card>
+    </div>
   </div>
-  <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" style="margin-bottom: 10rem">
-    <app-card *ngFor="let item of categoriesForBudget"
-      margin="2px 5px 5px 5px" 
-      padding="5px">
-        <ion-grid>
-          <ion-row class="ion-justify-content-start">
-            <ion-col size="2">
-              <app-circle-gauge [config]="item?.circleGuage"></app-circle-gauge>
-            </ion-col>
-            <ion-col>
-              <p class="text-sm strong description">{{item?.name}}</p>
-              <p class="pt-0 mt-2 text-xs light-text-color strong">Budgeted: {{ item?.budgetAmount | currency:'USD':'symbol':'1.2-2' }}</p>
-            </ion-col> 
-            <ion-col>
-              <p class="text-sm strong ion-float-right" [ngClass]="{'showRed': item?.showRed}">{{ item?.remainingAmount | currency:'USD':'symbol':'1.2-2' }}</p><br>
-              <p class="text-xs light-text-color ion-float-right strong">
-                <span *ngIf="item?.type == transactionType.Expense">Spent: </span><span *ngIf="item?.type == transactionType.Income">Earned: </span>{{ item?.spentAmount | currency:'USD':'symbol':'1.2-2' }}</p>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-    </app-card>
-  </div>
-
-  <div *ngIf="!pageInitialized" style="margin-bottom: 10rem">
-    <app-card *ngFor="let item of placeholderCategories"
-      margin="2px 5px 5px 5px" 
-      padding="5px">
-        <ion-grid>
-          <ion-row class="ion-justify-content-start">
-            <ion-col size="2">
-              <ion-skeleton-text class="round-loader" [animated]="true"></ion-skeleton-text>
-            </ion-col>
-            <ion-col>
-              <ion-skeleton-text [animated]="true" style="width: 40%"></ion-skeleton-text>
-              <ion-skeleton-text [animated]="true" style="width: 80%"></ion-skeleton-text>
-            </ion-col> 
-            <ion-col>
-              <div class="ion-float-right" style="width: 100%; direction: rtl;">
-                <ion-skeleton-text [animated]="true" style="width: 35%"></ion-skeleton-text>
-                <ion-skeleton-text [animated]="true" style="width: 85%"></ion-skeleton-text>
-              </div>
-              
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-    </app-card>
-  </div>
-  <app-empty-placeholder [@loadingContent]="pageInitialized && categoriesForBudget?.length == 0 ? 'enter' : 'void'"
+  <app-empty-placeholder *ngIf="budgetSummary?.length > 0" [@loadingContent]="pageInitialized && categoriesForBudget?.length == 0 ? 'enter' : 'void'"
         [icon]="'emptyList'"
         [message]="'No categories added yet'"
         [display]="pageInitialized && categoriesForBudget?.length == 0"></app-empty-placeholder>
+
+  <app-empty-placeholder *ngIf="budgetSummary?.length == 0" [@loadingContent]="pageInitialized && budgetSummary?.length == 0 ? 'enter' : 'void'"
+    [icon]="'emptyList'"
+    [message]="'No budgets available'"
+    [display]="pageInitialized && budgetSummary?.length == 0"></app-empty-placeholder>
 </ion-content>

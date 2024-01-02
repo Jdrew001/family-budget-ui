@@ -120,7 +120,8 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
       component: AddAccountComponent,
       componentProps: {
         disabledFields: result?.disabledFields ?? [],
-        account: result?.data
+        account: result?.data,
+        canArchive: this.accounts.length > 1
       }
     });
 

@@ -22,6 +22,7 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
 
   @Input() onboarding: boolean = false;
   @Input() disabledFields: Array<{name: string, message: string}> = [];
+  @Input() canArchive: boolean = false;
 
   _account: any;
   @Input() set account(value) {
@@ -220,8 +221,8 @@ export class AddAccountComponent  implements OnInit, ViewDidLeave {
     this.modalController.dismiss(this.formGroup.getRawValue(), 'confirm');
   }
 
-  delete() {
-    this.modalController.dismiss(this.accountId.value, 'delete');
+  archiveAccount() {
+    this.modalController.dismiss(this.accountId.value, 'archive');
   }
 
   closeAccountPopup() {
