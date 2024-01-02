@@ -32,6 +32,10 @@ export class CoreService extends BaseService {
   get accountBalanceSummary() { return this._accountBalanceSummary; }
   set accountBalanceSummary(value) { this._accountBalanceSummary = value; }
 
+  private _appVersion: string;
+  get appVersion() { return this._appVersion; }
+  set appVersion(value) { this._appVersion = value; }
+
   constructor(
     private readonly http: HttpClient,
     private helperService: HelperService,

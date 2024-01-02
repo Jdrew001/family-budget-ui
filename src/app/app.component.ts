@@ -3,9 +3,9 @@ import { NavController, Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { AuthService } from './core/services/auth.service';
 import { CoreService } from './core/services/core.service';
-import { SplashScreen } from '@capacitor/splash-screen';
 import { Keyboard } from '@capacitor/keyboard';
 import { from } from 'rxjs';
+import { App } from '@capacitor/app';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +24,8 @@ export class AppComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.platForm.ready().then(async (source) => {
       await Keyboard.setAccessoryBarVisible({isVisible: true});
+      let appInfo = await App.getInfo();
+      this.coreService.appVersion = `${appInfo.version} (${appInfo.build})`;
       // await SplashScreen.show(
       //   {
       //     autoHide: false

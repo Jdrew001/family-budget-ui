@@ -4,4 +4,6 @@ export interface CircleGaugeModel {
     currentValue: number;
     showRed: boolean;
     icon?: string;
+    size?: string;
+    text?: string;
 }

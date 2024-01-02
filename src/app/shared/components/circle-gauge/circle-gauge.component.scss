@@ -26,6 +26,23 @@
     color: var(--fg);
   }
 
+  div.large {
+    --size: 120px;
+    --fg: rgba(36, 56, 142, 1);
+    --bg: rgba(36, 56, 142, 0.2);
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: 
+      radial-gradient(closest-side, #FAFAFA 85%, transparent 0 99.9%, #FAFAFA 0),
+      conic-gradient(var(--fg) calc(var(--value) * 1%), var(--bg) 0);
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: calc(var(--size) / 4);
+    color: var(--fg);
+  }
+
   div.showRed {
     --size: 36px;
     --fg: #FF0000;
@@ -50,4 +67,10 @@
 
   .should-animate {
     animation: growProgressBar 1.5s 1 forwards;
+  }
+
+  p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
   }

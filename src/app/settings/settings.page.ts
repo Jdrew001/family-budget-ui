@@ -7,6 +7,7 @@ import { AddAccountComponent } from '../shared/components/add-account/add-accoun
 import { AddFamilyComponent } from '../shared/components/add-family/add-family.component';
 import { AddCategoryComponent } from '../shared/components/add-category/add-category.component';
 import { loadingContentAnimation } from '../shared/animations/loading-animation';
+import { CoreService } from '../core/services/core.service';
 
 @Component({
   selector: 'app-settings',
@@ -32,12 +33,15 @@ export class SettingsPage implements OnInit, ViewDidEnter, ViewDidLeave {
 
   get pageInitialized() { return this.settingsService.pageInitialized; }
 
+  get appVersion() { return this.coreService.appVersion; }
+
   placeHolderData = [{}, {}];
 
   constructor(
     private settingsService: SettingsService,
     private authService: AuthService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private coreService: CoreService
   ) { }
 
   ngOnInit() {

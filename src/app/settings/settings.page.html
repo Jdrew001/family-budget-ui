@@ -293,7 +293,7 @@
         size="large">Feedback</ion-button>
     </div> -->
 
-    <div class="button-group mb-3 mt-2">
+    <div class="button-group mb-5 mt-3">
       <ion-button 
         class="shadow" 
         type="submit" 
@@ -301,6 +301,16 @@
         shape="round" 
         size="large"
         (click)="logout()">Logout</ion-button>
+    </div>
+
+    <div>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <p class="text-sm text-center strong description light-text-color">{{ appVersion }}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
   </div>
 
