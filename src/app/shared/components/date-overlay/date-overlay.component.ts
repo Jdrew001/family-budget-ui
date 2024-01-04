@@ -8,7 +8,7 @@ import { IonModal } from '@ionic/angular';
 })
 export class DateOverlayComponent  implements OnInit {
 
-  selectedDate = new Date();
+  selectedDate: string = new Date().toISOString();
   @ViewChild('modal') modalElement: IonModal = {} as IonModal;
   @Input() title: string = '';
   @Input() minDate: string = null;
@@ -18,7 +18,8 @@ export class DateOverlayComponent  implements OnInit {
 
   ngOnInit() {}
 
-  presentModal() {
+  presentModal(date?: string) {
+    this.selectedDate = date ? date : new Date().toISOString();
     this.modalElement.present();
   }
 
