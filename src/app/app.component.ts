@@ -5,7 +5,7 @@ import { AuthService } from './core/services/auth.service';
 import { CoreService } from './core/services/core.service';
 import { Keyboard } from '@capacitor/keyboard';
 import { from } from 'rxjs';
-import { App } from '@capacitor/app';
+import { App, AppState } from '@capacitor/app';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +26,8 @@ export class AppComponent implements OnInit {
       await Keyboard.setAccessoryBarVisible({isVisible: true});
       let appInfo = await App.getInfo();
       this.coreService.appVersion = `${appInfo.version} (${appInfo.build})`;
+      this.setupResumeListener();
+
       // await SplashScreen.show(
       //   {
       //     autoHide: false
@@ -34,6 +36,15 @@ export class AppComponent implements OnInit {
       from(this.storage.create()).subscribe(async (result) => {
         await this.authService.validateRefreshToken();
       })
+    });
+  }
+
+  private setupResumeListener() {
+    App.addListener('appStateChange', (state: AppState) => {
+      if (state.isActive) {
+        console.log('App has come to the foreground!')
+        this.coreService.$shouldRefreshScreen.next(true);
+      }
     });
   }
 }

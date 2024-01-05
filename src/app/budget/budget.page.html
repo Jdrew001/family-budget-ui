@@ -156,7 +156,13 @@
                 <p class="pt-0 mt-2 text-xs light-text-color strong">Budgeted: {{ item?.budgetAmount | currency:'USD':'symbol':'1.2-2' }}</p>
               </ion-col> 
               <ion-col>
-                <p class="text-sm strong ion-float-right" [ngClass]="{'showRed': item?.showRed}">{{ item?.remainingAmount | currency:'USD':'symbol':'1.2-2' }}</p><br>
+                <p *ngIf="item?.type == 0" class="text-sm strong ion-float-right">
+                  <span *ngIf="item?.remainingAmount < 0">+{{ getIncomeAmount(item?.remainingAmount) | currency:'USD':'symbol':'1.2-2' }}</span>
+                  <span *ngIf="item?.remainingAmount >= 0">{{ getIncomeAmount(item?.remainingAmount) | currency:'USD':'symbol':'1.2-2' }}</span>
+                </p>
+                <p *ngIf="item?.type == 1" class="text-sm strong ion-float-right" [ngClass]="{'showRed': item?.showRed}">
+                  {{ item?.remainingAmount | currency:'USD':'symbol':'1.2-2' }}
+                </p><br>
                 <p class="text-xs light-text-color ion-float-right strong">
                   <span *ngIf="item?.type == transactionType.Expense">Spent: </span><span *ngIf="item?.type == transactionType.Income">Earned: </span>{{ item?.spentAmount | currency:'USD':'symbol':'1.2-2' }}</p>
               </ion-col>

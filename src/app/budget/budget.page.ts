@@ -44,6 +44,10 @@ export class BudgetPage implements OnInit, ViewDidEnter, ViewDidLeave {
     });
   }
 
+  getIncomeAmount(data) {
+    return Math.abs(data);
+  }
+
   ionViewDidEnter(): void {
     this.budgetService.initialize();
   }

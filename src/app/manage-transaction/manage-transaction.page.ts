@@ -80,12 +80,12 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
       return;
     }
     this.manageTranService.confirmTransaction();
-    this.formGroup.reset();
+    this.resetPage();
   }
 
   onDelete() {
     this.manageTranService.deleteTransaction(this.selId?.value);
-    this.formGroup.reset();
+    this.resetPage();
   }
 
   chooseCategory() {
@@ -98,8 +98,7 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
 
   closeTransaction() {
     this.modalController.dismiss();
-    this.formGroup.reset();
-    this.manageTranService.pageInitialized = false;
+    this.resetPage();
   }
 
   onSelectCategory(value: any) {
@@ -121,5 +120,10 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
   setSelectedCard(id: string, active: boolean) {
     const account = this.accounts.find(item => item.id === id) as SummaryAccountBalance;
     account.active = active;
+  }
+
+  resetPage() {
+    this.formGroup.reset();
+    this.manageTranService.pageInitialized = false;
   }
 }
