@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
       await Keyboard.setAccessoryBarVisible({isVisible: true});
       let appInfo = await App.getInfo();
       this.coreService.appVersion = `${appInfo.version} (${appInfo.build})`;
-      this.setupResumeListener();
+      //this.setupResumeListener();
 
       // await SplashScreen.show(
       //   {
