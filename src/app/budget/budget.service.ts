@@ -27,6 +27,10 @@ export class BudgetService {
   get pageInitialized() { return this._pageInitialized; }
   set pageInitialized(value) { this._pageInitialized = value; }
 
+  private _categoriesInitialized = false;
+  get categoriesInitialized() { return this._categoriesInitialized; }
+  set categoriesInitialized(value) { this._categoriesInitialized = value; }
+
   constructor(
     private http: HttpClient,
     private helperService: HelperService
@@ -41,15 +45,13 @@ export class BudgetService {
 
         if (currentBudget.length === 0) {
           this.pageInitialized = true;
+          this.categoriesInitialized = true;
           return EMPTY;
         }
 
         return this.getBudgetCategories(currentBudget[0]);
       })
-    ).subscribe(result => {
-      this.categoriesForBudget = result;
-      this.pageInitialized = true;
-    });
+    ).subscribe(result => this.setCategoryBudgetResult(result));
   }
 
   getBudgetCategories(budgetSummary: LeftSpendingManage): Observable<Array<CategoriesForBudget>> {
@@ -57,11 +59,18 @@ export class BudgetService {
     return this.http.get(`${url}${budgetSummary.id}`) as Observable<Array<CategoriesForBudget>>;
   }
 
+  setCategoryBudgetResult(result: Array<CategoriesForBudget>) {
+    this.categoriesForBudget = result;
+    this.pageInitialized = true;
+    this.categoriesInitialized = true;
+  }
+
   resetBudget() {
     this.budgetSummary = [];
     this.categoriesForBudget = [];
     this.currentBudget = null;
     this.pageInitialized = false;
+    this.categoriesInitialized = false;
   }
 
   private getAllBudgets(): Observable<Array<LeftSpendingManage>> {

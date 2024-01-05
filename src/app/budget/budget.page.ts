@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController, ViewDidEnter, ViewDidLeave } from '@ionic/angular';
 import { BudgetService } from './budget.service';
 import { CoreService } from '../core/services/core.service';
@@ -6,6 +6,7 @@ import { TransactionType } from '../core/models/transaction-type.model';
 import { ManageBudgetPage } from '../manage-budget/manage-budget.page';
 import { ManageCategoryPage } from '../manage-category/manage-category.page';
 import { loadingContentAnimation } from '../shared/animations/loading-animation';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-budget',
@@ -20,6 +21,7 @@ export class BudgetPage implements OnInit, ViewDidEnter, ViewDidLeave {
 
   get currentBudget() { return this.budgetService.currentBudget; }
   get pageInitialized() { return this.budgetService.pageInitialized; }
+  get categoriesInitialized() { return this.budgetService.categoriesInitialized; }
 
   budgetCategoryRefData: Array<{id: string, name: string, type: TransactionType}> = [];
 
@@ -30,7 +32,8 @@ export class BudgetPage implements OnInit, ViewDidEnter, ViewDidLeave {
   constructor(
     private budgetService: BudgetService,
     private modalController: ModalController,
-    private coreService: CoreService
+    private coreService: CoreService,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -76,9 +79,19 @@ export class BudgetPage implements OnInit, ViewDidEnter, ViewDidLeave {
   }
 
   swiperSlideChanged(event: any) {
-    const activeIndex = event?.detail[0]?.activeIndex;
+    const activeIndex = event[0]?.activeIndex;
     if (activeIndex !== undefined) {
-      this.budgetService.currentBudget.accountName = this.budgetSummary[activeIndex]?.accountName;
+      const budget = this.budgetSummary[activeIndex];
+      if (!budget) return;
+      this.budgetService.categoriesInitialized = false;
+      this.cd.detectChanges();
+      this.budgetService.getBudgetCategories(budget).subscribe(result => {
+        this.budgetService.setCategoryBudgetResult(result);
+        this.budgetService.currentBudget = budget;
+        this.cd.detectChanges();
+
+        console.log('current budget', this.currentBudget);
+      });
     }
   }
 }

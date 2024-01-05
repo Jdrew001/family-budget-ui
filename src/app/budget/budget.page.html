@@ -31,7 +31,7 @@
         direction="horizontal"
         [slidesPerView]="1"
         [pagination]="true"
-        (slidechange)="swiperSlideChanged($event)">
+        (slideChange)="swiperSlideChanged($event)">
           <ng-template *ngFor="let item of budgetSummary" swiperSlide>
             <div>
               <app-card 
@@ -142,7 +142,8 @@
         </ion-row>
       </ion-grid>
     </div>
-    <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" style="margin-bottom: 10rem">
+    
+    <div [@loadingContent]="categoriesInitialized ? 'enter' : 'void'" *ngIf="categoriesInitialized" style="margin-bottom: 10rem">
       <app-card *ngFor="let item of categoriesForBudget"
         margin="2px 5px 5px 5px" 
         padding="5px">
@@ -171,7 +172,7 @@
       </app-card>
     </div>
   
-    <div *ngIf="!pageInitialized" style="margin-bottom: 10rem">
+    <div *ngIf="!categoriesInitialized" style="margin-bottom: 10rem">
       <app-card *ngFor="let item of placeholderCategories"
         margin="2px 5px 5px 5px" 
         padding="5px">
