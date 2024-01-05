@@ -140,7 +140,7 @@
         <div class="input-group mt-2 mb-5">
           <div class="group mb-0">
             <ion-label position="stacked">Date</ion-label>
-            <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" (click)="chooseDate()" class="input-lookalike">
+            <div [@loadingContent]="pageInitialized ? 'enter' : 'void'" *ngIf="pageInitialized" (click)="chooseDate(selectedDate?.value)" class="input-lookalike">
               <p *ngIf="!selectedDate?.value" class="placeholder">Select Date</p>
               <p *ngIf="selectedDate?.value">{{ selectedDate?.value | date:'MM/dd/yyyy' }}</p>
             </div>

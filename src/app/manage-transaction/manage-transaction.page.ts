@@ -92,8 +92,8 @@ export class ManageTransactionPage implements OnInit, ViewDidEnter {
     this.categoryOverlay.presentModal();
   }
 
-  chooseDate() {
-    this.dateOverlay.presentModal();
+  chooseDate(date) {console.log('date', date)
+    this.dateOverlay.presentModal(date);
   }
 
   closeTransaction() {

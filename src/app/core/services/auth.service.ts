@@ -74,7 +74,7 @@ export class AuthService {
       })
     ).subscribe(async (onboardingResult) => {
       this.coreService.onboardingRequiredSections = onboardingResult?.data?.requiredSections;
-        await SplashScreen.hide();//
+        await SplashScreen.hide();
         if (onboardingResult?.data?.requiredSections?.length > 0) {
           this.navController.navigateRoot('/onboarding', { replaceUrl:true });
         } else {

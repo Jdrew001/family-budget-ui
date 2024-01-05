@@ -39,7 +39,7 @@ export class HttpInterceptorService implements HttpInterceptor {
       switchMap((token) => {
         this.token = token;
   
-        // skip certain URLS -- add in constant
+        // skip certain URLS -- add in constants
         if (req.url.includes(AuthConstants.SIGN_IN_URL) || req.url.includes(AuthConstants.SIGN_UP_URL)) {
           return next.handle(req);
         }

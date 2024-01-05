@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-date-overlay',
@@ -8,7 +9,7 @@ import { IonModal } from '@ionic/angular';
 })
 export class DateOverlayComponent  implements OnInit {
 
-  selectedDate: string = new Date().toISOString();
+  selectedDate: String = new Date().toISOString();
   @ViewChild('modal') modalElement: IonModal = {} as IonModal;
   @Input() title: string = '';
   @Input() minDate: string = null;
@@ -18,8 +19,22 @@ export class DateOverlayComponent  implements OnInit {
 
   ngOnInit() {}
 
-  presentModal(date?: string) {
-    this.selectedDate = date ? date : new Date().toISOString();
+  presentModal(date?: Date) {
+    const nDate = moment().toDate();
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    console.log('date', date);
+
+    if (date) {
+        // If date is provided, convert it to the user's timezone
+        console.log('Date:', date);
+        this.selectedDate = moment(date).format('YYYY-MM-DDTHH:mm');
+    } else {
+        // If date is not provided, use the current time in the user's timezone
+        this.selectedDate = moment.tz(nDate, userTimeZone).format('YYYY-MM-DDTHH:mm');//
+    }
+
+    console.log('Selected date:', this.selectedDate); // Log the selected date
+
     this.modalElement.present();
   }
 
