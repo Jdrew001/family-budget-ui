@@ -18,7 +18,7 @@ export class TransactionPage implements OnInit, ViewDidEnter, ViewWillLeave {
 
   get pageInitialized() { return this.transactionService.pageInitialized; }
 
-  scrollDisabled: boolean = false;
+  get scrollDisabled() { return this.transactionService.scrollDisabled; }
 
   placeHolderAccounts = [{}, {}];
   placeHolderTransactions = [{}, {}, {}, {}];
@@ -33,7 +33,7 @@ export class TransactionPage implements OnInit, ViewDidEnter, ViewWillLeave {
     this.transactionService.accountBalanceSummary = [];
     this.transactionService.groupTransactions = [];
     this.fetchTransactionGroups();
-    this.scrollDisabled = false;
+    this.transactionService.scrollDisabled = false;
   }
 
   ionViewWillLeave(): void {
@@ -45,6 +45,7 @@ export class TransactionPage implements OnInit, ViewDidEnter, ViewWillLeave {
     this.transactionService.groupTransactions = [];
     this.transactionService.page = 1;
     this.transactionService.pageInitialized = false;
+    this.transactionService.scrollDisabled = true;
   }
 
   ngOnInit() {
@@ -73,7 +74,7 @@ export class TransactionPage implements OnInit, ViewDidEnter, ViewWillLeave {
   }
 
   handleAccountAction(id: any) {
-    this.transactionService.page = 1;
+    this.transactionService.page = 0;
     this.transactionService.accountId = id;
     this.accountBalanceSummary.forEach(item => item.active = false);
     this.accountBalanceSummary.find(item => item.id === id).active = true;

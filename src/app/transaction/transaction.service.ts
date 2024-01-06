@@ -33,6 +33,10 @@ export class TransactionService {
   get pageInitialized(): boolean { return this._pageInitialized; }
   set pageInitialized(value: boolean) { this._pageInitialized = value; }
 
+  private _scrollDisabled: boolean = false;
+  get scrollDisabled(): boolean { return this._scrollDisabled; }
+  set scrollDisabled(value: boolean) { this._scrollDisabled = value; }
+
 
   constructor(
     private http: HttpClient,
@@ -57,16 +61,19 @@ export class TransactionService {
       setTimeout(() => {
         event?.target?.complete();
       }, 500);
+      this.scrollDisabled = false;
     });
   }
 
   getTransactionsForAccount(page?: number) {
     const selPage = page || this.page;
+    console.log('selPage', selPage, this.page);
     const body: TransactionGroupRequest = {
       page: selPage <= 0 ? 1 : selPage,
       size: this.pageSize,
       accountId: this.accountId
     }
+    this.scrollDisabled = false;
     const url = this.helperService.getResourceUrl(TransactionConstant.GROUPED_TRANSACTION_URL);
     return this.http.post(url, body) as Observable<any>;
   }
