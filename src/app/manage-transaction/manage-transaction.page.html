@@ -93,6 +93,7 @@
               formControlName="description" 
               placeholder="Type something here"
               [counter]="true"
+              autocapitalize="sentences"
               [autoGrow]="true"></ion-textarea>
             <ion-skeleton-text *ngIf="!pageInitialized" class="textarea-loader" [animated]="true"></ion-skeleton-text>
           </div>
